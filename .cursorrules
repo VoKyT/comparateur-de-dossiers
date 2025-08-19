@@ -22,6 +22,85 @@
 - Tailwind CSS: `https://tailwindcss.com`
 - Electron: `https://www.electronjs.org`
 
+## Architecture technique obligatoire
+
+### Stack imposée
+- **Electron** : Framework desktop principal (process main, renderer, preload)
+- **React** : Librairie UI pour tous les composants interface
+- **TypeScript** : Langage obligatoire pour tout le code JavaScript
+- **Tailwind CSS** : Framework CSS utilitaire pour tout le styling
+
+### Intégration Electron + React + Tailwind
+- **Process Main** : Electron pur (Node.js + Electron APIs)
+- **Process Renderer** : React + TypeScript + Tailwind CSS
+- **Process Preload** : TypeScript avec APIs Electron sécurisées
+- **Communication** : IPC sécurisé via contextBridge uniquement
+- **Styling** : Tailwind CSS exclusivement, pas de CSS custom sauf exceptions documentées
+
+### Architecture modulaire obligatoire
+```
+src/
+├── electron/                    # Code Electron natif
+│   ├── main/                   # Process principal Electron
+│   │   ├── main.ts             # Point d'entrée principal
+│   │   ├── window-manager.ts   # Gestion des fenêtres
+│   │   └── ipc-handlers.ts     # Handlers IPC sécurisés
+│   ├── preload/                # Scripts preload sécurisés
+│   │   └── preload.ts          # API sécurisée via contextBridge
+│   └── renderer/               # Interface React
+│       └── index.html          # Shell HTML minimal
+├── components/                  # Composants React + Tailwind
+│   ├── ui/                     # Composants UI génériques
+│   │   ├── Button.tsx          # Boutons avec variants Tailwind
+│   │   ├── Modal.tsx           # Modales réutilisables
+│   │   └── index.ts            # Barrel export
+│   └── layout/                 # Composants de mise en page
+│       ├── Header.tsx          # En-tête application
+│       ├── Sidebar.tsx         # Barre latérale
+│       └── index.ts            # Barrel export
+├── features/                    # Modules métier React
+│   ├── folder-comparison/       # Feature comparaison
+│   │   ├── components/         # Composants React spécifiques
+│   │   │   ├── FolderSelector.tsx
+│   │   │   ├── ComparisonResult.tsx
+│   │   │   └── index.ts
+│   │   ├── hooks/              # Hooks React personnalisés
+│   │   │   ├── useFolderComparison.ts
+│   │   │   └── index.ts
+│   │   ├── types/              # Types TypeScript
+│   │   │   ├── comparison.ts
+│   │   │   └── index.ts
+│   │   └── index.ts            # Point d'entrée feature
+│   └── settings/               # Feature paramètres
+│       ├── components/
+│       ├── hooks/
+│       ├── types/
+│       └── index.ts
+├── shared/                      # Code partagé React/TS
+│   ├── types/                  # Types globaux TypeScript
+│   ├── utils/                  # Utilitaires purs TypeScript
+│   ├── hooks/                  # Hooks React partagés
+│   └── constants/              # Constantes TypeScript
+├── styles/                      # Configuration Tailwind
+│   ├── globals.css             # Imports Tailwind + custom CSS minimal
+│   └── tailwind.config.js      # Configuration Tailwind
+└── App.tsx                     # Composant racine React
+```
+
+### Règles d'intégration strictes
+1. **Electron Main** : Aucun import React, uniquement Electron/Node.js APIs
+2. **React Components** : Obligatoirement TypeScript + Tailwind classes
+3. **Communication IPC** : Via contextBridge uniquement, typée TypeScript
+4. **State Management** : React hooks (useState, useContext, zustand si complexe)
+5. **Styling** : Tailwind utility classes, pas de CSS inline ou modules
+6. **Build** : Webpack/Vite pour bundle React dans Electron renderer
+
+### Points d'intégration clés
+- **Electron → React** : Chargement du bundle React dans BrowserWindow
+- **React → Electron** : Via window.electronAPI (contextBridge)
+- **TypeScript** : Configuration partagée pour Electron et React
+- **Tailwind** : Build CSS intégré dans le processus Electron
+
 ## Initialisation (React + TypeScript)
 ```bash
 npm init -y
@@ -39,6 +118,38 @@ npm install react@latest react-dom@latest
 ```bash
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
+```
+
+### Configuration Tailwind pour Electron + React
+```javascript
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/electron/renderer/*.html"
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+```css
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-system;
+  }
+}
 ```
 
 ## Installation d’Electron
