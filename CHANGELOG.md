@@ -8,15 +8,35 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 ## [Non publié]
 
 ### Ajouté
-- Configuration initiale du projet
-- Fichiers `.cursorrules` et `.cursorignore`
-- Structure de base pour l'architecture modulaire
 
 ### Modifié
 
 ### Corrigé
 
 ### Supprimé
+
+---
+
+## [v1.0.0] - 2025-08-19
+
+### Ajouté
+- **Fenêtre Electron fonctionnelle** : Application desktop complète avec interface moderne
+- **Architecture sécurisée** : Processus principal, renderer et preload avec isolation du contexte
+- **Interface utilisateur élégante** : Design moderne avec dégradés et animations CSS
+- **Configuration npm complète** : Scripts pour développement, production et distribution
+- **Structure de projet modulaire** : Organisation selon les meilleures pratiques Electron
+- **Mode développement** : DevTools automatiques et rechargement en mode dev
+- **Documentation complète** : README détaillé avec instructions d'installation et usage
+- **Support cross-platform** : Configuration pour Windows, macOS et Linux
+- **Menu d'application** : Menu natif avec raccourcis clavier standard
+- **Gestion des erreurs** : Capture et logging des erreurs JavaScript
+- **API sécurisée** : Communication IPC via contextBridge pour les futures fonctionnalités
+
+### Notes techniques
+- **Electron** : v37.3.1 (dernière version stable)
+- **Node.js** : ≥ 20.0.0 requis
+- **Sécurité** : `nodeIntegration: false`, `contextIsolation: true`
+- **Architecture** : Séparation claire main/renderer/preload
 
 ---
 

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+  <title>Comparateur de Dossiers</title>
+  <style>
+    /**
+     * @fileoverview Styles de base pour la fenêtre Electron vide
+     * @description Interface utilisateur minimaliste pour le comparateur de dossiers
+     * @styling Base CSS sans framework pour une fenêtre vide élégante
+     * @responsive Design adaptatif pour différentes tailles de fenêtre
+     */
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+      font-weight: 300;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #27ae60;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      background: #2ecc71;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+      }
+    }
+
+    .version-info {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .dev-info {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Animation d'entrée */
+    .container {
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mode sombre pour l'OS */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      }
+      
+      .container {
+        background: rgba(52, 73, 94, 0.95);
+        color: #ecf0f1;
+      }
+      
+      h1 {
+        color: #ecf0f1;
+      }
+      
+      .subtitle {
+        color: #bdc3c7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Comparateur de Dossiers</h1>
+    <p class="subtitle">
+      Application Electron prête à l'utilisation.<br>
+      L'interface de comparaison sera bientôt disponible.
+    </p>
+    <div class="status">
+      <div class="status-indicator"></div>
+      Système initialisé
+    </div>
+  </div>
+
+  <div class="version-info" id="version-info">
+    Version: 1.0.0-dev
+  </div>
+
+  <div class="dev-info" id="dev-info">
+    <!-- Informations de développement seront ajoutées via JS -->
+  </div>
+
+  <script>
+    /**
+     * @fileoverview Script principal pour la fenêtre renderer
+     * @description Logique côté interface utilisateur pour la fenêtre vide
+     * @dependencies Preload script pour l'IPC sécurisé
+     * @usage Script chargé dans la fenêtre principale
+     */
+
+    // Attendre que le DOM soit chargé
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 Comparateur de Dossiers - Interface chargée');
+      
+      // Mise à jour des informations de version
+      updateVersionInfo();
+      
+      // Configuration des informations de développement
+      setupDevInfo();
+      
+      // Gestion des événements clavier pour les raccourcis
+      setupKeyboardShortcuts();
+    });
+
+    /**
+     * Met à jour les informations de version affichées
+     */
+    function updateVersionInfo() {
+      const versionElement = document.getElementById('version-info');
+      if (versionElement) {
+        // Les informations de version seront récupérées via l'IPC plus tard
+        versionElement.textContent = 'Version: 1.0.0-dev | Electron: ' + process.versions?.electron || 'N/A';
+      }
+    }
+
+    /**
+     * Configure les informations de développement
+     */
+    function setupDevInfo() {
+      const devElement = document.getElementById('dev-info');
+      if (devElement) {
+        const isDevMode = process.env.NODE_ENV === 'development';
+        if (isDevMode) {
+          devElement.innerHTML = '🔧 Mode développement';
+        }
+      }
+    }
+
+    /**
+     * Configure les raccourcis clavier
+     */
+    function setupKeyboardShortcuts() {
+      document.addEventListener('keydown', (event) => {
+        // F11 : Plein écran (géré par Electron)
+        // F12 : DevTools (géré par Electron)
+        // Ctrl+R : Actualiser (géré par Electron)
+        
+        if (event.ctrlKey && event.key === 'q') {
+          // Ctrl+Q : Quitter (sera géré via IPC plus tard)
+          console.log('Demande de fermeture de l\'application');
+        }
+      });
+    }
+
+    /**
+     * Gestion des erreurs JavaScript
+     */
+    window.addEventListener('error', (event) => {
+      console.error('Erreur JavaScript:', event.error);
+    });
+
+    /**
+     * Gestion des erreurs de chargement des ressources
+     */
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Promise rejetée:', event.reason);
+    });
+  </script>
+</body>
+</html>

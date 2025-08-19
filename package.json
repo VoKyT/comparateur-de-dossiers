@@ -1,0 +1,60 @@
+{
+  "name": "comparateur-de-dossiers",
+  "version": "1.0.0",
+  "description": "Application Electron pour comparer le contenu de dossiers",
+  "main": "src/electron/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "dev-win": "set NODE_ENV=development && electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VoKyT/comparateur-de-dossiers.git"
+  },
+  "keywords": [
+    "electron",
+    "comparateur",
+    "dossiers",
+    "fichiers",
+    "synchronisation",
+    "desktop-app"
+  ],
+  "author": "VoKyT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VoKyT/comparateur-de-dossiers/issues"
+  },
+  "homepage": "https://github.com/VoKyT/comparateur-de-dossiers#readme",
+  "devDependencies": {
+    "electron": "^37.3.1"
+  },
+  "build": {
+    "appId": "com.vokyt.comparateur-de-dossiers",
+    "productName": "Comparateur de Dossiers",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    }
+  }
+}
