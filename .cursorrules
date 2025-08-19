@@ -10,18 +10,6 @@
 - **Public cible**: Utilisateurs Windows ayant besoin de synchroniser ou vérifier des dossiers
 - **Stack technique**: Electron + React + TypeScript + Tailwind CSS
 
-# Outils & versions
-
-## Politique de versions
-- Utiliser les dernières versions stables disponibles (tags `@latest`).
-- Ne figer des versions que si une régression connue l’impose (documenter la raison).
-- Environnement recommandé: Node.js ≥ 20, npm ≥ 10 (Windows PowerShell).
-
-## Liens officiels
-- React: `https://react.dev`
-- Tailwind CSS: `https://tailwindcss.com`
-- Electron: `https://www.electronjs.org`
-
 ## Architecture technique obligatoire
 
 ### Stack imposée
@@ -101,18 +89,34 @@ src/
 - **TypeScript** : Configuration partagée pour Electron et React
 - **Tailwind** : Build CSS intégré dans le processus Electron
 
-## Initialisation (React + TypeScript)
+## Installation et configuration
+
+### Politique de versions
+- Utiliser les dernières versions stables disponibles (tags `@latest`).
+- Ne figer des versions que si une régression connue l'impose (documenter la raison).
+- Environnement recommandé: Node.js ≥ 20, npm ≥ 10 (Windows PowerShell).
+
+### Liens officiels
+- React: `https://react.dev`
+- Tailwind CSS: `https://tailwindcss.com`
+- Electron: `https://www.electronjs.org`
+
+### Initialisation complète du projet
 ```bash
+# Initialisation Node.js
 npm init -y
+
+# React + TypeScript
 npm install react@latest react-dom@latest
 npm install -D typescript@latest @types/react@latest @types/react-dom@latest
 npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
-```
 
-## Installation de Tailwind CSS
-```bash
+# Tailwind CSS
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
+
+# Electron
+npm install -D electron@latest
 ```
 
 ### Configuration Tailwind pour Electron + React
@@ -147,19 +151,16 @@ module.exports = {
 }
 ```
 
-## Installation d’Electron
-```bash
-npm install -D electron@latest
-```
-
-## Scripts recommandés (indicatif)
+### Scripts recommandés
 - `start`: lance Electron avec le process `main`.
 - `dev`: lance Electron en dev avec relance au changement (ex: `electronmon`/`nodemon`).
 - `build`: construit l'app (ex: via `electron-builder` ou `electron-forge`).
 
-## En-têtes de fichiers (pour Cursor AI)
+## Règles de développement
 
-### Fichiers TypeScript/JavaScript
+### En-têtes de fichiers (pour Cursor AI)
+
+#### Fichiers TypeScript/JavaScript
 ```typescript
 /**
  * @fileoverview [Description courte du rôle du fichier]
@@ -176,7 +177,7 @@ npm install -D electron@latest
  */
 ```
 
-### Fichiers React (composants)
+#### Fichiers React (composants)
 ```typescript
 /**
  * @fileoverview [Nom du composant et son rôle principal]
@@ -194,20 +195,7 @@ npm install -D electron@latest
  */
 ```
 
-### Fichiers de configuration
-```javascript
-/**
- * @fileoverview [Type de configuration: webpack, tailwind, electron, etc.]
- * @description [Objectif de cette configuration, ce qu'elle contrôle]
- * @environment [Environnement: dev, prod, test]
- * @dependencies [Outils qui utilisent cette config]
- * @customization [Options personnalisées et leur raison]
- * @validation [Règles de validation ou schémas]
- * @related [Autres fichiers de config liés]
- */
-```
-
-### Fichiers Electron (main/preload)
+#### Fichiers Electron (main/preload)
 ```javascript
 /**
  * @fileoverview [Process: main, renderer, ou preload]
@@ -221,7 +209,20 @@ npm install -D electron@latest
  */
 ```
 
-### Fichiers de types/interfaces
+#### Fichiers de configuration
+```javascript
+/**
+ * @fileoverview [Type de configuration: webpack, tailwind, electron, etc.]
+ * @description [Objectif de cette configuration, ce qu'elle contrôle]
+ * @environment [Environnement: dev, prod, test]
+ * @dependencies [Outils qui utilisent cette config]
+ * @customization [Options personnalisées et leur raison]
+ * @validation [Règles de validation ou schémas]
+ * @related [Autres fichiers de config liés]
+ */
+```
+
+#### Fichiers de types/interfaces
 ```typescript
 /**
  * @fileoverview [Domaine des types: API, UI, business logic]
@@ -243,15 +244,11 @@ npm install -D electron@latest
 - **Mise à jour**: modifier `@lastModified` à chaque changement significatif
 - **Liens**: utiliser des chemins relatifs pour `@related` et `@usage`
 
-## Architecture & modularité
-
-### Principes de base
+### Principes de modularité
 - **Une responsabilité par module**: chaque fichier/dossier a un rôle unique et bien défini.
 - **Couplage faible**: les modules communiquent via des interfaces claires, pas de dépendances directes.
 - **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
 - **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
-
-### Structure de dossiers - Voir "Architecture modulaire obligatoire" ci-dessus
 
 ### Règles d'imports
 - **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
@@ -264,7 +261,7 @@ npm install -D electron@latest
 - Communication inter-features via des événements, context, ou services partagés.
 - Chaque feature doit pouvoir être supprimée sans casser le reste.
 
-### Règles de nommage modulaire
+### Règles de nommage
 - **Dossiers**: `kebab-case` (`user-management`, `file-comparison`).
 - **Fichiers**: `PascalCase` pour composants, `camelCase` pour le reste.
 - **Exports**: noms explicites, pas de `export default` sauf pour les composants React.
@@ -335,5 +332,3 @@ Avant d'ajouter une fonctionnalité, vérifier:
 ## Documentation
 - Mettre à jour systématiquement le `README` à chaque modification de l'application (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
 - Si un `CHANGELOG.md` existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
-
-
