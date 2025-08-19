@@ -3,245 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: blob:;
+    font-src 'self' data:;
+    connect-src 'self';
+    frame-src 'none';
+    object-src 'none';
+  ">
   <title>Comparateur de Dossiers</title>
+  
+  <!-- Favicons et icônes -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/icon.png">
+  
+  <!-- Styles de base pour éviter FOUC -->
   <style>
     /**
-     * @fileoverview Styles de base pour la fenêtre Electron vide
-     * @description Interface utilisateur minimaliste pour le comparateur de dossiers
-     * @styling Base CSS sans framework pour une fenêtre vide élégante
-     * @responsive Design adaptatif pour différentes tailles de fenêtre
+     * Styles critiques pour éviter le Flash of Unstyled Content (FOUC)
+     * Ces styles sont appliqués immédiatement pendant le chargement
      */
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
+      height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #333;
-      height: 100vh;
+      overflow: hidden;
+    }
+
+    #root {
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Loader de démarrage */
+    .initial-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      z-index: 9999;
     }
 
-    .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 3rem;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      max-width: 500px;
-      width: 90%;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      color: #2c3e50;
+    .initial-loader h1 {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
       font-weight: 300;
     }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: #7f8c8d;
-      margin-bottom: 2rem;
-      line-height: 1.5;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #27ae60;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .status-indicator {
-      width: 8px;
-      height: 8px;
-      background: #2ecc71;
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
-      animation: pulse 2s infinite;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-      }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .version-info {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.7);
-      background: rgba(0, 0, 0, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+    /* Masquer le loader une fois React chargé */
+    .react-loaded .initial-loader {
+      display: none;
     }
 
-    .dev-info {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.7);
+    /* Styles pour focus visible */
+    body:not(.user-is-tabbing) button:focus,
+    body:not(.user-is-tabbing) input:focus,
+    body:not(.user-is-tabbing) select:focus,
+    body:not(.user-is-tabbing) textarea:focus {
+      outline: none;
     }
 
-    /* Animation d'entrée */
-    .container {
-      animation: slideInUp 0.8s ease-out;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Mode sombre pour l'OS */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-      }
-      
-      .container {
-        background: rgba(52, 73, 94, 0.95);
-        color: #ecf0f1;
-      }
-      
-      h1 {
-        color: #ecf0f1;
-      }
-      
-      .subtitle {
-        color: #bdc3c7;
-      }
+    .user-is-tabbing button:focus,
+    .user-is-tabbing input:focus,
+    .user-is-tabbing select:focus,
+    .user-is-tabbing textarea:focus {
+      outline: 2px solid #667eea;
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Comparateur de Dossiers</h1>
-    <p class="subtitle">
-      Application Electron prête à l'utilisation.<br>
-      L'interface de comparaison sera bientôt disponible.
-    </p>
-    <div class="status">
-      <div class="status-indicator"></div>
-      Système initialisé
+  <!-- Conteneur principal React -->
+  <div id="root">
+    <!-- Loader affiché pendant le chargement initial -->
+    <div class="initial-loader">
+      <h1>Comparateur de Dossiers</h1>
+      <div class="spinner" aria-label="Chargement en cours"></div>
     </div>
   </div>
 
-  <div class="version-info" id="version-info">
-    Version: 1.0.0-dev
-  </div>
-
-  <div class="dev-info" id="dev-info">
-    <!-- Informations de développement seront ajoutées via JS -->
-  </div>
-
+  <!-- Scripts -->
   <script>
-    /**
-     * @fileoverview Script principal pour la fenêtre renderer
-     * @description Logique côté interface utilisateur pour la fenêtre vide
-     * @dependencies Preload script pour l'IPC sécurisé
-     * @usage Script chargé dans la fenêtre principale
-     */
-
-    // Attendre que le DOM soit chargé
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('🚀 Comparateur de Dossiers - Interface chargée');
-      
-      // Mise à jour des informations de version
-      updateVersionInfo();
-      
-      // Configuration des informations de développement
-      setupDevInfo();
-      
-      // Gestion des événements clavier pour les raccourcis
-      setupKeyboardShortcuts();
-    });
-
-    /**
-     * Met à jour les informations de version affichées
-     */
-    function updateVersionInfo() {
-      const versionElement = document.getElementById('version-info');
-      if (versionElement) {
-        // Les informations de version seront récupérées via l'IPC plus tard
-        versionElement.textContent = 'Version: 1.0.0-dev | Electron: ' + process.versions?.electron || 'N/A';
-      }
-    }
-
-    /**
-     * Configure les informations de développement
-     */
-    function setupDevInfo() {
-      const devElement = document.getElementById('dev-info');
-      if (devElement) {
-        const isDevMode = process.env.NODE_ENV === 'development';
-        if (isDevMode) {
-          devElement.innerHTML = '🔧 Mode développement';
-        }
-      }
-    }
-
-    /**
-     * Configure les raccourcis clavier
-     */
-    function setupKeyboardShortcuts() {
-      document.addEventListener('keydown', (event) => {
-        // F11 : Plein écran (géré par Electron)
-        // F12 : DevTools (géré par Electron)
-        // Ctrl+R : Actualiser (géré par Electron)
-        
-        if (event.ctrlKey && event.key === 'q') {
-          // Ctrl+Q : Quitter (sera géré via IPC plus tard)
-          console.log('Demande de fermeture de l\'application');
-        }
+    // Masquer le loader une fois que React est chargé
+    window.addEventListener('DOMContentLoaded', () => {
+      // Observer pour détecter quand React a pris le contrôle
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.addedNodes.length > 0) {
+            // React a ajouté des éléments, masquer le loader
+            document.body.classList.add('react-loaded');
+            observer.disconnect();
+          }
+        });
       });
-    }
 
-    /**
-     * Gestion des erreurs JavaScript
-     */
-    window.addEventListener('error', (event) => {
-      console.error('Erreur JavaScript:', event.error);
+      // Observer les changements dans le conteneur root
+      const root = document.getElementById('root');
+      if (root) {
+        observer.observe(root, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      // Sécurité : masquer le loader après 5 secondes maximum
+      setTimeout(() => {
+        document.body.classList.add('react-loaded');
+        observer.disconnect();
+      }, 5000);
     });
 
-    /**
-     * Gestion des erreurs de chargement des ressources
-     */
-    window.addEventListener('unhandledrejection', (event) => {
-      console.error('Promise rejetée:', event.reason);
+    // Configuration globale pour l'accessibilité
+    document.addEventListener('DOMContentLoaded', () => {
+      // Vérification de l'API Electron
+      if (typeof window.electronAPI === 'undefined') {
+        console.warn('⚠️ ElectronAPI non disponible - Mode dégradé');
+      } else {
+        console.log('✅ ElectronAPI disponible');
+      }
+    });
+
+    // Gestion des erreurs globales avant React
+    window.addEventListener('error', (event) => {
+      console.error('🚨 Erreur avant chargement React:', event.error);
     });
   </script>
+
+  <!-- Chargement du bundle React -->
+  <!-- Ce script sera remplacé par le système de build -->
+  <script type="module" src="../../index.tsx"></script>
 </body>
 </html>

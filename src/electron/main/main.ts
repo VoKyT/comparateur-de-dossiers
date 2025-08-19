@@ -1,0 +1,505 @@
+/**
+ * @fileoverview Process principal Electron TypeScript pour le comparateur de dossiers
+ * @description Gère la création de la fenêtre principale et les handlers IPC sécurisés
+ * @security Configuration sécurisée: contextIsolation, nodeIntegration désactivé
+ * @ipc Handlers IPC pour communication avec le renderer process
+ * @apis Gestion des fenêtres, notifications, système de fichiers, préférences
+ * @lifecycle Point d'entrée principal de l'application Electron
+ * @dependencies electron (app, BrowserWindow, Menu, ipcMain, dialog, nativeTheme)
+ * @related src/electron/preload/preload.ts, src/electron/renderer/
+ */
+
+import { 
+  app, 
+  BrowserWindow, 
+  Menu, 
+  ipcMain, 
+  dialog,
+  nativeTheme,
+  Notification,
+  shell
+} from 'electron';
+import path from 'path';
+import fs from 'fs/promises';
+// import { promisify } from 'util'; // Pour usage futur
+
+/**
+ * Fenêtre principale de l'application
+ */
+let mainWindow: BrowserWindow | null = null;
+
+/**
+ * Crée la fenêtre principale de l'application avec configuration sécurisée
+ */
+function createMainWindow(): void {
+  // Configuration sécurisée de la fenêtre principale
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    minWidth: 800,
+    minHeight: 600,
+    title: 'Comparateur de Dossiers',
+    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
+    icon: getAppIcon(), // Icône adaptée à la plateforme
+    webPreferences: {
+      // Configuration de sécurité renforcée
+      nodeIntegration: false,              // Désactive Node.js dans le renderer
+      contextIsolation: true,             // Isolation complète du contexte
+      allowRunningInsecureContent: false, // Empêche le contenu non sécurisé
+      webSecurity: true,                  // Active la sécurité web
+      preload: path.join(__dirname, '../preload/preload.js'), // Script preload
+      sandbox: process.env.NODE_ENV === 'production' // Sandbox en production
+    },
+    show: false // Affichage différé après le chargement
+  });
+
+  // Chemin vers le fichier HTML principal
+  const rendererPath = path.join(__dirname, '../renderer/index.html');
+  
+  // Chargement de l'interface utilisateur
+  mainWindow.loadFile(rendererPath);
+
+  // Affichage sécurisé de la fenêtre
+  mainWindow.once('ready-to-show', () => {
+    if (!mainWindow) return;
+    
+    mainWindow.show();
+    
+    // Outils de développement en mode dev
+    if (isDevelopmentMode()) {
+      mainWindow.webContents.openDevTools({ mode: 'detach' });
+    }
+  });
+
+  // Gestion de la fermeture
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
+  // Sécurité : empêcher la navigation externe
+  mainWindow.webContents.on('will-navigate', (event, navigationUrl) => {
+    const parsedUrl = new URL(navigationUrl);
+    
+    // Autoriser uniquement les protocoles file et data
+    if (!['file:', 'data:'].includes(parsedUrl.protocol)) {
+      event.preventDefault();
+      console.warn('🛡️ Navigation externe bloquée:', navigationUrl);
+    }
+  });
+
+  // Sécurité : empêcher l'ouverture de nouvelles fenêtres
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    // Ouvrir les liens externes dans le navigateur par défaut
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+}
+
+/**
+ * Obtient le chemin de l'icône adaptée à la plateforme
+ */
+function getAppIcon(): string | undefined {
+  const assetsPath = path.join(__dirname, '../../../assets');
+  
+  // Retourner l'icône selon la plateforme
+  switch (process.platform) {
+    case 'win32':
+      return path.join(assetsPath, 'icon.ico');
+    case 'darwin':
+      return path.join(assetsPath, 'icon.icns');
+    default:
+      return path.join(assetsPath, 'icon.png');
+  }
+}
+
+/**
+ * Vérifie si l'application est en mode développement
+ */
+function isDevelopmentMode(): boolean {
+  return process.env.NODE_ENV === 'development';
+}
+
+/**
+ * Configuration du menu de l'application
+ */
+function createApplicationMenu(): void {
+  const isMac = process.platform === 'darwin';
+
+  const template: Electron.MenuItemConstructorOptions[] = [
+    // Menu Application (macOS uniquement)
+    ...(isMac ? [{
+      label: app.getName(),
+      submenu: [
+        { role: 'about' as const, label: 'À propos de ' + app.getName() },
+        { type: 'separator' as const },
+        { role: 'services' as const, label: 'Services' },
+        { type: 'separator' as const },
+        { role: 'hide' as const, label: 'Masquer ' + app.getName() },
+        { role: 'hideOthers' as const, label: 'Masquer les autres' },
+        { role: 'unhide' as const, label: 'Tout afficher' },
+        { type: 'separator' as const },
+        { role: 'quit' as const, label: 'Quitter ' + app.getName() }
+      ]
+    }] : []),
+
+    // Menu Fichier
+    {
+      label: 'Fichier',
+      submenu: [
+        {
+          label: 'Nouvelle comparaison',
+          accelerator: 'CmdOrCtrl+N',
+          click: async (): Promise<void> => {
+            // TODO: Implémenter nouvelle comparaison
+            if (mainWindow) {
+              mainWindow.webContents.send('menu:new-comparison');
+            }
+          }
+        },
+        { type: 'separator' },
+        isMac ? { role: 'close', label: 'Fermer' } : { role: 'quit', label: 'Quitter' }
+      ]
+    },
+
+    // Menu Édition
+    {
+      label: 'Édition',
+      submenu: [
+        { role: 'undo', label: 'Annuler' },
+        { role: 'redo', label: 'Rétablir' },
+        { type: 'separator' },
+        { role: 'cut', label: 'Couper' },
+        { role: 'copy', label: 'Copier' },
+        { role: 'paste', label: 'Coller' },
+        ...(isMac ? [
+          { role: 'pasteAndMatchStyle' as const, label: 'Coller et adapter le style' },
+          { role: 'delete' as const, label: 'Supprimer' },
+          { role: 'selectAll' as const, label: 'Tout sélectionner' }
+        ] : [
+          { role: 'delete' as const, label: 'Supprimer' },
+          { type: 'separator' as const },
+          { role: 'selectAll' as const, label: 'Tout sélectionner' }
+        ])
+      ]
+    },
+
+    // Menu Affichage
+    {
+      label: 'Affichage',
+      submenu: [
+        { role: 'reload', label: 'Actualiser' },
+        { role: 'forceReload', label: 'Actualiser (forcé)' },
+        { role: 'toggleDevTools', label: 'Outils de développement' },
+        { type: 'separator' },
+        { role: 'resetZoom', label: 'Taille normale' },
+        { role: 'zoomIn', label: 'Agrandir' },
+        { role: 'zoomOut', label: 'Réduire' },
+        { type: 'separator' },
+        { role: 'togglefullscreen', label: 'Plein écran' }
+      ]
+    },
+
+    // Menu Fenêtre
+    {
+      label: 'Fenêtre',
+      submenu: [
+        { role: 'minimize', label: 'Réduire' },
+        { role: 'close', label: 'Fermer' }
+      ]
+    },
+
+    // Menu Aide
+    {
+      label: 'Aide',
+      submenu: [
+        {
+          label: 'À propos',
+          click: async (): Promise<void> => {
+            await dialog.showMessageBox(mainWindow!, {
+              type: 'info',
+              title: 'À propos',
+              message: 'Comparateur de Dossiers',
+              detail: `Version: ${app.getVersion()}\nElectron: ${process.versions.electron}\nNode.js: ${process.versions.node}`
+            });
+          }
+        }
+      ]
+    }
+  ];
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
+/**
+ * Configuration des handlers IPC sécurisés
+ */
+function setupIpcHandlers(): void {
+  // === Handlers d'application ===
+  
+  ipcMain.handle('app:close', async (): Promise<void> => {
+    app.quit();
+  });
+
+  // === Handlers de fenêtre ===
+  
+  ipcMain.handle('window:minimize', async (): Promise<void> => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.minimize();
+    }
+  });
+
+  ipcMain.handle('window:maximize', async (): Promise<void> => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize();
+      } else {
+        mainWindow.maximize();
+      }
+    }
+  });
+
+  ipcMain.handle('window:restore', async (): Promise<void> => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+    }
+  });
+
+  ipcMain.handle('window:is-maximized', async (): Promise<boolean> => {
+    return mainWindow ? mainWindow.isMaximized() : false;
+  });
+
+  // === Handlers de dialogue ===
+  
+  ipcMain.handle('dialog:select-folder', async (): Promise<string | null> => {
+    if (!mainWindow) return null;
+    
+    const result = await dialog.showOpenDialog(mainWindow, {
+      title: 'Sélectionner un dossier',
+      buttonLabel: 'Sélectionner',
+      properties: ['openDirectory']
+    });
+    
+    return result.canceled ? null : result.filePaths[0];
+  });
+
+  ipcMain.handle('dialog:error', async (
+    _event, 
+    { title, message }: { title: string; message: string }
+  ): Promise<void> => {
+    if (!mainWindow) return;
+    
+    await dialog.showErrorBox(title, message);
+  });
+
+  ipcMain.handle('dialog:info', async (
+    _event, 
+    { title, message }: { title: string; message: string }
+  ): Promise<void> => {
+    if (!mainWindow) return;
+    
+    await dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title,
+      message,
+      buttons: ['OK']
+    });
+  });
+
+  ipcMain.handle('dialog:warning', async (
+    _event, 
+    { title, message }: { title: string; message: string }
+  ): Promise<void> => {
+    if (!mainWindow) return;
+    
+    await dialog.showMessageBox(mainWindow, {
+      type: 'warning',
+      title,
+      message,
+      buttons: ['OK']
+    });
+  });
+
+  // === Handlers du système de fichiers ===
+  
+  ipcMain.handle('fs:read-directory', async (_event, dirPath: string): Promise<string[]> => {
+    try {
+      const entries = await fs.readdir(dirPath, { withFileTypes: true });
+      return entries.map(entry => entry.name);
+    } catch (error) {
+      console.error('Erreur lors de la lecture du dossier:', error);
+      throw error;
+    }
+  });
+
+  ipcMain.handle('fs:get-file-stats', async (_event, filePath: string) => {
+    try {
+      const stats = await fs.stat(filePath);
+      return {
+        path: filePath,
+        name: path.basename(filePath),
+        size: stats.size,
+        isDirectory: stats.isDirectory(),
+        isFile: stats.isFile(),
+        birthtime: stats.birthtime,
+        mtime: stats.mtime,
+        atime: stats.atime
+      };
+    } catch (error) {
+      console.error('Erreur lors de la lecture des statistiques:', error);
+      throw error;
+    }
+  });
+
+  // === Handlers de notifications ===
+  
+  ipcMain.handle('notification:show', async (
+    _event, 
+    { title, body, icon }: { title: string; body: string; icon?: string }
+  ): Promise<void> => {
+    if (Notification.isSupported()) {
+      new Notification({
+        title,
+        body,
+        icon: icon || getAppIcon()
+      }).show();
+    }
+  });
+
+  // === Handlers de préférences ===
+  
+  ipcMain.handle('preferences:get-theme', async (): Promise<string> => {
+    return nativeTheme.shouldUseDarkColors ? 'dark' : 'light';
+  });
+
+  ipcMain.handle('preferences:set-theme', async (_event, theme: string): Promise<void> => {
+    nativeTheme.themeSource = theme as any;
+  });
+
+  // === Handlers de développement ===
+  
+  if (isDevelopmentMode()) {
+    ipcMain.handle('dev:open-devtools', async (): Promise<void> => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.openDevTools();
+      }
+    });
+
+    ipcMain.handle('dev:reload', async (): Promise<void> => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.reload();
+      }
+    });
+
+    ipcMain.handle('dev:clear-cache', async (): Promise<void> => {
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        await mainWindow.webContents.session.clearCache();
+      }
+    });
+  }
+}
+
+/**
+ * Configuration de la sécurité avancée
+ */
+function setupSecurityHandlers(): void {
+  // Empêcher la création de nouvelles fenêtres
+  app.on('web-contents-created', (_event, contents) => {
+    // Sécurité : contrôler la navigation
+    contents.on('will-navigate', (navigationEvent, navigationUrl) => {
+      const parsedUrl = new URL(navigationUrl);
+      
+      if (!['file:', 'data:'].includes(parsedUrl.protocol)) {
+        navigationEvent.preventDefault();
+        console.warn('🛡️ Navigation bloquée:', navigationUrl);
+      }
+    });
+
+    // Sécurité : empêcher l'ouverture de nouvelles fenêtres
+    contents.setWindowOpenHandler(({ url }) => {
+      console.log('🛡️ Ouverture de fenêtre bloquée:', url);
+      return { action: 'deny' };
+    });
+  });
+
+  // Protection contre les fuites de données
+  app.on('certificate-error', (event, _webContents, url, error, _certificate, callback) => {
+    // En production, toujours rejeter les certificats invalides
+    if (process.env.NODE_ENV === 'production') {
+      event.preventDefault();
+      callback(false);
+    } else {
+      // En développement, logger l'erreur
+      console.warn('⚠️ Erreur de certificat:', url, error);
+      callback(false);
+    }
+  });
+}
+
+// ===== ÉVÉNEMENTS DU CYCLE DE VIE =====
+
+/**
+ * Initialisation de l'application
+ */
+app.whenReady().then(async () => {
+  console.log('🚀 Application Electron initialisée');
+  
+  // Configuration des handlers
+  setupIpcHandlers();
+  setupSecurityHandlers();
+  
+  // Création de l'interface
+  createMainWindow();
+  createApplicationMenu();
+
+  // Gestion macOS : recréer la fenêtre si activée sans fenêtre ouverte
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createMainWindow();
+    }
+  });
+});
+
+/**
+ * Fermeture de toutes les fenêtres
+ */
+app.on('window-all-closed', () => {
+  // Sur macOS, les applications restent actives même sans fenêtre
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+/**
+ * L'application va quitter
+ */
+app.on('before-quit', () => {
+  console.log('🛑 Arrêt de l\'application - Nettoyage en cours...');
+  // Nettoyage et sauvegarde si nécessaire
+});
+
+/**
+ * Sécurité avancée
+ */
+app.on('web-contents-created', (_event, contents) => {
+  // Log des créations de contenu web pour le debug
+  if (isDevelopmentMode()) {
+    console.log('🌐 Nouveau contenu web créé:', contents.getURL());
+  }
+});
+
+// Gestion des erreurs globales
+process.on('uncaughtException', (error: Error) => {
+  console.error('🚨 Erreur non gérée:', error);
+  
+  // En production, quitter proprement
+  if (process.env.NODE_ENV === 'production') {
+    app.quit();
+  }
+});
+
+process.on('unhandledRejection', (reason: unknown) => {
+  console.error('🚨 Promise rejetée:', reason);
+});
