@@ -274,11 +274,17 @@ module.exports = {
 
 ### Validation avant ajout/modification
 Avant d'ajouter une fonctionnalité, vérifier:
-1. **Emplacement**: dans quel module/feature cette fonctionnalité appartient-elle ?
-2. **Dépendances**: quels sont les imports nécessaires ? Sont-ils autorisés ?
-3. **Interface**: comment cette fonctionnalité expose-t-elle son API ?
-4. **Tests**: comment tester cette fonctionnalité de manière isolée ?
-5. **Documentation**: quel impact sur le README et la doc d'architecture ?
+1. **Existence préalable**: TOUJOURS demander à Cursor de vérifier si cette fonctionnalité existe déjà dans le codebase
+   - Question recommandée: *"Avant de développer [FONCTIONNALITÉ], peux-tu vérifier dans tout le codebase si cette fonctionnalité ou une partie similaire existe déjà ? Si oui, indique-moi où elle se trouve et si je peux la réutiliser/étendre plutôt que la recréer."*
+   - Rechercher dans tous les fichiers : composants, services, hooks, types, utils
+   - Vérifier les fonctionnalités partielles qui pourraient être étendues
+   - Éviter la duplication de code et les reimplementations inutiles
+2. **Emplacement**: dans quel module/feature cette fonctionnalité appartient-elle ?
+3. **Dépendances**: quels sont les imports nécessaires ? Sont-ils autorisés ?
+4. **Interface**: comment cette fonctionnalité expose-t-elle son API ?
+5. **Tests**: comment tester cette fonctionnalité de manière isolée ?
+6. **Documentation**: quel impact sur le README et la doc d'architecture ?
+7. **Gitignore**: faut-il ajouter des exclusions dans le .gitignore ?
 
 ### Anti-patterns à éviter
 - **God objects**: fichiers > 200 lignes (sauf cas exceptionnels documentés).
