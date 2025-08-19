@@ -1,13 +1,15 @@
 # Comparateur de Dossiers
 
-Application Electron moderne pour comparer le contenu de deux dossiers et identifier les différences de manière intuitive.
+Application Electron moderne avec React, TypeScript et Tailwind CSS pour comparer le contenu de deux dossiers et identifier les différences de manière intuitive.
 
 ## 🚀 Fonctionnalités
 
-- **Interface graphique moderne** : Fenêtre Electron élégante avec design adaptatif
+- **Interface React moderne** : Composants React avec design system Tailwind CSS
+- **TypeScript intégral** : Typage strict pour une meilleure robustesse
 - **Architecture sécurisée** : Isolation du contexte et communication IPC sécurisée
+- **Build moderne** : Webpack avec hot reload et optimisations
 - **Cross-platform** : Compatible Windows, macOS et Linux
-- **Mode développement** : DevTools intégrés pour le développement
+- **Mode développement** : DevTools intégrés et rechargement automatique
 
 ### Fonctionnalités à venir
 - Comparaison de dossiers avec algorithme de détection des différences
@@ -19,6 +21,7 @@ Application Electron moderne pour comparer le contenu de deux dossiers et identi
 
 - **Node.js** ≥ 20.0.0
 - **npm** ≥ 10.0.0
+- **TypeScript** (installé automatiquement)
 - **Système d'exploitation** : Windows 10/11, macOS 10.15+, ou Linux Ubuntu 18.04+
 
 ## 🛠 Installation
@@ -33,6 +36,13 @@ Application Electron moderne pour comparer le contenu de deux dossiers et identi
    ```bash
    npm install
    ```
+   
+   Installe automatiquement :
+   - React & React DOM
+   - TypeScript & types associés  
+   - Tailwind CSS & PostCSS
+   - Webpack & loaders
+   - Electron & outils de build
 
 ## 🎯 Usage
 
@@ -50,6 +60,18 @@ npm run dev
 npm start
 ```
 
+### Build manuel
+```bash
+# Build complet (TypeScript + React + Webpack)
+npm run build
+
+# Build avec surveillance des changements
+npm run build:watch
+
+# Nettoyage des fichiers générés
+npm run clean
+```
+
 ### Construction de l'application
 ```bash
 # Construction pour la plateforme actuelle
@@ -63,24 +85,48 @@ npm run dist
 
 ```
 src/
-├── electron/           # Code Electron
-│   ├── main/          # Processus principal
-│   │   └── main.js    # Point d'entrée Electron
-│   ├── preload/       # Scripts preload sécurisés
-│   │   └── preload.js # API sécurisée pour le renderer
-│   └── renderer/      # Interface utilisateur
-│       └── index.html # Fenêtre principale
-├── components/        # Composants React (à venir)
-├── features/          # Modules métier (à venir)
-├── shared/           # Code partagé (à venir)
-└── services/         # Services globaux (à venir)
+├── electron/              # Code Electron TypeScript
+│   ├── main/             # Processus principal
+│   │   └── main.ts       # Point d'entrée Electron (TypeScript)
+│   ├── preload/          # Scripts preload sécurisés  
+│   │   └── preload.ts    # API typée pour le renderer
+│   └── renderer/         # Interface utilisateur
+│       └── index.html    # Shell HTML pour React
+├── components/           # Composants React + Tailwind
+│   ├── ui/              # Composants UI génériques
+│   └── layout/          # Composants de mise en page
+├── features/            # Modules métier React
+│   └── folder-comparison/ # Feature comparaison
+│       ├── components/   # Composants spécifiques
+│       ├── hooks/       # Hooks React personnalisés
+│       └── types/       # Types TypeScript
+├── shared/              # Code partagé TypeScript
+│   ├── types/           # Types globaux (electron.ts, etc.)
+│   ├── utils/           # Utilitaires TypeScript
+│   ├── hooks/           # Hooks React partagés
+│   └── constants/       # Constantes typées
+├── styles/              # Configuration Tailwind
+│   └── globals.css      # Styles Tailwind + CSS custom
+├── App.tsx              # Composant React racine
+└── index.tsx            # Point d'entrée React
 ```
 
 ## ⚡ Scripts disponibles
 
-- `npm start` - Lance l'application en mode production
-- `npm run dev` - Lance en mode développement (macOS/Linux)
-- `npm run dev-win` - Lance en mode développement (Windows)
+### Exécution
+- `npm start` - Build + lance l'application en mode production
+- `npm run dev` - Lance en mode développement avec hot reload (macOS/Linux)
+- `npm run dev-win` - Lance en mode développement avec hot reload (Windows)
+
+### Build et développement
+- `npm run build` - Build complet (main + preload + renderer)
+- `npm run build:main` - Build du processus principal TypeScript
+- `npm run build:preload` - Build du script preload TypeScript  
+- `npm run build:renderer` - Build React + Webpack + Tailwind
+- `npm run build:watch` - Build avec surveillance des changements
+- `npm run clean` - Supprime le dossier dist/
+
+### Distribution
 - `npm run pack` - Construit l'application (non distribuable)
 - `npm run dist` - Crée les installateurs pour la distribution
 - `npm test` - Lance les tests (à implémenter)
@@ -91,17 +137,29 @@ src/
 - `NODE_ENV` : Mode d'exécution (`development` ou `production`)
 
 ### Configuration Electron
-- **Sécurité** : `nodeIntegration: false`, `contextIsolation: true`
+- **Sécurité** : `nodeIntegration: false`, `contextIsolation: true`, `sandbox: true` (production)
 - **DevTools** : Ouverture automatique en mode développement
 - **Fenêtre** : 1200x800px (minimum 800x600px)
+
+### Configuration TypeScript
+- **Target** : ES2020 avec support React JSX
+- **Paths** : Alias `@/` pour imports absolus
+- **Strict mode** : Activé pour une sécurité maximale
+
+### Configuration Tailwind CSS
+- **Content** : Scan automatique des fichiers React/TypeScript
+- **Thème étendu** : Couleurs custom et polices système
+- **Plugins** : Autoprefixer pour compatibilité navigateurs
 
 ## 🏗 Architecture technique
 
 ### Stack technologique
-- **Electron** ^37.3.1 - Framework desktop
-- **Node.js** - Runtime JavaScript
-- **HTML5/CSS3** - Interface utilisateur
-- **JavaScript ES6+** - Logique applicative
+- **Electron** ^37.3.1 - Framework desktop multiplateforme
+- **React** ^19.1.1 - Librairie UI avec hooks modernes
+- **TypeScript** ^5.9.2 - Langage typé pour robustesse
+- **Tailwind CSS** ^4.1.12 - Framework CSS utilitaire
+- **Webpack** ^5.101.3 - Bundler avec optimisations
+- **PostCSS** - Traitement CSS avec Autoprefixer
 
 ### Principes architecturaux
 - **Modularité** : Séparation claire des responsabilités
@@ -111,7 +169,12 @@ src/
 
 ## 🚧 Roadmap
 
-### Version 1.1.0
+### Version 1.1.0 ✅
+- [x] Architecture React + TypeScript + Tailwind CSS
+- [x] Migration complète vers TypeScript
+- [x] Interface React moderne avec composants
+- [x] Build system Webpack optimisé
+- [x] Communication IPC sécurisée et typée
 - [ ] Interface de sélection de dossiers
 - [ ] Algorithme de comparaison basique
 - [ ] Affichage des résultats
@@ -130,7 +193,7 @@ src/
 
 1. Fork le projet
 2. Créer une branche feature (`git checkout -b feature/nouvelle-fonctionnalite`)
-3. Commit les changes (`git commit -m '[v1.1.0] feat: ajout nouvelle fonctionnalité'`)
+3. Commit les changes (`git commit -m '[v1.2.0] feat: ajout nouvelle fonctionnalité'`)
 4. Push vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. Ouvrir une Pull Request
 
