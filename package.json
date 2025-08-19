@@ -1,6 +1,6 @@
 {
   "name": "comparateur-de-dossiers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Application Electron pour comparer le contenu de dossiers",
   "main": "dist/main/main.js",
   "scripts": {
