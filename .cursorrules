@@ -109,11 +109,6 @@ npm install -D typescript@latest @types/react@latest @types/react-dom@latest
 npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
 ```
 
-## Installation de React (si non créé via template)
-```bash
-npm install react@latest react-dom@latest
-```
-
 ## Installation de Tailwind CSS
 ```bash
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
@@ -256,30 +251,7 @@ npm install -D electron@latest
 - **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
 - **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
 
-### Structure de dossiers obligatoire
-```
-src/
-├── components/          # Composants React réutilisables
-│   ├── common/         # Composants génériques (Button, Modal, etc.)
-│   └── feature/        # Composants spécifiques à une fonctionnalité
-├── features/           # Modules métier (un dossier par fonctionnalité)
-│   └── [feature-name]/
-│       ├── components/ # Composants spécifiques à cette feature
-│       ├── hooks/      # Hooks personnalisés
-│       ├── services/   # Logique métier et API calls
-│       ├── types/      # Types TypeScript
-│       └── index.ts    # Point d'entrée public de la feature
-├── shared/             # Code partagé entre features
-│   ├── types/          # Types globaux
-│   ├── utils/          # Utilitaires purs (pas de side effects)
-│   ├── constants/      # Constantes globales
-│   └── hooks/          # Hooks partagés
-├── services/           # Services globaux (API client, storage, etc.)
-└── electron/           # Code spécifique Electron
-    ├── main/           # Process principal
-    ├── preload/        # Scripts preload
-    └── renderer/       # Code renderer
-```
+### Structure de dossiers - Voir "Architecture modulaire obligatoire" ci-dessus
 
 ### Règles d'imports
 - **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
