@@ -236,6 +236,19 @@ Avant d'ajouter une fonctionnalité, vérifier:
 - Tenir à jour un fichier `CHANGELOG.md` avec les versions et changements
 - Format: date, version, type de changements (Added, Changed, Fixed, Removed)
 
+### Gestion du .gitignore
+- **Vérification obligatoire** : À chaque ajout ou modification de fonctionnalité, vérifier si des éléments doivent être ajoutés au `.gitignore`
+- **Types de fichiers à surveiller** :
+  - Nouveaux outils de build (webpack cache, rollup cache, etc.)
+  - Fichiers de configuration locaux (.env.local, settings.local.json)
+  - Dossiers de sortie (build/, dist/, out/, coverage/)
+  - Fichiers générés automatiquement (*.generated.*, auto-imports.d.ts)
+  - Caches IDE ou d'outils (.cache/, .temp/, .tmp/)
+  - Fichiers utilisateur spécifiques (user-data/, preferences/)
+  - Certificats et clés privées (*.key, *.pem, *.p12)
+- **Règle générale** : Tout ce qui est généré automatiquement, spécifique à l'utilisateur ou sensible doit être exclu
+- **Documentation** : Commenter dans le .gitignore les exclusions non évidentes avec leur raison
+
 ## Documentation
 - Mettre à jour systématiquement le `README` à chaque modification de l'application (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
 - Si un `CHANGELOG.md` existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
