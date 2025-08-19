@@ -204,3 +204,6 @@ userdata/
 # Miscellaneous
 *.tgz
 *.tar.gz
+
+# Claude Code configuration (user-specific)
+.claude/
