@@ -1,0 +1,243 @@
+# Règles Cursor - Comparateur de dossiers
+
+## Description du projet
+- **Objectif**: Application Electron pour comparer le contenu de deux dossiers et identifier les différences.
+- **Fonctionnalités principales**: 
+  - Interface graphique pour sélectionner les dossiers à comparer
+  - Algorithme de comparaison (fichiers présents/absents, tailles, dates de modification)
+  - Affichage des résultats avec différences mises en évidence
+  - Export des résultats (JSON, CSV, rapport)
+- **Public cible**: Utilisateurs Windows ayant besoin de synchroniser ou vérifier des dossiers
+- **Stack technique**: Electron + React + TypeScript + Tailwind CSS
+
+# Outils & versions
+
+## Politique de versions
+- Utiliser les dernières versions stables disponibles (tags `@latest`).
+- Ne figer des versions que si une régression connue l’impose (documenter la raison).
+- Environnement recommandé: Node.js ≥ 20, npm ≥ 10 (Windows PowerShell).
+
+## Liens officiels
+- React: `https://react.dev`
+- Tailwind CSS: `https://tailwindcss.com`
+- Electron: `https://www.electronjs.org`
+
+## Initialisation (React + TypeScript)
+```bash
+npm init -y
+npm install react@latest react-dom@latest
+npm install -D typescript@latest @types/react@latest @types/react-dom@latest
+npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
+```
+
+## Installation de React (si non créé via template)
+```bash
+npm install react@latest react-dom@latest
+```
+
+## Installation de Tailwind CSS
+```bash
+npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+npx tailwindcss init -p
+```
+
+## Installation d’Electron
+```bash
+npm install -D electron@latest
+```
+
+## Scripts recommandés (indicatif)
+- `start`: lance Electron avec le process `main`.
+- `dev`: lance Electron en dev avec relance au changement (ex: `electronmon`/`nodemon`).
+- `build`: construit l'app (ex: via `electron-builder` ou `electron-forge`).
+
+## En-têtes de fichiers (pour Cursor AI)
+
+### Fichiers TypeScript/JavaScript
+```typescript
+/**
+ * @fileoverview [Description courte du rôle du fichier]
+ * @description [Description détaillée de la fonctionnalité, responsabilités, interactions]
+ * @author [Nom ou équipe]
+ * @created [Date de création]
+ * @lastModified [Date de dernière modification]
+ * @dependencies [Liste des dépendances externes et internes critiques]
+ * @exports [Ce que le fichier exporte: classes, fonctions, types, interfaces]
+ * @imports [Imports principaux et leur rôle]
+ * @usage [Exemples d'usage ou liens vers la documentation]
+ * @related [Fichiers liés: composants parents/enfants, services, utils]
+ * @notes [Notes importantes: limitations, TODOs, considérations de performance]
+ */
+```
+
+### Fichiers React (composants)
+```typescript
+/**
+ * @fileoverview [Nom du composant et son rôle principal]
+ * @description [Fonctionnalité du composant, props attendues, comportement]
+ * @props [Interface des props avec types et descriptions]
+ * @state [État local géré par le composant]
+ * @events [Événements émis (onClick, onChange, etc.)]
+ * @dependencies [Hooks utilisés, librairies externes]
+ * @parent [Composant parent qui utilise ce composant]
+ * @children [Composants enfants rendus par ce composant]
+ * @styling [Classes Tailwind, CSS modules, ou styling utilisé]
+ * @accessibility [Attributs ARIA, navigation clavier, etc.]
+ * @performance [Optimisations: memo, useMemo, useCallback]
+ * @testing [Tests unitaires associés, cas de test principaux]
+ */
+```
+
+### Fichiers de configuration
+```javascript
+/**
+ * @fileoverview [Type de configuration: webpack, tailwind, electron, etc.]
+ * @description [Objectif de cette configuration, ce qu'elle contrôle]
+ * @environment [Environnement: dev, prod, test]
+ * @dependencies [Outils qui utilisent cette config]
+ * @customization [Options personnalisées et leur raison]
+ * @validation [Règles de validation ou schémas]
+ * @related [Autres fichiers de config liés]
+ */
+```
+
+### Fichiers Electron (main/preload)
+```javascript
+/**
+ * @fileoverview [Process: main, renderer, ou preload]
+ * @description [Rôle dans l'architecture Electron, responsabilités]
+ * @security [Permissions, contextIsolation, nodeIntegration]
+ * @ipc [Channels IPC exposés ou consommés]
+ * @apis [APIs système utilisées: fs, path, etc.]
+ * @lifecycle [Événements de cycle de vie gérés]
+ * @dependencies [Modules Electron et Node.js utilisés]
+ * @related [Fichiers renderer ou main associés]
+ */
+```
+
+### Fichiers de types/interfaces
+```typescript
+/**
+ * @fileoverview [Domaine des types: API, UI, business logic]
+ * @description [Contexte d'utilisation de ces types/interfaces]
+ * @types [Liste des types principaux définis]
+ * @interfaces [Interfaces et leurs propriétés clés]
+ * @enums [Énumérations et leurs valeurs]
+ * @unions [Types union et leurs cas d'usage]
+ * @validation [Règles de validation ou contraintes]
+ * @usage [Fichiers qui utilisent ces types]
+ * @related [Types similaires dans d'autres fichiers]
+ */
+```
+
+### Règles générales pour les en-têtes
+- **Obligatoire**: `@fileoverview`, `@description`, `@dependencies`
+- **Recommandé**: `@exports`, `@related`, `@notes`
+- **Conditionnel**: autres tags selon le type de fichier
+- **Mise à jour**: modifier `@lastModified` à chaque changement significatif
+- **Liens**: utiliser des chemins relatifs pour `@related` et `@usage`
+
+## Architecture & modularité
+
+### Principes de base
+- **Une responsabilité par module**: chaque fichier/dossier a un rôle unique et bien défini.
+- **Couplage faible**: les modules communiquent via des interfaces claires, pas de dépendances directes.
+- **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
+- **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
+
+### Structure de dossiers obligatoire
+```
+src/
+├── components/          # Composants React réutilisables
+│   ├── common/         # Composants génériques (Button, Modal, etc.)
+│   └── feature/        # Composants spécifiques à une fonctionnalité
+├── features/           # Modules métier (un dossier par fonctionnalité)
+│   └── [feature-name]/
+│       ├── components/ # Composants spécifiques à cette feature
+│       ├── hooks/      # Hooks personnalisés
+│       ├── services/   # Logique métier et API calls
+│       ├── types/      # Types TypeScript
+│       └── index.ts    # Point d'entrée public de la feature
+├── shared/             # Code partagé entre features
+│   ├── types/          # Types globaux
+│   ├── utils/          # Utilitaires purs (pas de side effects)
+│   ├── constants/      # Constantes globales
+│   └── hooks/          # Hooks partagés
+├── services/           # Services globaux (API client, storage, etc.)
+└── electron/           # Code spécifique Electron
+    ├── main/           # Process principal
+    ├── preload/        # Scripts preload
+    └── renderer/       # Code renderer
+```
+
+### Règles d'imports
+- **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
+- **Imports absolus**: pour tout le reste, via alias (`@/features/`, `@/shared/`).
+- **Barrel exports**: chaque dossier expose son API via `index.ts`.
+- **Pas d'imports circulaires**: utiliser l'inversion de dépendance si nécessaire.
+
+### Isolation des features
+- Une feature ne doit **jamais** importer directement une autre feature.
+- Communication inter-features via des événements, context, ou services partagés.
+- Chaque feature doit pouvoir être supprimée sans casser le reste.
+
+### Règles de nommage modulaire
+- **Dossiers**: `kebab-case` (`user-management`, `file-comparison`).
+- **Fichiers**: `PascalCase` pour composants, `camelCase` pour le reste.
+- **Exports**: noms explicites, pas de `export default` sauf pour les composants React.
+
+### Séparation des préoccupations
+- **UI**: uniquement dans les composants, pas de logique métier.
+- **Business logic**: dans les services, pas dans les composants.
+- **State management**: hooks personnalisés ou context, isolé par feature.
+- **Side effects**: dans les services ou hooks, pas directement dans les composants.
+
+### Validation avant ajout/modification
+Avant d'ajouter une fonctionnalité, vérifier:
+1. **Emplacement**: dans quel module/feature cette fonctionnalité appartient-elle ?
+2. **Dépendances**: quels sont les imports nécessaires ? Sont-ils autorisés ?
+3. **Interface**: comment cette fonctionnalité expose-t-elle son API ?
+4. **Tests**: comment tester cette fonctionnalité de manière isolée ?
+5. **Documentation**: quel impact sur le README et la doc d'architecture ?
+
+### Anti-patterns à éviter
+- **God objects**: fichiers > 200 lignes (sauf cas exceptionnels documentés).
+- **Couplage fort**: imports directs entre features.
+- **Logique dans les composants**: calculs complexes, appels API directs.
+- **Barrel exports trop larges**: exposer uniquement l'API publique.
+- **Mixage des responsabilités**: UI + logique métier dans le même fichier.
+
+## Git & versioning
+
+### Conventions de commits
+- **Format obligatoire**: `[v1.2.3] type: description courte`
+- **Types autorisés**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+- **Exemples**:
+  - `[v1.0.1] feat: ajout comparaison de dossiers`
+  - `[v1.0.2] fix: correction bug affichage différences`
+  - `[v1.1.0] feat: interface utilisateur Electron`
+
+### Versioning sémantique (SemVer)
+- **MAJOR** (v2.0.0): changements incompatibles
+- **MINOR** (v1.1.0): nouvelles fonctionnalités compatibles
+- **PATCH** (v1.0.1): corrections de bugs
+
+### Branches et workflow
+- **main**: version stable de production
+- **develop**: intégration des nouvelles fonctionnalités
+- **feature/nom-fonctionnalité**: développement de nouvelles features
+- **hotfix/v1.0.1**: corrections urgentes en production
+
+### Tags Git
+- Créer un tag à chaque version: `git tag v1.2.3`
+- Pousser les tags: `git push origin --tags`
+
+### Changelog
+- Tenir à jour un fichier `CHANGELOG.md` avec les versions et changements
+- Format: date, version, type de changements (Added, Changed, Fixed, Removed)
+
+## Documentation
+- Mettre à jour systématiquement le `README` à chaque modification de l'application (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
+- Si un `CHANGELOG.md` existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
+
+

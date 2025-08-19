@@ -1,0 +1,69 @@
+# Dépendances
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Builds et distributions
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Cache et temporaires
+.cache/
+.temp/
+.tmp/
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Environnement et secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Electron spécifique
+release/
+app/dist/
+app/build/
+
+# IDE et éditeurs
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Tests et couverture
+coverage/
+.nyc_output/
+.coverage/
+
+# Assets volumineux (optionnel)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.iso
+*.dmg
+*.zip
+*.tar.gz
+*.rar
+
+# Fichiers de lock (garder package-lock.json mais ignorer les autres)
+yarn.lock
+pnpm-lock.yaml
