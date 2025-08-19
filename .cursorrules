@@ -338,3 +338,23 @@ Avant d'ajouter une fonctionnalité, vérifier:
 ## Documentation
 - Mettre à jour systématiquement le `README` à chaque modification de l'application (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
 - Si un `CHANGELOG.md` existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
+
+## Maintenance du .cursorrules
+
+### Vérification avant mise à jour du .cursorrules
+Avant de modifier ce fichier .cursorrules, TOUJOURS vérifier :
+- **Question recommandée**: *"Avant de mettre à jour le fichier .cursorrules, peux-tu vérifier qu'il n'y a aucune répétition inutile ou redondance entre le contenu que je veux ajouter et l'existant ? Si tu trouves des doublons, des sections qui se chevauchent ou une organisation non optimale, propose-moi une restructuration pour éviter les répétitions et améliorer la lisibilité."*
+
+### Principes de maintenance
+- **Pas de duplication** : Chaque règle/information doit apparaître une seule fois
+- **Organisation logique** : Regrouper les règles par thème cohérent
+- **Sections claires** : Chaque section doit avoir un rôle unique et bien défini
+- **Références croisées** : Utiliser des renvois plutôt que de répéter l'information
+- **Lisibilité optimale** : Structure facile à naviguer et à comprendre
+
+### Validation post-modification
+Après chaque mise à jour du .cursorrules :
+1. Vérifier qu'aucune information n'est dupliquée
+2. S'assurer que l'organisation reste logique
+3. Contrôler que la navigation est fluide
+4. Valider que chaque section a un objectif distinct
