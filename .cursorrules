@@ -1,5 +1,18 @@
 # Règles Cursor - Comparateur de dossiers
 
+## ⚠️ RÈGLE CRITIQUE - PAS DE SURENGINEERING
+**QUAND L'UTILISATEUR DEMANDE QUELQUE CHOSE DANS LE TCHAT :**
+- ✅ **FAIRE EXACTEMENT** ce qui est demandé, rien de plus
+- ❌ **NE PAS AJOUTER** de fonctionnalités non demandées
+- ❌ **NE PAS CRÉER** d'interface complexe si c'est pas demandé
+- ❌ **NE PAS FAIRE** de "améliorations" non sollicitées
+- ✅ **RESTER SIMPLE** et répondre précisément à la demande
+- ✅ **DEMANDER** si l'utilisateur veut plus avant d'ajouter
+
+**Exemple :**
+- Demande: "Un bouton au centre" → Réponse: UN bouton au centre, point final
+- Demande: "Changer la couleur" → Réponse: Changer JUSTE la couleur demandée
+
 ## Description du projet
 - **Objectif**: Application Electron pour comparer le contenu de deux dossiers et identifier les différences.
 - **Fonctionnalités principales**: 
@@ -250,11 +263,30 @@ module.exports = {
 - **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
 - **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
 
-### Règles d'imports
+### Règles d'imports et syntaxe ES6
+- **Syntaxe ES6 obligatoire**: TOUJOURS utiliser `import` (ES6) au lieu de `require` (CommonJS), sauf cas exceptionnels documentés
 - **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
 - **Imports absolus**: pour tout le reste, via alias (`@/features/`, `@/shared/`).
 - **Barrel exports**: chaque dossier expose son API via `index.ts`.
 - **Pas d'imports circulaires**: utiliser l'inversion de dépendance si nécessaire.
+
+**Exemples corrects :**
+```typescript
+// ✅ BON - Import ES6
+import React from 'react';
+import { app } from 'electron';
+import path from 'path';
+
+// ❌ ÉVITER - Require CommonJS (sauf exception)
+const React = require('react');
+const { app } = require('electron');
+```
+
+**Configuration ES6 :**
+- **package.json** : `"type": "module"` pour le support ES modules
+- **webpack.config.js** : Utiliser `import` et `export default`
+- **postcss.config.js** : Utiliser `import` et `export default`
+- **TypeScript** : Configuration compatible ES6 modules
 
 ### Isolation des features
 - Une feature ne doit **jamais** importer directement une autre feature.

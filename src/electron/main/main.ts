@@ -47,7 +47,7 @@ function createMainWindow(): void {
       contextIsolation: true,             // Isolation complète du contexte
       allowRunningInsecureContent: false, // Empêche le contenu non sécurisé
       webSecurity: true,                  // Active la sécurité web
-      preload: path.join(__dirname, '../preload/preload.js'), // Script preload
+      preload: path.join(__dirname, '../preload/electron/preload/preload.js'), // Script preload
       sandbox: process.env.NODE_ENV === 'production' // Sandbox en production
     },
     show: false // Affichage différé après le chargement

@@ -10,6 +10,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -31,7 +32,7 @@ module.exports = (env, argv) => {
     mode: isProduction ? 'production' : 'development',
     
     // Source maps pour debug
-    devtool: isProduction ? 'source-map' : 'eval-source-map',
+    devtool: isProduction ? false : 'eval-source-map',
 
     // Configuration du serveur de développement
     devServer: {
@@ -61,6 +62,12 @@ module.exports = (env, argv) => {
 
     // Target pour Electron renderer
     target: 'electron-renderer',
+
+    // Node polyfills pour Electron
+    node: {
+      __dirname: false,
+      __filename: false
+    },
 
     // Configuration des loaders
     module: {
@@ -119,6 +126,18 @@ module.exports = (env, argv) => {
 
     // Plugins
     plugins: [
+      // Fix pour les globals Electron
+      new webpack.DefinePlugin({
+        'global': 'globalThis',
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      }),
+      
+      // Fix pour process et globals
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
+      }),
+      
       // Génération du fichier HTML
       new HtmlWebpackPlugin({
         template: './src/electron/renderer/index.html',
@@ -141,7 +160,7 @@ module.exports = (env, argv) => {
 
     // Optimisations
     optimization: {
-      splitChunks: isProduction ? {
+      splitChunks: {
         chunks: 'all',
         cacheGroups: {
           vendor: {
@@ -155,7 +174,7 @@ module.exports = (env, argv) => {
             chunks: 'all',
           }
         }
-      } : false,
+      },
       
       minimize: isProduction,
       
@@ -165,10 +184,10 @@ module.exports = (env, argv) => {
     },
 
     // Configuration du cache
-    cache: isDevelopment ? {
+    cache: {
       type: 'filesystem',
       cacheDirectory: path.resolve(__dirname, 'node_modules/.cache/webpack')
-    } : false,
+    },
 
     // Statistiques de build
     stats: {
