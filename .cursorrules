@@ -335,9 +335,24 @@ Avant d'ajouter une fonctionnalité, vérifier:
 - **Règle générale** : Tout ce qui est généré automatiquement, spécifique à l'utilisateur ou sensible doit être exclu
 - **Documentation** : Commenter dans le .gitignore les exclusions non évidentes avec leur raison
 
-## Documentation
-- Mettre à jour systématiquement le `README` à chaque modification de l'application (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
-- Si un `CHANGELOG.md` existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
+## Documentation OBLIGATOIRE
+- **README.md** : Mettre à jour SYSTÉMATIQUEMENT à chaque modification (fonctionnalités, scripts `npm`, installation, configuration, usage, prérequis, variables d'environnement).
+- **ARCHITECTURE.md** : Mettre à jour OBLIGATOIREMENT à chaque changement architectural (nouveau module, migration technologique, réorganisation, nouvelle intégration).
+- **CHANGELOG.md** : Si existe, y consigner un résumé des changements; sinon, ajouter une section "Changelog" au `README`.
+
+### ⚠️ RAPPEL CRITIQUE - Documentation
+**AVANT de terminer TOUTE tâche de développement :**
+1. ✅ Vérifier si le README.md nécessite une mise à jour
+2. ✅ Vérifier si ARCHITECTURE.md nécessite une mise à jour
+3. ✅ Mettre à jour immédiatement si nécessaire
+4. ✅ Committer la documentation en même temps que le code
+
+**Types de changements nécessitant une mise à jour doc :**
+- ✅ Nouveau script npm → README
+- ✅ Nouvelle technologie → README + ARCHITECTURE
+- ✅ Changement structure → ARCHITECTURE
+- ✅ Nouvelle dépendance → README
+- ✅ Migration majeure → README + ARCHITECTURE + version
 
 ## Maintenance du .cursorrules
 
