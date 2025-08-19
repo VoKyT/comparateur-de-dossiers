@@ -358,3 +358,24 @@ Après chaque mise à jour du .cursorrules :
 2. S'assurer que l'organisation reste logique
 3. Contrôler que la navigation est fluide
 4. Valider que chaque section a un objectif distinct
+
+## Maintenance de l'architecture
+
+### Fichier ARCHITECTURE.md obligatoire
+- **Lecture systématique** : Cursor doit TOUJOURS lire `ARCHITECTURE.md` pour comprendre le contexte actuel du projet
+- **Mise à jour obligatoire** : À chaque changement architectural significatif, mettre à jour `ARCHITECTURE.md`
+
+### Changements nécessitant une mise à jour
+- ✅ **Nouveau module/feature** : Ajout de dossier dans `src/features/`
+- ✅ **Nouveau composant principal** : Ajout dans `src/components/`
+- ✅ **Nouvelle intégration** : API, service, librairie majeure
+- ✅ **Réorganisation** : Changement de structure de dossiers
+- ✅ **Migration technologique** : Changement de stack (ex: ajout React)
+- ❌ **Fichiers mineurs** : Types, utils, petits correctifs
+
+### Format de mise à jour
+Lors de modifications importantes :
+1. **Lire d'abord** `ARCHITECTURE.md` pour comprendre l'état actuel
+2. **Documenter les changements** dans la section appropriée
+3. **Mettre à jour la version** en fin de fichier
+4. **Commit** avec message explicite sur l'évolution architecturale
