@@ -1,11 +1,11 @@
 /**
- * @fileoverview Configuration Webpack pour l'architecture Electron + React + TypeScript
+ * @fileoverview Configuration Webpack pour l'architecture Electron + React + JavaScript
  * @description Configuration build pour le renderer process avec React et Tailwind
  * @environment Build process avec support développement et production
- * @dependencies webpack, ts-loader, css-loader, postcss-loader, html-webpack-plugin
+ * @dependencies webpack, babel-loader, css-loader, postcss-loader, html-webpack-plugin
  * @customization Configuration optimisée pour Electron renderer
- * @validation Compatible avec TypeScript et Tailwind CSS
- * @related tsconfig.json, tailwind.config.js, postcss.config.js
+ * @validation Compatible avec JavaScript et Tailwind CSS
+ * @related babel.config.js, tailwind.config.js, postcss.config.js
  */
 
 const path = require('path');
@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
 
   return {
     // Point d'entrée de l'application React
-    entry: './src/index.tsx',
+    entry: './src/index.jsx',
     
     // Configuration de sortie
     output: {
@@ -50,7 +50,7 @@ module.exports = (env, argv) => {
 
     // Résolution des modules
     resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.jsx'],
+      extensions: ['.jsx', '.js'],
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '@/components': path.resolve(__dirname, 'src/components'),
@@ -72,15 +72,17 @@ module.exports = (env, argv) => {
     // Configuration des loaders
     module: {
       rules: [
-        // TypeScript et React
+        // JavaScript et React
         {
-          test: /\.tsx?$/,
+          test: /\.(js|jsx)$/,
           use: [
             {
-              loader: 'ts-loader',
+              loader: 'babel-loader',
               options: {
-                transpileOnly: isDevelopment, // Compilation plus rapide en dev
-                configFile: path.resolve(__dirname, 'tsconfig.json')
+                presets: [
+                  ['@babel/preset-env', { targets: { node: 'current' } }],
+                  ['@babel/preset-react', { runtime: 'automatic' }]
+                ]
               }
             }
           ],
