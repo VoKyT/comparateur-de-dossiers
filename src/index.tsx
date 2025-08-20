@@ -16,6 +16,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import './shared/types/electron';
 
 // Vérification de l'environnement Electron
 if (typeof window === 'undefined') {
@@ -25,6 +26,8 @@ if (typeof window === 'undefined') {
 // Vérification de l'API Electron
 if (!window.electronAPI) {
   console.warn('⚠️ API Electron non disponible. Fonctionnalités limitées.');
+} else {
+  console.log('✅ API Electron disponible');
 }
 
 /**

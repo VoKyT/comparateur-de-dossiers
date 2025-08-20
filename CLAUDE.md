@@ -13,6 +13,16 @@
 - Demande: "Un bouton au centre" → Réponse: UN bouton au centre, point final
 - Demande: "Changer la couleur" → Réponse: Changer JUSTE la couleur demandée
 
+## ⚠️ RÈGLE CLAUDE CODE - MODE THINKING OBLIGATOIRE
+**TOUJOURS UTILISER LE MODE "THINKING" :**
+- ✅ **ACTIVER** le mode thinking de Claude Code pour TOUTES les tâches
+- ✅ **RÉFLÉCHIR** avant d'agir, planifier les étapes
+- ✅ **ANALYSER** le contexte et les implications des actions
+- ✅ **VÉRIFIER** la cohérence avec les règles du projet
+- ❌ **JAMAIS** d'actions impulsives sans réflexion préalable
+
+**Objectif :** Garantir une réflexion structurée et éviter les erreurs ou oublis.
+
 ## Description du projet
 - **Objectif**: Application Electron pour comparer le contenu de deux dossiers et identifier les différences.
 - **Fonctionnalités principales**: 
@@ -173,6 +183,25 @@ module.exports = {
 - `start`: lance Electron avec le process `main`.
 - `dev`: lance Electron en dev avec relance au changement (ex: `electronmon`/`nodemon`).
 - `build`: construit l'app (ex: via `electron-builder` ou `electron-forge`).
+
+### Règles pour les commandes terminal
+- **JAMAIS de "&&" en début de commande** : Les commandes doivent être écrites individuellement, une par ligne
+- **Format obligatoire** : Chaque commande sur sa propre ligne dans les blocs bash
+- **Séparation claire** : Utiliser des commentaires ou des lignes vides entre groupes de commandes
+- **Exemple correct** :
+```bash
+# Installation des dépendances
+npm install react@latest
+npm install -D typescript@latest
+
+# Configuration initiale
+npx tsc --init
+```
+- **Exemple incorrect** :
+```bash
+&& npm install react@latest
+&& npm install -D typescript@latest
+```
 
 ## Règles de développement
 

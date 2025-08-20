@@ -34,10 +34,10 @@ let mainWindow: BrowserWindow | null = null;
 function createMainWindow(): void {
   // Configuration sécurisée de la fenêtre principale
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    minWidth: 800,
-    minHeight: 600,
+    width: 900,
+    height: 600,
+    minWidth: 600,
+    minHeight: 400,
     title: 'Comparateur de Dossiers',
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     icon: getAppIcon(), // Icône adaptée à la plateforme
@@ -47,10 +47,10 @@ function createMainWindow(): void {
       contextIsolation: true,             // Isolation complète du contexte
       allowRunningInsecureContent: false, // Empêche le contenu non sécurisé
       webSecurity: true,                  // Active la sécurité web
-      preload: path.join(__dirname, '../preload/preload.js'), // Script preload
+      preload: path.join(__dirname, 'preload.js'), // Script preload
       sandbox: process.env.NODE_ENV === 'production' // Sandbox en production
     },
-    show: false // Affichage différé après le chargement
+    show: true // Affichage direct
   });
 
   // Chemin vers le fichier HTML principal
@@ -73,7 +73,13 @@ function createMainWindow(): void {
 
   // Gestion de la fermeture
   mainWindow.on('closed', () => {
+    console.log('🪟 Fenêtre principale fermée');
     mainWindow = null;
+  });
+
+  // Détection si la fenêtre se ferme prématurément
+  mainWindow.on('close', (event) => {
+    console.log('⚠️ Tentative de fermeture de la fenêtre');
   });
 
   // Sécurité : empêcher la navigation externe
@@ -438,6 +444,39 @@ function setupSecurityHandlers(): void {
   });
 }
 
+// ===== GESTION D'INSTANCE UNIQUE =====
+
+/**
+ * Vérification et gestion d'instance unique
+ * Ferme les instances existantes si l'application est déjà ouverte
+ */
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+  console.log('🔒 Instance déjà en cours d\'exécution - Fermeture de cette instance');
+  app.quit();
+} else {
+  // Gestion du second-instance (quand on essaie de lancer une autre instance)
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    console.log('🔄 Tentative de lancement d\'une seconde instance détectée');
+    
+    // Si une fenêtre existe déjà, la ramener au premier plan
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+      mainWindow.focus();
+      mainWindow.show();
+      
+      console.log('👆 Fenêtre existante ramenée au premier plan');
+    } else {
+      // Si aucune fenêtre n'existe, en créer une nouvelle
+      console.log('🆕 Création d\'une nouvelle fenêtre principale');
+      createMainWindow();
+    }
+  });
+}
+
 // ===== ÉVÉNEMENTS DU CYCLE DE VIE =====
 
 /**
@@ -466,8 +505,10 @@ app.whenReady().then(async () => {
  * Fermeture de toutes les fenêtres
  */
 app.on('window-all-closed', () => {
+  console.log('🪟 Toutes les fenêtres fermées');
   // Sur macOS, les applications restent actives même sans fenêtre
   if (process.platform !== 'darwin') {
+    console.log('🛑 Fermeture de l\'application');
     app.quit();
   }
 });

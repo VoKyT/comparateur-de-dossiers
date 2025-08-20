@@ -10,7 +10,7 @@
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import electron from 'vite-plugin-electron';
+import electron from 'vite-plugin-electron/simple';
 import renderer from 'vite-plugin-electron-renderer';
 import path from 'path';
 
@@ -20,17 +20,13 @@ export default defineConfig({
     // Plugin React avec support TypeScript
     react(),
     
-    // Plugin Electron avec configuration main et preload
-    electron([
-      {
-        // Configuration du main process
+    // Plugin Electron avec configuration simple
+    electron({
+      main: {
         entry: 'src/electron/main/main.ts',
-        onstart: ({ startup }) => {
-          startup();
-        },
         vite: {
           build: {
-            outDir: 'dist/main',
+            outDir: 'dist/electron',
             minify: false,
             rollupOptions: {
               external: ['electron', 'path', 'fs', 'fs/promises'],
@@ -41,16 +37,11 @@ export default defineConfig({
           }
         }
       },
-      {
-        // Configuration du preload script
-        entry: 'src/electron/preload/preload.ts',
-        onstart: ({ reload }) => {
-          // Hot reload uniquement pour le preload
-          reload();
-        },
+      preload: {
+        input: 'src/electron/preload/preload.ts',
         vite: {
           build: {
-            outDir: 'dist/preload',
+            outDir: 'dist/electron',
             minify: false,
             rollupOptions: {
               external: ['electron'],
@@ -60,8 +51,8 @@ export default defineConfig({
             }
           }
         }
-      }
-    ]),
+      },
+    }),
     
     // Plugin renderer pour le support Electron dans le renderer
     renderer()

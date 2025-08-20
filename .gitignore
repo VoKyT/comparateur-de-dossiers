@@ -103,6 +103,7 @@ release/
 
 # Electron-builder
 dist_electron/
+dist-electron/
 
 # Application packaging
 *.dmg
