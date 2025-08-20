@@ -93,6 +93,9 @@ export default defineConfig({
     rollupOptions: {
       // Configuration spécifique pour Electron
       external: [],
+      input: {
+        main: 'src/electron/renderer/index.html'
+      },
       output: {
         format: 'es'
       }

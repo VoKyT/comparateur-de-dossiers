@@ -13,15 +13,16 @@
 - Demande: "Un bouton au centre" → Réponse: UN bouton au centre, point final
 - Demande: "Changer la couleur" → Réponse: Changer JUSTE la couleur demandée
 
-## ⚠️ RÈGLE CLAUDE CODE - MODE THINKING OBLIGATOIRE
-**TOUJOURS UTILISER LE MODE "THINKING" :**
-- ✅ **ACTIVER** le mode thinking de Claude Code pour TOUTES les tâches
-- ✅ **RÉFLÉCHIR** avant d'agir, planifier les étapes
+## ⚠️ RÈGLE CLAUDE CODE - MODE THINK HARD OBLIGATOIRE
+**TOUJOURS UTILISER LE MODE "THINK HARD" :**
+- ✅ **ACTIVER** le mode think hard de Claude Code pour TOUTES les tâches
+- ✅ **RÉFLÉCHIR PROFONDÉMENT** avant d'agir, planifier les étapes
 - ✅ **ANALYSER** le contexte et les implications des actions
 - ✅ **VÉRIFIER** la cohérence avec les règles du projet
+- ✅ **ANTICIPER** les problèmes potentiels et les solutions
 - ❌ **JAMAIS** d'actions impulsives sans réflexion préalable
 
-**Objectif :** Garantir une réflexion structurée et éviter les erreurs ou oublis.
+**Objectif :** Garantir une réflexion approfondie et structurée pour éviter les erreurs ou oublis.
 
 ## Description du projet
 - **Objectif**: Application Electron pour comparer le contenu de deux dossiers et identifier les différences.
@@ -183,6 +184,62 @@ module.exports = {
 - `start`: lance Electron avec le process `main`.
 - `dev`: lance Electron en dev avec relance au changement (ex: `electronmon`/`nodemon`).
 - `build`: construit l'app (ex: via `electron-builder` ou `electron-forge`).
+
+## ⚠️ RÈGLE CRITIQUE - TEST AUTOMATIQUE DES NOUVELLES FONCTIONNALITÉS
+
+### Test obligatoire après chaque développement
+**APRÈS chaque nouvelle fonctionnalité développée :**
+1. ✅ **AJOUTER DES LOGS** spécifiques pour la fonctionnalité
+2. ✅ **TESTER AUTOMATIQUEMENT** via `npm start` 
+3. ✅ **VÉRIFIER LES LOGS** dans la console pour confirmer le bon fonctionnement
+4. ✅ **TESTER MANUELLEMENT** si nécessaire (clics, interactions)
+5. ✅ **MARQUER COMME COMPLÉTÉ** seulement si tout fonctionne
+
+### Stratégie de logs pour tests
+**TOUJOURS ajouter des logs console UNIQUES pour :**
+- ✅ **Initialisation** : `console.log('🆕 [NOM_FEATURE] [ID_UNIQUE] initialisée')`
+- ✅ **Actions utilisateur** : `console.log('👆 [NOM_FEATURE] [ID_UNIQUE] action: [DESCRIPTION]')`
+- ✅ **Succès** : `console.log('✅ [NOM_FEATURE] [ID_UNIQUE] succès: [RÉSULTAT]')`
+- ✅ **Erreurs** : `console.error('❌ [NOM_FEATURE] [ID_UNIQUE] erreur:', error)`
+- ✅ **État** : `console.log('📊 [NOM_FEATURE] [ID_UNIQUE] état:', data)`
+
+### Règles pour les IDs uniques de logs
+**OBLIGATOIRE : Chaque fonctionnalité doit avoir un ID unique facilement identifiable**
+- Format : `[FEATURE_ACTION_NUMERO]` ou `[FEATURE_STEP_XX]`
+- Exemples : `[FOLDER_SELECT_01]`, `[COMPARISON_START_02]`, `[EXPORT_CSV_03]`
+- **Incrémentation** : Toujours incrémenter le numéro pour chaque nouveau log d'une feature
+- **Recherche facile** : Permet de retrouver rapidement dans la console avec Ctrl+F
+
+**Exemple de logs avec IDs uniques :**
+```typescript
+// Au démarrage
+console.log('🆕 [FOLDER_SELECTOR] [FS_INIT_01] Composant initialisé');
+
+// Action utilisateur  
+console.log('👆 [FOLDER_SELECTOR] [FS_CLICK_02] Bouton sélection cliqué');
+
+// Dialog ouvert
+console.log('📊 [FOLDER_SELECTOR] [FS_DIALOG_03] Dialog système ouvert');
+
+// Résultat
+console.log('✅ [FOLDER_SELECTOR] [FS_SUCCESS_04] Dossier sélectionné:', folderPath);
+
+// Erreur possible
+console.error('❌ [FOLDER_SELECTOR] [FS_ERROR_05] Sélection annulée par utilisateur');
+```
+
+### Avantages des IDs uniques
+- ✅ **Recherche rapide** : `Ctrl+F "FS_INIT_01"` trouve instantanément le log
+- ✅ **Debug précis** : Identifie exactement quelle étape a échoué  
+- ✅ **Suivi chronologique** : L'ordre des numéros indique la séquence
+- ✅ **Documentation automatique** : Les logs servent de trace d'exécution
+
+### Process de test automatique
+1. **Développement** → Ajouter logs immédiatement
+2. **Build** → `npm run build` 
+3. **Test** → `npm start` et vérifier logs console
+4. **Validation** → Confirmer que les logs correspondent au comportement attendu
+5. **Commit** → Seulement si tous les tests passent
 
 ### Règles pour les commandes terminal
 - **JAMAIS de "&&" en début de commande** : Les commandes doivent être écrites individuellement, une par ligne

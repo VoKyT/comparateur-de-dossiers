@@ -48,13 +48,13 @@ function createMainWindow(): void {
       allowRunningInsecureContent: false, // Empêche le contenu non sécurisé
       webSecurity: true,                  // Active la sécurité web
       preload: path.join(__dirname, 'preload.js'), // Script preload
-      sandbox: process.env.NODE_ENV === 'production' // Sandbox en production
+      sandbox: true // Sandbox toujours activé pour la sécurité
     },
     show: true // Affichage direct
   });
 
   // Chemin vers le fichier HTML principal
-  const rendererPath = path.join(__dirname, '../renderer/index.html');
+  const rendererPath = path.join(__dirname, '../renderer/src/electron/renderer/index.html');
   
   // Chargement de l'interface utilisateur
   mainWindow.loadFile(rendererPath);
@@ -385,26 +385,32 @@ function setupIpcHandlers(): void {
   });
 
   // === Handlers de développement ===
+  // Toujours disponibles en local pour le développement
+  console.log('🔧 [MAIN_DEBUG] Enregistrement handlers dev - NODE_ENV:', process.env.NODE_ENV);
   
-  if (isDevelopmentMode()) {
-    ipcMain.handle('dev:open-devtools', async (): Promise<void> => {
-      if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.openDevTools();
-      }
-    });
+  ipcMain.handle('dev:open-devtools', async (): Promise<void> => {
+    console.log('🔧 [DEV_HANDLER] Ouverture DevTools demandée');
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.openDevTools();
+      console.log('✅ [DEV_HANDLER] DevTools ouvertes');
+    } else {
+      console.error('❌ [DEV_HANDLER] Fenêtre principale introuvable');
+    }
+  });
 
-    ipcMain.handle('dev:reload', async (): Promise<void> => {
-      if (mainWindow && !mainWindow.isDestroyed()) {
-        mainWindow.reload();
-      }
-    });
+  ipcMain.handle('dev:reload', async (): Promise<void> => {
+    console.log('🔄 [DEV_HANDLER] Reload demandé');
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.reload();
+    }
+  });
 
-    ipcMain.handle('dev:clear-cache', async (): Promise<void> => {
-      if (mainWindow && !mainWindow.isDestroyed()) {
-        await mainWindow.webContents.session.clearCache();
-      }
-    });
-  }
+  ipcMain.handle('dev:clear-cache', async (): Promise<void> => {
+    console.log('🧹 [DEV_HANDLER] Clear cache demandé');
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      await mainWindow.webContents.session.clearCache();
+    }
+  });
 }
 
 /**
@@ -444,38 +450,39 @@ function setupSecurityHandlers(): void {
   });
 }
 
-// ===== GESTION D'INSTANCE UNIQUE =====
+// ===== GESTION DE REDÉMARRAGE AUTOMATIQUE =====
 
 /**
- * Vérification et gestion d'instance unique
- * Ferme les instances existantes si l'application est déjà ouverte
+ * Système de redémarrage automatique pour npm start
+ * La nouvelle instance remplace l'ancienne automatiquement
  */
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-  console.log('🔒 Instance déjà en cours d\'exécution - Fermeture de cette instance');
+  console.log('🔄 [RESTART] [RS_NEW_01] Nouvelle instance détectée - L\'ancienne va se fermer');
+  console.log('🚫 [RESTART] [RS_BLOCK_06] Nouvelle instance bloquée - Arrêt immédiat');
+  // Cette nouvelle instance doit quitter IMMÉDIATEMENT
   app.quit();
 } else {
-  // Gestion du second-instance (quand on essaie de lancer une autre instance)
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
-    console.log('🔄 Tentative de lancement d\'une seconde instance détectée');
-    
-    // Si une fenêtre existe déjà, la ramener au premier plan
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) {
-        mainWindow.restore();
-      }
-      mainWindow.focus();
-      mainWindow.show();
-      
-      console.log('👆 Fenêtre existante ramenée au premier plan');
-    } else {
-      // Si aucune fenêtre n'existe, en créer une nouvelle
-      console.log('🆕 Création d\'une nouvelle fenêtre principale');
-      createMainWindow();
-    }
-  });
+  console.log('🆕 [RESTART] [RS_FIRST_02] Première instance - Démarrage normal');
 }
+
+// Gérer la réception d'une nouvelle instance (si on est l'ancienne)
+app.on('second-instance', (event, commandLine, workingDirectory) => {
+  console.log('🔄 [RESTART] [RS_OLD_03] Signal reçu - Ancienne instance va quitter');
+  console.log('⏹️ [RESTART] [RS_CLOSE_04] Fermeture de l\'ancienne instance...');
+  
+  // Fermer proprement l'ancienne instance
+  if (mainWindow) {
+    mainWindow.close();
+  }
+  
+  // Quitter immédiatement pour laisser place à la nouvelle
+  setTimeout(() => {
+    console.log('✅ [RESTART] [RS_QUIT_05] Ancienne instance fermée');
+    app.quit();
+  }, 50);
+});
 
 // ===== ÉVÉNEMENTS DU CYCLE DE VIE =====
 

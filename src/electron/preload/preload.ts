@@ -196,24 +196,27 @@ const electronAPI: ElectronAPI = {
   }
 };
 
-// Ajouter l'API de développement uniquement en mode développement
-if (process.env.NODE_ENV === 'development') {
-  electronAPI.development = {
-    isDevMode: (): boolean => process.env.NODE_ENV === 'development',
+// Ajouter l'API de développement - toujours disponible en local
+console.log('🔍 [PRELOAD_DEBUG] NODE_ENV:', process.env.NODE_ENV);
+// Forcer l'activation dev si on est en développement local
+const isDev = true; // Temporaire pour dev local
 
-    openDevTools: async (): Promise<void> => {
-      await ipcRenderer.invoke('dev:open-devtools');
-    },
+console.log('🔧 [PRELOAD_DEV] API développement forcée pour dev local');
+electronAPI.development = {
+  isDevMode: (): boolean => isDev,
 
-    reloadApp: async (): Promise<void> => {
-      await ipcRenderer.invoke('dev:reload');
-    },
+  openDevTools: async (): Promise<void> => {
+    await ipcRenderer.invoke('dev:open-devtools');
+  },
 
-    clearCache: async (): Promise<void> => {
-      await ipcRenderer.invoke('dev:clear-cache');
-    }
-  };
-}
+  reloadApp: async (): Promise<void> => {
+    await ipcRenderer.invoke('dev:reload');
+  },
+
+  clearCache: async (): Promise<void> => {
+    await ipcRenderer.invoke('dev:clear-cache');
+  }
+};
 
 /**
  * Exposition sécurisée de l'API via contextBridge
