@@ -206,7 +206,7 @@ src/
   - Migration main.js → main.ts avec handlers IPC complets
   - Migration preload.js → preload.ts avec API typée
   - Création architecture React complète (App.tsx, index.tsx)
-  - Intégration Tailwind CSS avec PostCSS et Webpack
+  - Intégration Tailwind CSS avec PostCSS et Vite
   - Structure modulaire (components, features, shared, styles)
   - Build system Vite avec TypeScript et hot reload
   - Types partagés pour communication IPC sécurisée
@@ -227,4 +227,4 @@ src/
 - **Build** : Surveiller taille des bundles et performances Vite
 
 ---
-*Dernière mise à jour : v1.1.0 - 2025-08-20 (Migration Vite)*
+*Dernière mise à jour : v1.1.0 - 2025-08-20 (Migration Vite + Suppression Babel)*
