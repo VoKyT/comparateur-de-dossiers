@@ -19,6 +19,48 @@
 
 **JAMAIS de design basique ou laid - L'esthétisme est NON-NÉGOCIABLE**
 
+## 📱 RÈGLE ABSOLUE - RESPONSIVITÉ PARFAITE OBLIGATOIRE
+**PRINCIPE FONDAMENTAL : ADAPTATION TOTALE À TOUS LES ÉCRANS**
+- ✅ **TOUTE INTERFACE** doit s'adapter parfaitement à toutes les tailles d'écran
+- ✅ **MOBILE FIRST** : Concevoir d'abord pour mobile, puis étendre
+- ✅ **BREAKPOINTS TAILWIND** : Utiliser sm:, md:, lg:, xl:, 2xl: systématiquement
+- ✅ **TYPOGRAPHIE ADAPTIVE** : Tailles de texte qui s'adaptent selon l'écran
+- ✅ **ESPACEMENTS VARIABLES** : Marges et paddings responsive
+- ✅ **CONTENUS CONSTANTS** : Même texte sur tous écrans, seule la taille change
+- ✅ **INTERACTIONS TACTILES** : Boutons suffisamment grands pour le touch
+- ✅ **NAVIGATION FLUIDE** : Menus hamburgers, sidebars collapsibles
+
+**Breakpoints Tailwind obligatoires :**
+- **Mobile** : Par défaut (< 640px) - Interface tactile optimisée
+- **SM** : `sm:` (≥ 640px) - Tablette portrait
+- **MD** : `md:` (≥ 768px) - Tablette paysage
+- **LG** : `lg:` (≥ 1024px) - Desktop standard
+- **XL** : `xl:` (≥ 1280px) - Grand écran
+- **2XL** : `2xl:` (≥ 1536px) - Écran ultra-large
+
+**Règles responsives non-négociables :**
+- ✅ **Textes adaptatifs** : `text-sm sm:text-base md:text-lg lg:text-xl`
+- ✅ **Espacements progressifs** : `px-4 sm:px-6 md:px-8 lg:px-12`
+- ✅ **Conteneurs limités** : `max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-4xl`
+- ✅ **Icônes scalables** : `h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6`
+- ✅ **Textes constants** : Même contenu sur tous écrans, adaptation par la taille uniquement
+- ✅ **Grilles responsives** : `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
+
+**Tests obligatoires :**
+- ✅ **Mobile** : iPhone SE (375px), iPhone 12 (390px)
+- ✅ **Tablette** : iPad (768px), iPad Pro (1024px)  
+- ✅ **Desktop** : 1280px, 1440px, 1920px, 2560px
+- ✅ **Orientation** : Portrait ET paysage sur tous devices
+
+**Règles de contenu responsif :**
+- ✅ **TEXTE CONSTANT** : Même contenu textuel sur toutes les tailles d'écran
+- ✅ **TAILLE ADAPTIVE** : Seules les tailles de police s'adaptent (`text-sm sm:text-base md:text-lg`)
+- ❌ **JAMAIS de texte différent** selon l'écran (pas de `hidden sm:inline`)
+- ❌ **JAMAIS de contenu tronqué** sur mobile
+- ✅ **LISIBILITÉ GARANTIE** : Le texte doit rester lisible sur le plus petit écran
+
+**JAMAIS d'interface qui casse sur mobile - La responsivité est NON-NÉGOCIABLE**
+
 ## ⚠️ RÈGLE CRITIQUE - PAS DE SURENGINEERING
 **QUAND L'UTILISATEUR DEMANDE QUELQUE CHOSE DANS LE TCHAT :**
 - ✅ **FAIRE EXACTEMENT** ce qui est demandé, rien de plus
@@ -220,6 +262,33 @@ module.exports = {
 - ✅ **Modification React/CSS** : Mise à jour instantanée sans redémarrage
 
 **Objectif :** Développement fluide avec hot reload Vite pour une productivité maximale.
+
+## ⚠️ RÈGLE OBLIGATOIRE - NETTOYAGE AUTOMATIQUE DES PORTS
+**TOUJOURS NETTOYER LES PORTS AUTOMATIQUEMENT AU LANCEMENT DE L'APPLICATION :**
+- ✅ **NETTOYAGE AUTOMATIQUE** : L'application nettoie automatiquement les ports dès qu'elle se lance
+- ✅ **TIMING** : **AU DÉMARRAGE DE L'APPLICATION** - avant toute connexion réseau
+- ✅ **PORTS CONCERNÉS** : 3000 (Vite), 3001 (WebSocket), 3002 (Alternatif)
+- ✅ **IMPLEMENTATION** : Script `scripts/kill-ports.cjs` intégré dans Electron main.ts
+- ✅ **SILENCIEUX** : Nettoyage invisible sans fenêtres CMD parasites
+- ✅ **MULTI-PLATEFORME** : Windows (netstat + taskkill), Unix (lsof + kill)
+
+### Scripts de nettoyage disponibles
+- `npm run kill-ports` : Nettoie ports 3000, 3001, 3002
+- `npm run kill-ports:all` : Nettoie tous ports dev (3000, 3001, 3002, 5173, 8080)
+- `npm run dev` : Lance dev avec nettoyage automatique
+- `npm run dev:clean` : Clean + kill-ports + dev complet
+
+### Intégration automatique
+**LE NETTOYAGE EST INTÉGRÉ AUTOMATIQUEMENT AU LANCEMENT DE L'APPLICATION :**
+- ✅ **Au démarrage d'Electron** : `killPorts()` appelé dans `app.whenReady()` AVANT toute autre action
+- ✅ **Séquence obligatoire** : Lancement app → Nettoyage ports → Chargement interface
+- ✅ **Scripts npm** : Nettoyage avant chaque lancement de serveur de développement
+- ✅ **Logs détaillés** : IDs uniques `[AUTO_KILL]` et `[KILL_PORTS]` pour traçabilité
+- ✅ **Gestion d'erreurs** : Continue même si certains ports échouent
+
+**RÈGLE ABSOLUE : Dès qu'on lance l'application, les ports sont automatiquement nettoyés !**
+
+**Objectif :** Éliminer définitivement les problèmes de ports occupés au démarrage de l'application.
 
 ## ⚠️ RÈGLE CRITIQUE - TEST AUTOMATIQUE DES NOUVELLES FONCTIONNALITÉS
 
