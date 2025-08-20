@@ -8,7 +8,7 @@ Application Electron moderne utilisant **React + TypeScript + Tailwind CSS** pou
 - **UI Framework** : React ^19.1.1 avec hooks modernes
 - **Langage** : TypeScript ^5.9.2 (strict mode)
 - **Styling** : Tailwind CSS ^4.1.12 + PostCSS
-- **Build** : Webpack ^5.101.3 + ts-loader + css-loader
+- **Build** : Vite ^7.1.3 + plugins Electron
 - **Runtime** : Node.js ≥ 20, npm ≥ 10
 
 ## Structure actuelle
@@ -101,14 +101,14 @@ src/
 - [x] **Architecture React + TypeScript + Tailwind complète**
 - [x] **Migration complète vers TypeScript** (main.ts, preload.ts)
 - [x] **Interface React moderne** avec composants et hooks
-- [x] **Build system Webpack** avec hot reload et optimisations
+- [x] **Build system Vite** avec hot reload et optimisations
 - [x] **Communication IPC typée** avec validation des données
 - [x] **Design system Tailwind CSS** avec thème personnalisé
 - [x] Structure de base Electron sécurisée
 - [x] Fenêtre principale fonctionnelle
 - [x] Architecture modulaire (features, components, shared)
 - [x] Scripts de développement et build optimisés
-- [x] Configuration complète (tsconfig, webpack, postcss, tailwind)
+- [x] Configuration complète (tsconfig, vite, postcss, tailwind)
 - [x] Documentation mise à jour
 
 ### 🚧 En cours de développement
@@ -121,7 +121,7 @@ src/
 - [x] Configuration Tailwind CSS + PostCSS  
 - [x] Migration interface HTML vers composants React
 - [x] Structure modulaire des composants
-- [x] Build system Webpack intégré
+- [x] Build system Vite intégré
 
 #### Phase 2 - Fonctionnalités core
 - [ ] Interface de sélection de dossiers
@@ -164,27 +164,24 @@ src/
 - `typescript` ^5.9.2 : Compilation TypeScript
 - `@types/react` + `@types/react-dom` : Types React
 - `tailwindcss` ^4.1.12 : Framework CSS utilitaire  
-- `webpack` ^5.101.3 : Bundler et optimiseur
-- `ts-loader` : Loader TypeScript pour Webpack
-- `css-loader` + `postcss-loader` : Processing CSS
+- `vite` ^7.1.3 : Build tool moderne
+- `vite-plugin-electron` : Plugin Vite pour Electron
+- `@vitejs/plugin-react` : Plugin React pour Vite
 - `@tailwindcss/postcss` : Plugin PostCSS pour Tailwind
 - `concurrently` + `wait-on` : Scripts parallèles
-- Scripts npm configurés pour dev/build/dist
+- Scripts npm simplifiés avec Vite
 
 ## Configuration et Build
 
 ### Scripts disponibles
 **Exécution :**
-- `npm start` : Build complet + lancement production
-- `npm run dev-win` : Développement Windows avec hot reload
-- `npm run dev` : Développement Unix/macOS avec hot reload
+- `npm start` : Lance l'application avec les sources actuelles
+- `npm run start:build` : Build + lancement production
+- `npm run dev` : Développement avec hot reload et Vite
 
 **Build :**
-- `npm run build` : Build complet (main + preload + renderer)
-- `npm run build:main` : Build processus principal TypeScript
-- `npm run build:preload` : Build script preload TypeScript
-- `npm run build:renderer` : Build React + Webpack + Tailwind
-- `npm run build:watch` : Build avec surveillance des changements
+- `npm run build` : Build complet Vite (main + preload + renderer)
+- `npm run preview` : Aperçu du build en mode production
 - `npm run clean` : Nettoyage du dossier dist/
 
 **Distribution :**
@@ -211,7 +208,7 @@ src/
   - Création architecture React complète (App.tsx, index.tsx)
   - Intégration Tailwind CSS avec PostCSS et Webpack
   - Structure modulaire (components, features, shared, styles)
-  - Build system Webpack avec TypeScript et hot reload
+  - Build system Vite avec TypeScript et hot reload
   - Types partagés pour communication IPC sécurisée
   - Scripts optimisés pour développement et production
 
@@ -219,7 +216,7 @@ src/
 - ✅ Migration vers React : **TERMINÉE** - Impact majeur sur structure et build
 - Ajout de fonctionnalités métier : Interface de sélection, comparaison
 - Nouvelles features : Documentation obligatoire dans ce fichier
-- Performance : Optimisations Webpack et React
+- Performance : Optimisations Vite et React
 - Tests : Ajout de tests unitaires et d'intégration
 
 ### Points d'attention v1.1.0+
@@ -227,7 +224,7 @@ src/
 - **Structure modulaire** : Respecter l'architecture features/components/shared
 - **Imports** : Utiliser les alias TypeScript `@/` configurés
 - **Styles** : Privilégier Tailwind CSS, éviter CSS custom sauf exceptions
-- **Build** : Surveiller taille des bundles et performances Webpack
+- **Build** : Surveiller taille des bundles et performances Vite
 
 ---
-*Dernière mise à jour : v1.1.0 - 2025-08-19*
+*Dernière mise à jour : v1.1.0 - 2025-08-20 (Migration Vite)*

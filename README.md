@@ -7,7 +7,7 @@ Application Electron moderne avec React, TypeScript et Tailwind CSS pour compare
 - **Interface React moderne** : Composants React avec design system Tailwind CSS
 - **TypeScript intégral** : Typage strict pour une meilleure robustesse
 - **Architecture sécurisée** : Isolation du contexte et communication IPC sécurisée
-- **Build moderne** : Webpack avec hot reload et optimisations
+- **Build moderne** : Vite avec hot reload et optimisations
 - **Cross-platform** : Compatible Windows, macOS et Linux
 - **Mode développement** : DevTools intégrés et rechargement automatique
 
@@ -41,32 +41,32 @@ Application Electron moderne avec React, TypeScript et Tailwind CSS pour compare
    - React & React DOM
    - TypeScript & types associés  
    - Tailwind CSS & PostCSS
-   - Webpack & loaders
+   - Vite & plugins Electron
    - Electron & outils de build
 
 ## 🎯 Usage
 
 ### Mode développement
 ```bash
-# Windows
-npm run dev-win
-
-# macOS/Linux  
 npm run dev
 ```
 
 ### Mode production
 ```bash
+# Lance l'application avec les sources actuelles
 npm start
+
+# Build puis lance l'application
+npm run start:build
 ```
 
 ### Build manuel
 ```bash
-# Build complet (TypeScript + React + Webpack)
+# Build complet (TypeScript + React + Vite)
 npm run build
 
-# Build avec surveillance des changements
-npm run build:watch
+# Aperçu du build
+npm run preview
 
 # Nettoyage des fichiers générés
 npm run clean
@@ -114,16 +114,13 @@ src/
 ## ⚡ Scripts disponibles
 
 ### Exécution
-- `npm start` - Build + lance l'application en mode production
-- `npm run dev` - Lance en mode développement avec hot reload (macOS/Linux)
-- `npm run dev-win` - Lance en mode développement avec hot reload (Windows)
+- `npm start` - Lance l'application avec les sources actuelles
+- `npm run start:build` - Build + lance l'application en mode production
+- `npm run dev` - Lance en mode développement avec hot reload et Vite
 
 ### Build et développement
-- `npm run build` - Build complet (main + preload + renderer)
-- `npm run build:main` - Build du processus principal TypeScript
-- `npm run build:preload` - Build du script preload TypeScript  
-- `npm run build:renderer` - Build React + Webpack + Tailwind
-- `npm run build:watch` - Build avec surveillance des changements
+- `npm run build` - Build complet avec Vite (main + preload + renderer)
+- `npm run preview` - Aperçu du build en mode production
 - `npm run clean` - Supprime le dossier dist/
 
 ### Distribution
@@ -158,7 +155,7 @@ src/
 - **React** ^19.1.1 - Librairie UI avec hooks modernes
 - **TypeScript** ^5.9.2 - Langage typé pour robustesse
 - **Tailwind CSS** ^4.1.12 - Framework CSS utilitaire
-- **Webpack** ^5.101.3 - Bundler avec optimisations
+- **Vite** ^7.1.3 - Build tool moderne avec plugins Electron
 - **PostCSS** - Traitement CSS avec Autoprefixer
 
 ### Principes architecturaux
@@ -173,7 +170,7 @@ src/
 - [x] Architecture React + TypeScript + Tailwind CSS
 - [x] Migration complète vers TypeScript
 - [x] Interface React moderne avec composants
-- [x] Build system Webpack optimisé
+- [x] Build system Vite optimisé
 - [x] Communication IPC sécurisée et typée
 - [ ] Interface de sélection de dossiers
 - [ ] Algorithme de comparaison basique

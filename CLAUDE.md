@@ -28,8 +28,9 @@
 ### Stack imposée
 - **Electron** : Framework desktop principal (process main, renderer, preload)
 - **React** : Librairie UI pour tous les composants interface
-- **TypeScript** : Langage obligatoire pour tout le code JavaScript
+- **TypeScript** : Langage obligatoire pour tout le code applicatif
 - **Tailwind CSS** : Framework CSS utilitaire pour tout le styling
+- **Vite** : Build tool moderne avec hot reload et optimisations
 
 ### Intégration Electron + React + Tailwind
 - **Process Main** : Electron pur (Node.js + Electron APIs)
@@ -94,7 +95,7 @@ src/
 3. **Communication IPC** : Via contextBridge uniquement, typée TypeScript
 4. **State Management** : React hooks (useState, useContext, zustand si complexe)
 5. **Styling** : Tailwind utility classes, pas de CSS inline ou modules
-6. **Build** : Webpack/Vite pour bundle React dans Electron renderer
+6. **Build** : Vite pour bundle React dans Electron renderer
 
 ### Points d'intégration clés
 - **Electron → React** : Chargement du bundle React dans BrowserWindow
@@ -113,6 +114,7 @@ src/
 - React: `https://react.dev`
 - Tailwind CSS: `https://tailwindcss.com`
 - Electron: `https://www.electronjs.org`
+- Vite: `https://vitejs.dev`
 
 ### Initialisation complète du projet
 ```bash
@@ -127,6 +129,9 @@ npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule
 # Tailwind CSS
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
+
+# Vite
+npm install -D vite@latest @vitejs/plugin-react@latest vite-plugin-electron@latest
 
 # Electron
 npm install -D electron@latest
@@ -173,7 +178,7 @@ module.exports = {
 
 ### En-têtes de fichiers (pour Claude Code)
 
-#### Fichiers TypeScript/JavaScript
+#### Fichiers TypeScript
 ```typescript
 /**
  * @fileoverview [Description courte du rôle du fichier]
@@ -225,7 +230,7 @@ module.exports = {
 #### Fichiers de configuration
 ```javascript
 /**
- * @fileoverview [Type de configuration: webpack, tailwind, electron, etc.]
+ * @fileoverview [Type de configuration: vite, tailwind, electron, etc.]
  * @description [Objectif de cette configuration, ce qu'elle contrôle]
  * @environment [Environnement: dev, prod, test]
  * @dependencies [Outils qui utilisent cette config]
@@ -263,30 +268,34 @@ module.exports = {
 - **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
 - **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
 
-### Règles d'imports et syntaxe ES6
-- **Syntaxe ES6 obligatoire**: TOUJOURS utiliser `import` (ES6) au lieu de `require` (CommonJS), sauf cas exceptionnels documentés
+### Règles d'imports et syntaxe
+- **Syntaxe ES6 recommandée**: Préférer `import` (ES6) quand c'est compatible avec l'environnement
+- **CommonJS acceptée**: Utiliser `require` (CommonJS) quand nécessaire pour la compatibilité
+- **Cohérence par fichier**: Ne pas mélanger ES6 et CommonJS dans le même fichier
 - **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
 - **Imports absolus**: pour tout le reste, via alias (`@/features/`, `@/shared/`).
 - **Barrel exports**: chaque dossier expose son API via `index.ts`.
 - **Pas d'imports circulaires**: utiliser l'inversion de dépendance si nécessaire.
 
-**Exemples corrects :**
+**Cas d'usage par environnement :**
 ```typescript
-// ✅ BON - Import ES6
+// ✅ Process Renderer (React) - ES6 recommandé
 import React from 'react';
-import { app } from 'electron';
-import path from 'path';
+import { useState } from 'react';
 
-// ❌ ÉVITER - Require CommonJS (sauf exception)
-const React = require('react');
-const { app } = require('electron');
+// ✅ Process Main (Electron) - CommonJS souvent requis
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
+// ✅ Preload (sécurité) - Selon contexte
+const { contextBridge, ipcRenderer } = require('electron');
 ```
 
-**Configuration ES6 :**
-- **package.json** : `"type": "module"` pour le support ES modules
-- **webpack.config.js** : Utiliser `import` et `export default`
-- **postcss.config.js** : Utiliser `import` et `export default`
-- **TypeScript** : Configuration compatible ES6 modules
+**Configuration flexible :**
+- **package.json** : Pas forcément `"type": "module"` (selon compatibilité)
+- **vite.config** : Format selon l'outil utilisé
+- **postcss.config.js** : Format selon l'intégration
+- **TypeScript** : Configuration compatible avec les deux syntaxes
 
 ### Isolation des features
 - Une feature ne doit **jamais** importer directement une autre feature.
@@ -357,7 +366,7 @@ Avant d'ajouter une fonctionnalité, vérifier:
 ### Gestion du .gitignore
 - **Vérification obligatoire** : À chaque ajout ou modification de fonctionnalité, vérifier si des éléments doivent être ajoutés au `.gitignore`
 - **Types de fichiers à surveiller** :
-  - Nouveaux outils de build (webpack cache, rollup cache, etc.)
+  - Nouveaux outils de build (vite cache, rollup cache, etc.)
   - Fichiers de configuration locaux (.env.local, settings.local.json)
   - Dossiers de sortie (build/, dist/, out/, coverage/)
   - Fichiers générés automatiquement (*.generated.*, auto-imports.d.ts)
