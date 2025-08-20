@@ -1,13 +1,5 @@
 # Règles Claude Code - Comparateur de dossiers
 
-## ⚠️ MODE DE FONCTIONNEMENT OBLIGATOIRE
-**UTILISER TOUJOURS LE MODE THINKHARD PAR DÉFAUT :**
-- ✅ **MODE THINKHARD** activé automatiquement pour toutes les tâches
-- ✅ **RÉFLEXION APPROFONDIE** avant chaque action ou réponse
-- ✅ **ANALYSE COMPLÈTE** du contexte et des implications
-- ✅ **PLANIFICATION DÉTAILLÉE** des étapes à suivre
-- ❌ **NE PAS RÉPONDRE** de manière impulsive ou superficielle
-
 ## ⚠️ RÈGLE CRITIQUE - PAS DE SURENGINEERING
 **QUAND L'UTILISATEUR DEMANDE QUELQUE CHOSE DANS LE TCHAT :**
 - ✅ **FAIRE EXACTEMENT** ce qui est demandé, rien de plus
