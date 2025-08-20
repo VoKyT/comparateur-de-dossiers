@@ -60,9 +60,14 @@ const initializeApp = (): void => {
     console.log('🔧 Mode développement activé');
     
     // Hot reload detection (si supporté par le bundler)
-    if ('hot' in module && (module as any).hot) {
+    if (typeof module !== 'undefined' && 'hot' in module && (module as any).hot) {
       (module as any).hot.accept('./App', () => {
         console.log('🔄 Hot reload détecté');
+      });
+    } else if (import.meta.hot) {
+      // Support Vite HMR
+      import.meta.hot.accept('./App', () => {
+        console.log('🔄 Vite HMR détecté');
       });
     }
   }

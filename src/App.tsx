@@ -1,5 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/globals.css';
+import { Button } from './components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
+import { Badge } from './components/ui/badge';
+import { 
+  Zap, 
+  Settings
+} from 'lucide-react';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -8,8 +15,9 @@ const App: React.FC = () => {
     document.documentElement.style.overflow = 'hidden';
   }, []);
 
-  const handleClick = () => {
-    alert('Bouton cliqué !');
+  const handleTestClick = () => {
+    console.log('🔥 [TEST_BUTTON] [TB_CLICK_01] Bouton test cliqué');
+    alert('🚀 Bouton test fonctionne !');
   };
 
   const openDevTools = async () => {
@@ -33,54 +41,46 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-purple-600 font-sans overflow-hidden">
-      <div className="flex flex-col items-center space-y-8">
-        {/* Titre de l'application */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-800 font-sans overflow-hidden">
+      <div className="flex flex-col items-center">
+        {/* Titre stylé sans card */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
             Comparateur de Dossiers
           </h1>
           <p className="text-blue-100 text-lg">
-            Comparez facilement le contenu de vos dossiers
+            Interface moderne avec shadcn/ui
           </p>
         </div>
 
-        {/* Conteneur des boutons */}
-        <div className="flex gap-6">
-          <button 
-            type="button"
-            onClick={handleClick}
-            className="group relative px-8 py-4 bg-white hover:bg-gray-50 text-blue-600 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out border-none cursor-pointer"
-          >
-            <span className="flex items-center space-x-2">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span>Commencer</span>
-            </span>
-          </button>
-          
-          <button 
-            type="button"
-            onClick={openDevTools}
-            className="group relative px-8 py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out border border-white/30 cursor-pointer"
-          >
-            <span className="flex items-center space-x-2">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>DevTools</span>
-            </span>
-          </button>
+        {/* Badge version stylé */}
+        <div className="mb-8">
+          <Badge variant="outline" className="bg-white/20 border-white/30 text-white px-6 py-2 text-sm">
+            <Zap className="h-4 w-4 mr-2" />
+            Version 1.2.2 • Test Mode
+          </Badge>
         </div>
 
-        {/* Badge version */}
-        <div className="mt-8">
-          <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm text-white shadow-sm border border-white/30">
-            Version 1.2.1 • Electron + React + TypeScript
-          </span>
-        </div>
+        {/* Bouton test simple */}
+        <Button 
+          onClick={handleTestClick}
+          size="lg"
+          className="px-12 py-6 bg-white hover:bg-gray-50 text-blue-600 rounded-xl font-semibold text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+        >
+          <Zap className="h-5 w-5 mr-2" />
+          Bouton Test
+        </Button>
+        
+        {/* Bouton DevTools */}
+        <Button 
+          onClick={openDevTools}
+          variant="outline"
+          size="lg"
+          className="mt-4 px-8 py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border border-white/30"
+        >
+          <Settings className="h-5 w-5 mr-2" />
+          DevTools
+        </Button>
       </div>
     </div>
   );

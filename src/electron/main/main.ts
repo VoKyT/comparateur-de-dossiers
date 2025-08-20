@@ -21,6 +21,11 @@ import {
 } from 'electron';
 import path from 'path';
 import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
+
+// Définir __dirname pour ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // import { promisify } from 'util'; // Pour usage futur
 
 /**
@@ -32,6 +37,11 @@ let mainWindow: BrowserWindow | null = null;
  * Crée la fenêtre principale de l'application avec configuration sécurisée
  */
 function createMainWindow(): void {
+  // Éviter la création de multiples fenêtres
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    console.log('⚠️ [WINDOW] Fenêtre principale existe déjà - pas de création');
+    return;
+  }
   // Configuration sécurisée de la fenêtre principale
   mainWindow = new BrowserWindow({
     width: 900,
@@ -53,22 +63,81 @@ function createMainWindow(): void {
     show: true // Affichage direct
   });
 
-  // Chemin vers le fichier HTML principal
-  const rendererPath = path.join(__dirname, '../renderer/src/electron/renderer/index.html');
-  
-  // Chargement de l'interface utilisateur
-  mainWindow.loadFile(rendererPath);
+  // Chargement de l'interface utilisateur selon l'environnement
+  if (isDevelopmentMode()) {
+    // En développement : attendre obligatoirement le serveur Vite
+    console.log('🔥 [VITE_WAIT_01] Mode développement - Attente du serveur Vite...');
+    
+    // Attendre que le serveur Vite soit prêt avec logs détaillés
+    const waitForViteServer = async () => {
+      const maxAttempts = 60; // 30 secondes max
+      const retryDelay = 500; // 500ms entre chaque tentative
+      
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+          console.log(`🔍 [VITE_WAIT_02] Tentative ${attempt}/${maxAttempts} - Vérification serveur Vite...`);
+          
+          const response = await fetch('http://localhost:3002', {
+            method: 'GET',
+            timeout: 2000 // Timeout de 2 secondes
+          });
+          
+          if (response.ok) {
+            console.log('✅ [VITE_READY_03] Serveur Vite prêt et accessible !');
+            console.log('🌐 [VITE_LOAD_04] Chargement de l\'interface React...');
+            
+            await mainWindow!.loadURL('http://localhost:3002');
+            console.log('✅ [VITE_LOADED_05] Interface React chargée avec succès !');
+            return true;
+          } else {
+            console.log(`⚠️ [VITE_WAIT_06] Serveur répond mais status: ${response.status}`);
+          }
+        } catch (error) {
+          if (attempt % 5 === 0) { // Log détaillé tous les 5 tentatives
+            console.log(`⏳ [VITE_WAIT_07] Tentative ${attempt}/${maxAttempts} - Serveur pas encore prêt...`);
+          }
+        }
+        
+        if (attempt < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, retryDelay));
+        }
+      }
+      
+      // Si on arrive ici, le serveur n'est jamais devenu prêt
+      console.error('❌ [VITE_ERROR_08] ÉCHEC: Impossible de se connecter au serveur Vite après 30 secondes');
+      console.error('❌ [VITE_ERROR_09] Vérifiez que "npm run vite:dev" fonctionne correctement');
+      
+      // Charger une page d'erreur
+      const errorHtml = `
+        <html>
+          <body style="font-family: Arial; padding: 50px; text-align: center; background: #f0f0f0;">
+            <h1 style="color: #d32f2f;">⚠️ Erreur de développement</h1>
+            <p>Le serveur Vite n'est pas accessible sur localhost:3002</p>
+            <p>Veuillez vérifier que la commande <code>npm run dev</code> fonctionne correctement.</p>
+            <button onclick="location.reload()" style="padding: 10px 20px; font-size: 16px;">Réessayer</button>
+          </body>
+        </html>
+      `;
+      
+      await mainWindow!.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(errorHtml)}`);
+      return false;
+    };
+    
+    // Lancer l'attente du serveur
+    waitForViteServer();
+  } else {
+    // En production : charger le fichier HTML buildé
+    const rendererPath = path.join(__dirname, '../renderer/src/electron/renderer/index.html');
+    mainWindow.loadFile(rendererPath);
+    console.log('📦 [PROD] Mode production - Fichier HTML statique');
+  }
 
   // Affichage sécurisé de la fenêtre
   mainWindow.once('ready-to-show', () => {
     if (!mainWindow) return;
     
     mainWindow.show();
-    
-    // Outils de développement en mode dev
-    if (isDevelopmentMode()) {
-      mainWindow.webContents.openDevTools({ mode: 'detach' });
-    }
+    console.log('✅ [WINDOW] Fenêtre principale affichée');
   });
 
   // Gestion de la fermeture
@@ -122,7 +191,10 @@ function getAppIcon(): string | undefined {
  * Vérifie si l'application est en mode développement
  */
 function isDevelopmentMode(): boolean {
-  return process.env.NODE_ENV === 'development';
+  // Vérifier si on est en mode développement via NODE_ENV ou si l'app n'est pas packagée
+  const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+  console.log('🔍 [DEV_CHECK] NODE_ENV:', process.env.NODE_ENV, 'isPackaged:', app.isPackaged, 'isDev:', isDev);
+  return isDev;
 }
 
 /**
@@ -450,39 +522,28 @@ function setupSecurityHandlers(): void {
   });
 }
 
-// ===== GESTION DE REDÉMARRAGE AUTOMATIQUE =====
+// ===== GESTION D'INSTANCE UNIQUE SIMPLIFIÉE =====
 
 /**
- * Système de redémarrage automatique pour npm start
- * La nouvelle instance remplace l'ancienne automatiquement
+ * Système d'instance unique simple et stable
  */
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-  console.log('🔄 [RESTART] [RS_NEW_01] Nouvelle instance détectée - L\'ancienne va se fermer');
-  console.log('🚫 [RESTART] [RS_BLOCK_06] Nouvelle instance bloquée - Arrêt immédiat');
-  // Cette nouvelle instance doit quitter IMMÉDIATEMENT
+  console.log('🔒 Instance déjà en cours - Fermeture de cette instance');
   app.quit();
 } else {
-  console.log('🆕 [RESTART] [RS_FIRST_02] Première instance - Démarrage normal');
+  console.log('✅ Instance unique obtenue');
+  
+  // Gestion du second-instance (silencieux pour éviter spam HMR)
+  app.on('second-instance', () => {
+    // Seulement ramener au premier plan si la fenêtre existe et est minimisée
+    if (mainWindow && mainWindow.isMinimized()) {
+      mainWindow.restore();
+      mainWindow.focus();
+    }
+  });
 }
-
-// Gérer la réception d'une nouvelle instance (si on est l'ancienne)
-app.on('second-instance', (event, commandLine, workingDirectory) => {
-  console.log('🔄 [RESTART] [RS_OLD_03] Signal reçu - Ancienne instance va quitter');
-  console.log('⏹️ [RESTART] [RS_CLOSE_04] Fermeture de l\'ancienne instance...');
-  
-  // Fermer proprement l'ancienne instance
-  if (mainWindow) {
-    mainWindow.close();
-  }
-  
-  // Quitter immédiatement pour laisser place à la nouvelle
-  setTimeout(() => {
-    console.log('✅ [RESTART] [RS_QUIT_05] Ancienne instance fermée');
-    app.quit();
-  }, 50);
-});
 
 // ===== ÉVÉNEMENTS DU CYCLE DE VIE =====
 
@@ -521,11 +582,10 @@ app.on('window-all-closed', () => {
 });
 
 /**
- * L'application va quitter
+ * L'application va quitter - Arrêt propre simplifié
  */
 app.on('before-quit', () => {
-  console.log('🛑 Arrêt de l\'application - Nettoyage en cours...');
-  // Nettoyage et sauvegarde si nécessaire
+  console.log('🛑 [CLEANUP] Arrêt de l\'application...');
 });
 
 /**

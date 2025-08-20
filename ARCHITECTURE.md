@@ -97,19 +97,22 @@ src/
 
 ## État du développement
 
-### ✅ Implémenté (v1.1.0)
+### ✅ Implémenté (v1.2.2)
 - [x] **Architecture React + TypeScript + Tailwind complète**
 - [x] **Migration complète vers TypeScript** (main.ts, preload.ts)
 - [x] **Interface React moderne** avec composants et hooks
 - [x] **Build system Vite** avec hot reload et optimisations
 - [x] **Communication IPC typée** avec validation des données
 - [x] **Design system Tailwind CSS** avec thème personnalisé
+- [x] **Synchronisation Vite-Electron robuste** avec logs détaillés
+- [x] **Système de logs de débogage** avec IDs uniques
+- [x] **Gestion d'instances unique simplifiée** (plus de conflits)
 - [x] Structure de base Electron sécurisée
-- [x] Fenêtre principale fonctionnelle
+- [x] Fenêtre principale fonctionnelle et stable
 - [x] Architecture modulaire (features, components, shared)
-- [x] Scripts de développement et build optimisés
+- [x] Scripts de développement séparés (vite:dev + electron:dev)
 - [x] Configuration complète (tsconfig, vite, postcss, tailwind)
-- [x] Documentation mise à jour
+- [x] Documentation mise à jour avec procédures de dépannage
 
 ### 🚧 En cours de développement
 - [ ] Aucun développement actif
@@ -174,10 +177,17 @@ src/
 ## Configuration et Build
 
 ### Scripts disponibles
+
 **Exécution :**
 - `npm start` : Lance l'application avec les sources actuelles
 - `npm run start:build` : Build + lancement production
-- `npm run dev` : Développement avec hot reload et Vite
+- `npm run dev` : Développement concurrently (Vite + Electron)
+- `npm run vite:dev` : Lance uniquement le serveur Vite (recommandé)
+- `npm run electron:dev` : Lance uniquement Electron en mode dev
+
+⚠️ **Procédure de démarrage recommandée :**
+1. Terminal 1 : `npm run vite:dev` (attendre "VITE ready")
+2. Terminal 2 : `npm run electron:dev` (attendre logs de synchronisation)
 
 **Build :**
 - `npm run build` : Build complet Vite (main + preload + renderer)
@@ -226,5 +236,35 @@ src/
 - **Styles** : Privilégier Tailwind CSS, éviter CSS custom sauf exceptions
 - **Build** : Surveiller taille des bundles et performances Vite
 
+## Amélioration v1.2.2 - Synchronisation Vite-Electron
+
+### Problème résolu
+**Symptôme** : L'application Electron se lançait avant que le serveur Vite soit prêt, causant des pages blanches et des erreurs de connexion.
+
+### Solution implémentée
+1. **Système d'attente robuste** dans `main.ts` :
+   - Attente active du serveur Vite avec tentatives répétées (60 tentatives sur 30s)
+   - Logs détaillés avec IDs uniques pour faciliter le débogage
+   - Page d'erreur explicite si Vite n'est pas accessible
+
+2. **Scripts séparés** pour contrôle précis :
+   - `npm run vite:dev` : Lance uniquement Vite
+   - `npm run electron:dev` : Lance uniquement Electron
+   - `npm run dev` : Version concurrente (moins fiable)
+
+3. **Logs de synchronisation** :
+   ```
+   🔥 [VITE_WAIT_01] Mode développement - Attente du serveur Vite...
+   🔍 [VITE_WAIT_02] Tentative X/60 - Vérification serveur Vite...
+   ✅ [VITE_READY_03] Serveur Vite prêt et accessible !
+   🌐 [VITE_LOAD_04] Chargement de l'interface React...
+   ✅ [VITE_LOADED_05] Interface React chargée avec succès !
+   ✅ [WINDOW] Fenêtre principale affichée
+   ```
+
+### Procédure recommandée
+1. **Terminal 1** : `npm run vite:dev` → Attendre "VITE ready"
+2. **Terminal 2** : `npm run electron:dev` → Attendre les logs de synchronisation
+
 ---
-*Dernière mise à jour : v1.1.0 - 2025-08-20 (Migration Vite + Suppression Babel)*
+*Dernière mise à jour : v1.2.2 - 2025-08-20 (Synchronisation Vite-Electron + Logs débogage)*

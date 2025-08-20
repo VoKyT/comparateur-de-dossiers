@@ -12,6 +12,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import electron from 'vite-plugin-electron/simple';
 import renderer from 'vite-plugin-electron-renderer';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
@@ -19,6 +20,9 @@ export default defineConfig({
   plugins: [
     // Plugin React avec support TypeScript
     react(),
+    
+    // Plugin Tailwind CSS v4 officiel pour Vite
+    tailwindcss(),
     
     // Plugin Electron avec configuration simple
     electron({
@@ -61,10 +65,17 @@ export default defineConfig({
   // Configuration de base
   base: './',
   
-  // Configuration du serveur de développement
+  // Configuration du serveur de développement avec HMR
   server: {
     port: 3000,
-    strictPort: true
+    strictPort: false, // Permet de chercher un port libre automatiquement
+    hmr: {
+      port: 3001,
+      clientPort: 3001
+    },
+    // Gestion intelligente des ports
+    host: 'localhost',
+    force: true // Force la régénération du cache
   },
 
   // Configuration des alias et résolution
@@ -78,10 +89,7 @@ export default defineConfig({
     }
   },
 
-  // Configuration CSS avec support Tailwind
-  css: {
-    postcss: './postcss.config.js'
-  },
+  // Configuration CSS - PostCSS non nécessaire avec plugin Vite Tailwind v4
 
   // Configuration de build
   build: {
@@ -119,6 +127,7 @@ export default defineConfig({
     __VUE_OPTIONS_API__: false,
     __VUE_PROD_DEVTOOLS__: false,
     global: 'globalThis',
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
   },
 
   // Configuration environnement

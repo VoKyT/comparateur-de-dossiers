@@ -46,10 +46,29 @@ Application Electron moderne avec React, TypeScript et Tailwind CSS pour compare
 
 ## 🎯 Usage
 
-### Mode développement
+### ⚠️ Mode développement (RECOMMANDÉ)
+
+**Pour un démarrage fiable et synchronisé :**
+
+1. **Étape 1 : Démarrer Vite seul**
+   ```bash
+   npm run vite:dev
+   ```
+   ✅ Attendre le message : `VITE v7.x.x ready in XXXms`  
+   ✅ Vérifier l'accès : `Local: http://localhost:3000/`
+
+2. **Étape 2 : Dans un second terminal, démarrer Electron**
+   ```bash
+   npm run electron:dev
+   ```
+   ✅ Attendre les logs : `✅ [VITE_READY_03] Serveur Vite prêt et accessible !`  
+   ✅ Attendre : `✅ [VITE_LOADED_05] Interface React chargée avec succès !`
+
+**Alternative (moins fiable) :**
 ```bash
 npm run dev
 ```
+⚠️ **Note** : Cette commande peut parfois échouer à cause de problèmes de timing entre Vite et Electron. Utilisez la méthode en 2 étapes si vous rencontrez des problèmes.
 
 ### Mode production
 ```bash
@@ -116,7 +135,9 @@ src/
 ### Exécution
 - `npm start` - Lance l'application avec les sources actuelles
 - `npm run start:build` - Build + lance l'application en mode production
-- `npm run dev` - Lance en mode développement avec hot reload et Vite
+- `npm run dev` - Lance en mode développement (concurrently Vite + Electron)
+- `npm run vite:dev` - Lance uniquement le serveur Vite de développement
+- `npm run electron:dev` - Lance uniquement Electron en mode développement
 
 ### Build et développement
 - `npm run build` - Build complet avec Vite (main + preload + renderer)
@@ -147,6 +168,63 @@ src/
 - **Content** : Scan automatique des fichiers React/TypeScript
 - **Thème étendu** : Couleurs custom et polices système
 - **Plugins** : Autoprefixer pour compatibilité navigateurs
+
+## 🔧 Dépannage
+
+### Problèmes de démarrage
+
+#### Page blanche dans l'application Electron
+**Symptôme** : L'application Electron s'ouvre mais affiche une page blanche ou une erreur "Le serveur Vite n'est pas accessible".
+
+**Solution** :
+1. Arrêter tous les processus en cours (`Ctrl+C`)
+2. Utiliser la méthode en 2 étapes :
+   ```bash
+   # Terminal 1
+   npm run vite:dev
+   
+   # Attendre le message "VITE ready" puis dans Terminal 2
+   npm run electron:dev
+   ```
+
+#### Erreur "Lock file can not be created"
+**Symptôme** : Messages d'erreur sur les instances multiples.
+
+**Solution** :
+```bash
+# Windows - Tuer tous les processus Electron
+taskkill /f /im electron.exe
+taskkill /f /im node.exe /fi "WINDOWTITLE eq npm*"
+
+# Puis relancer
+npm run vite:dev
+```
+
+#### Port 3000 déjà utilisé
+**Symptôme** : `Error: listen EADDRINUSE :::3000`
+
+**Solution** :
+```bash
+# Windows - Libérer le port 3000
+netstat -ano | findstr :3000
+taskkill /F /PID [PID_DU_PROCESSUS]
+
+# Alternative - Utiliser un autre port
+npm run vite:dev -- --port 3001
+```
+
+### Logs de débogage
+
+L'application génère des logs détaillés avec des IDs uniques pour faciliter le débogage :
+
+- `🔥 [VITE_WAIT_01]` : Démarrage de l'attente du serveur Vite
+- `🔍 [VITE_WAIT_02]` : Tentatives de connexion au serveur
+- `✅ [VITE_READY_03]` : Serveur Vite prêt et accessible
+- `🌐 [VITE_LOAD_04]` : Début du chargement de l'interface React
+- `✅ [VITE_LOADED_05]` : Interface React chargée avec succès
+- `✅ [WINDOW]` : Fenêtre principale affichée
+
+Si vous ne voyez pas ces logs, vérifiez que `NODE_ENV=development` est bien défini.
 
 ## 🏗 Architecture technique
 

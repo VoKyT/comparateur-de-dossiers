@@ -1,13 +1,13 @@
+
 /**
- * @fileoverview Styles globaux Tailwind CSS pour l'application Electron
- * @description Configuration Tailwind avec styles de base pour l'interface desktop
- * @styling Tailwind CSS exclusivement avec customisations minimales
+ * @fileoverview Styles globaux Tailwind CSS v4 pour l'application Electron
+ * @description Configuration Tailwind v4 avec import unique pour l'interface desktop
+ * @styling Tailwind CSS v4 avec syntaxe simplifiée
  * @accessibility Focus visible, contraste élevé, navigation clavier
- * @performance Chargement optimisé des classes utilitaires
+ * @performance Chargement optimisé avec plugin Vite officiel
  * @responsive Design adaptatif pour fenêtres redimensionnables
- * @related tailwind.config.js, App.tsx
+ * @related vite.config.ts, App.tsx
  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import unique Tailwind CSS v4 - remplace les @tailwind directives */
+@import "tailwindcss";

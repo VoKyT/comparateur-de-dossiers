@@ -1,5 +1,24 @@
 # Règles Claude Code - Comparateur de dossiers
 
+## 🎨 RÈGLE ABSOLUE - TOUT DOIT ÊTRE ESTHÉTIQUE
+**PRINCIPE FONDAMENTAL : L'ESTHÉTISME AVANT TOUT**
+- ✅ **TOUTE INTERFACE** doit être visuellement magnifique et moderne
+- ✅ **CHAQUE COMPOSANT** doit avoir un design soigné et professionnel
+- ✅ **PRIVILÉGIER LA BEAUTÉ** : si c'est moche, c'est inacceptable
+- ✅ **UTILISER DES FRAMEWORKS MODERNES** pour un rendu esthétique optimal
+- ✅ **ANIMATIONS FLUIDES** et transitions élégantes obligatoires
+- ✅ **COULEURS HARMONIEUSES** et typographie moderne
+
+**Frameworks esthétiques recommandés (par ordre de préférence) :**
+1. **shadcn/ui** - LE framework moderne 2025, 200+ composants copy-paste, Radix UI + Tailwind CSS
+2. **Mantine** - Design système moderne, +100 composants esthétiques
+3. **Chakra UI** - Interface élégante, excellent UX/UI
+4. **Material UI** - Design Google, très populaire et raffiné
+5. **Ant Design** - Professionnel, niveau entreprise
+6. **Tailwind CSS** - Contrôle total, design custom moderne
+
+**JAMAIS de design basique ou laid - L'esthétisme est NON-NÉGOCIABLE**
+
 ## ⚠️ RÈGLE CRITIQUE - PAS DE SURENGINEERING
 **QUAND L'UTILISATEUR DEMANDE QUELQUE CHOSE DANS LE TCHAT :**
 - ✅ **FAIRE EXACTEMENT** ce qui est demandé, rien de plus
@@ -8,14 +27,15 @@
 - ❌ **NE PAS FAIRE** de "améliorations" non sollicitées
 - ✅ **RESTER SIMPLE** et répondre précisément à la demande
 - ✅ **DEMANDER** si l'utilisateur veut plus avant d'ajouter
+- ✅ **MAIS TOUJOURS ESTHÉTIQUE** - même simple, ça doit être beau
 
 **Exemple :**
-- Demande: "Un bouton au centre" → Réponse: UN bouton au centre, point final
-- Demande: "Changer la couleur" → Réponse: Changer JUSTE la couleur demandée
+- Demande: "Un bouton au centre" → Réponse: UN bouton au centre esthétique, point final
+- Demande: "Changer la couleur" → Réponse: Changer pour une couleur harmonieuse et moderne
 
-## ⚠️ RÈGLE CLAUDE CODE - MODE THINK HARD OBLIGATOIRE
-**TOUJOURS UTILISER LE MODE "THINK HARD" :**
-- ✅ **ACTIVER** le mode think hard de Claude Code pour TOUTES les tâches
+## ⚠️ RÈGLE CLAUDE CODE - MODE THINK OBLIGATOIRE
+**TOUJOURS UTILISER LE MODE "THINK" :**
+- ✅ **ACTIVER** le mode think de Claude Code pour TOUTES les tâches
 - ✅ **RÉFLÉCHIR PROFONDÉMENT** avant d'agir, planifier les étapes
 - ✅ **ANALYSER** le contexte et les implications des actions
 - ✅ **VÉRIFIER** la cohérence avec les règles du projet
@@ -122,6 +142,7 @@ src/
 - Environnement recommandé: Node.js ≥ 20, npm ≥ 10 (Windows PowerShell).
 
 ### Liens officiels
+- **shadcn/ui**: `https://ui.shadcn.com` - Composants modernes copy-paste
 - React: `https://react.dev`
 - Tailwind CSS: `https://tailwindcss.com`
 - Electron: `https://www.electronjs.org`
@@ -180,10 +201,25 @@ module.exports = {
 }
 ```
 
-### Scripts recommandés
-- `start`: lance Electron avec le process `main`.
-- `dev`: lance Electron en dev avec relance au changement (ex: `electronmon`/`nodemon`).
+### Scripts recommandés et obligatoires
+- `start`: lance Electron avec le process `main` (build complet puis run).
+- `dev`: **SCRIPT PRINCIPAL DE DÉVELOPPEMENT** - lance Electron avec Hot Module Replacement (HMR) automatique.
 - `build`: construit l'app (ex: via `electron-builder` ou `electron-forge`).
+
+### ⚠️ RÈGLE OBLIGATOIRE - HOT RELOAD VITE TOUJOURS ACTIVÉ
+**L'APPLICATION DOIT TOUJOURS ÊTRE EN HOT RELOAD AVEC VITE PENDANT LE DÉVELOPPEMENT :**
+- ✅ **PROCÉDURE OBLIGATOIRE** : 
+  1. Terminal 1 : `npm run vite:dev` (attendre "VITE ready")
+  2. Terminal 2 : `npm run electron:dev` (attendre logs de synchronisation)
+- ✅ **HMR Vite activé** : modifications React/TypeScript mises à jour instantanément
+- ✅ **Pas de redémarrage manuel** : Hot Module Replacement automatique
+- ⚠️ **`npm run dev` moins fiable** : problèmes de timing Vite/Electron
+- ❌ **JAMAIS utiliser `npm start`** pendant le développement (trop lent)
+- ✅ **`npm start` uniquement** pour tester la version finale
+- ✅ **Modification main.ts** : Redémarrage automatique d'Electron via electronmon
+- ✅ **Modification React/CSS** : Mise à jour instantanée sans redémarrage
+
+**Objectif :** Développement fluide avec hot reload Vite pour une productivité maximale.
 
 ## ⚠️ RÈGLE CRITIQUE - TEST AUTOMATIQUE DES NOUVELLES FONCTIONNALITÉS
 
