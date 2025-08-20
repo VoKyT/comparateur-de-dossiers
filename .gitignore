@@ -198,7 +198,6 @@ userdata/
 
 # Build tools
 .cache-loader/
-.webpack/
 .rollup.cache/
 
 # Miscellaneous

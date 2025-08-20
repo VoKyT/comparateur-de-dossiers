@@ -21,20 +21,21 @@
   - Affichage des résultats avec différences mises en évidence
   - Export des résultats (JSON, CSV, rapport)
 - **Public cible**: Utilisateurs Windows ayant besoin de synchroniser ou vérifier des dossiers
-- **Stack technique**: Electron + React + JavaScript + Tailwind CSS
+- **Stack technique**: Electron + React + TypeScript + Tailwind CSS
 
 ## Architecture technique obligatoire
 
 ### Stack imposée
 - **Electron** : Framework desktop principal (process main, renderer, preload)
 - **React** : Librairie UI pour tous les composants interface
-- **JavaScript** : Langage principal pour tout le code avec Babel pour la transpilation
+- **TypeScript** : Langage obligatoire pour tout le code applicatif
 - **Tailwind CSS** : Framework CSS utilitaire pour tout le styling
+- **Vite** : Build tool moderne avec hot reload et optimisations
 
-### Intégration Electron + React + JavaScript + Tailwind
-- **Process Main** : Electron pur (Node.js + Electron APIs) en JavaScript
-- **Process Renderer** : React + JavaScript + Tailwind CSS avec Babel
-- **Process Preload** : JavaScript avec APIs Electron sécurisées
+### Intégration Electron + React + Tailwind
+- **Process Main** : Electron pur (Node.js + Electron APIs)
+- **Process Renderer** : React + TypeScript + Tailwind CSS
+- **Process Preload** : TypeScript avec APIs Electron sécurisées
 - **Communication** : IPC sécurisé via contextBridge uniquement
 - **Styling** : Tailwind CSS exclusivement, pas de CSS custom sauf exceptions documentées
 
@@ -43,63 +44,63 @@
 src/
 ├── electron/                    # Code Electron natif
 │   ├── main/                   # Process principal Electron
-│   │   ├── main.js             # Point d'entrée principal
-│   │   ├── window-manager.js   # Gestion des fenêtres
-│   │   └── ipc-handlers.js     # Handlers IPC sécurisés
+│   │   ├── main.ts             # Point d'entrée principal
+│   │   ├── window-manager.ts   # Gestion des fenêtres
+│   │   └── ipc-handlers.ts     # Handlers IPC sécurisés
 │   ├── preload/                # Scripts preload sécurisés
-│   │   └── preload.js          # API sécurisée via contextBridge
+│   │   └── preload.ts          # API sécurisée via contextBridge
 │   └── renderer/               # Interface React
 │       └── index.html          # Shell HTML minimal
 ├── components/                  # Composants React + Tailwind
 │   ├── ui/                     # Composants UI génériques
-│   │   ├── Button.jsx          # Boutons avec variants Tailwind
-│   │   ├── Modal.jsx           # Modales réutilisables
-│   │   └── index.js            # Barrel export
+│   │   ├── Button.tsx          # Boutons avec variants Tailwind
+│   │   ├── Modal.tsx           # Modales réutilisables
+│   │   └── index.ts            # Barrel export
 │   └── layout/                 # Composants de mise en page
-│       ├── Header.jsx          # En-tête application
-│       ├── Sidebar.jsx         # Barre latérale
-│       └── index.js            # Barrel export
+│       ├── Header.tsx          # En-tête application
+│       ├── Sidebar.tsx         # Barre latérale
+│       └── index.ts            # Barrel export
 ├── features/                    # Modules métier React
 │   ├── folder-comparison/       # Feature comparaison
 │   │   ├── components/         # Composants React spécifiques
-│   │   │   ├── FolderSelector.jsx
-│   │   │   ├── ComparisonResult.jsx
-│   │   │   └── index.js
+│   │   │   ├── FolderSelector.tsx
+│   │   │   ├── ComparisonResult.tsx
+│   │   │   └── index.ts
 │   │   ├── hooks/              # Hooks React personnalisés
-│   │   │   ├── useFolderComparison.js
-│   │   │   └── index.js
-│   │   ├── types/              # Types JSDoc et interfaces
-│   │   │   ├── comparison.js
-│   │   │   └── index.js
-│   │   └── index.js            # Point d'entrée feature
+│   │   │   ├── useFolderComparison.ts
+│   │   │   └── index.ts
+│   │   ├── types/              # Types TypeScript
+│   │   │   ├── comparison.ts
+│   │   │   └── index.ts
+│   │   └── index.ts            # Point d'entrée feature
 │   └── settings/               # Feature paramètres
 │       ├── components/
 │       ├── hooks/
 │       ├── types/
-│       └── index.js
-├── shared/                      # Code partagé React/JS
-│   ├── types/                  # Types JSDoc et interfaces JavaScript
-│   ├── utils/                  # Utilitaires purs JavaScript
+│       └── index.ts
+├── shared/                      # Code partagé React/TS
+│   ├── types/                  # Types globaux TypeScript
+│   ├── utils/                  # Utilitaires purs TypeScript
 │   ├── hooks/                  # Hooks React partagés
-│   └── constants/              # Constantes JavaScript
+│   └── constants/              # Constantes TypeScript
 ├── styles/                      # Configuration Tailwind
 │   ├── globals.css             # Imports Tailwind + custom CSS minimal
 │   └── tailwind.config.js      # Configuration Tailwind
-└── App.jsx                     # Composant racine React
+└── App.tsx                     # Composant racine React
 ```
 
 ### Règles d'intégration strictes
 1. **Electron Main** : Aucun import React, uniquement Electron/Node.js APIs
-2. **React Components** : JavaScript + JSX + Tailwind classes avec Babel
-3. **Communication IPC** : Via contextBridge uniquement, validé par JSDoc
+2. **React Components** : Obligatoirement TypeScript + Tailwind classes
+3. **Communication IPC** : Via contextBridge uniquement, typée TypeScript
 4. **State Management** : React hooks (useState, useContext, zustand si complexe)
 5. **Styling** : Tailwind utility classes, pas de CSS inline ou modules
-6. **Build** : Webpack + Babel pour bundle React dans Electron renderer
+6. **Build** : Vite pour bundle React dans Electron renderer
 
 ### Points d'intégration clés
 - **Electron → React** : Chargement du bundle React dans BrowserWindow
 - **React → Electron** : Via window.electronAPI (contextBridge)
-- **JavaScript + Babel** : Transpilation ES6+ pour Electron et React
+- **TypeScript** : Configuration partagée pour Electron et React
 - **Tailwind** : Build CSS intégré dans le processus Electron
 
 ## Installation et configuration
@@ -113,58 +114,35 @@ src/
 - React: `https://react.dev`
 - Tailwind CSS: `https://tailwindcss.com`
 - Electron: `https://www.electronjs.org`
+- Vite: `https://vitejs.dev`
 
 ### Initialisation complète du projet
 ```bash
 # Initialisation Node.js
 npm init -y
 
-# React + JavaScript avec Babel
+# React + TypeScript
 npm install react@latest react-dom@latest
-npm install -D @babel/core@latest @babel/preset-env@latest @babel/preset-react@latest babel-loader@latest
+npm install -D typescript@latest @types/react@latest @types/react-dom@latest
+npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
 
 # Tailwind CSS
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
 
+# Vite
+npm install -D vite@latest @vitejs/plugin-react@latest vite-plugin-electron@latest
+
 # Electron
 npm install -D electron@latest
-
-# Configuration Babel
-npm install -D nodemon@latest
 ```
 
-### Configuration Babel pour React + JavaScript
-```javascript
-// babel.config.js
-module.exports = {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        targets: {
-          electron: '20.0.0'
-        },
-        modules: false
-      }
-    ],
-    [
-      '@babel/preset-react',
-      {
-        runtime: 'automatic',
-        development: process.env.NODE_ENV === 'development'
-      }
-    ]
-  ]
-};
-```
-
-### Configuration Tailwind pour Electron + React + JavaScript
+### Configuration Tailwind pour Electron + React
 ```javascript
 // tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
     "./src/electron/renderer/*.html"
   ],
   theme: {
@@ -200,7 +178,7 @@ module.exports = {
 
 ### En-têtes de fichiers (pour Claude Code)
 
-#### Fichiers TypeScript/JavaScript
+#### Fichiers TypeScript
 ```typescript
 /**
  * @fileoverview [Description courte du rôle du fichier]
@@ -252,7 +230,7 @@ module.exports = {
 #### Fichiers de configuration
 ```javascript
 /**
- * @fileoverview [Type de configuration: webpack, tailwind, electron, etc.]
+ * @fileoverview [Type de configuration: vite, tailwind, electron, etc.]
  * @description [Objectif de cette configuration, ce qu'elle contrôle]
  * @environment [Environnement: dev, prod, test]
  * @dependencies [Outils qui utilisent cette config]
@@ -290,30 +268,34 @@ module.exports = {
 - **Cohésion forte**: regrouper les éléments qui changent ensemble dans le même module.
 - **Inversion de dépendance**: les modules de haut niveau ne dépendent pas des détails d'implémentation.
 
-### Règles d'imports et syntaxe ES6
-- **Syntaxe ES6 obligatoire**: TOUJOURS utiliser `import` (ES6) au lieu de `require` (CommonJS), sauf cas exceptionnels documentés
+### Règles d'imports et syntaxe
+- **Syntaxe ES6 recommandée**: Préférer `import` (ES6) quand c'est compatible avec l'environnement
+- **CommonJS acceptée**: Utiliser `require` (CommonJS) quand nécessaire pour la compatibilité
+- **Cohérence par fichier**: Ne pas mélanger ES6 et CommonJS dans le même fichier
 - **Imports relatifs**: uniquement dans le même dossier (`./`, `../`).
 - **Imports absolus**: pour tout le reste, via alias (`@/features/`, `@/shared/`).
 - **Barrel exports**: chaque dossier expose son API via `index.ts`.
 - **Pas d'imports circulaires**: utiliser l'inversion de dépendance si nécessaire.
 
-**Exemples corrects :**
+**Cas d'usage par environnement :**
 ```typescript
-// ✅ BON - Import ES6
+// ✅ Process Renderer (React) - ES6 recommandé
 import React from 'react';
-import { app } from 'electron';
-import path from 'path';
+import { useState } from 'react';
 
-// ❌ ÉVITER - Require CommonJS (sauf exception)
-const React = require('react');
-const { app } = require('electron');
+// ✅ Process Main (Electron) - CommonJS souvent requis
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
+// ✅ Preload (sécurité) - Selon contexte
+const { contextBridge, ipcRenderer } = require('electron');
 ```
 
-**Configuration ES6 :**
-- **package.json** : `"type": "module"` pour le support ES modules
-- **webpack.config.js** : Utiliser `import` et `export default`
-- **postcss.config.js** : Utiliser `import` et `export default`
-- **TypeScript** : Configuration compatible ES6 modules
+**Configuration flexible :**
+- **package.json** : Pas forcément `"type": "module"` (selon compatibilité)
+- **vite.config** : Format selon l'outil utilisé
+- **postcss.config.js** : Format selon l'intégration
+- **TypeScript** : Configuration compatible avec les deux syntaxes
 
 ### Isolation des features
 - Une feature ne doit **jamais** importer directement une autre feature.
@@ -384,7 +366,7 @@ Avant d'ajouter une fonctionnalité, vérifier:
 ### Gestion du .gitignore
 - **Vérification obligatoire** : À chaque ajout ou modification de fonctionnalité, vérifier si des éléments doivent être ajoutés au `.gitignore`
 - **Types de fichiers à surveiller** :
-  - Nouveaux outils de build (webpack cache, rollup cache, etc.)
+  - Nouveaux outils de build (vite cache, rollup cache, etc.)
   - Fichiers de configuration locaux (.env.local, settings.local.json)
   - Dossiers de sortie (build/, dist/, out/, coverage/)
   - Fichiers générés automatiquement (*.generated.*, auto-imports.d.ts)
