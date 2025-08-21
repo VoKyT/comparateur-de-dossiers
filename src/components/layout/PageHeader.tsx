@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface PageHeaderProps {
@@ -34,12 +35,22 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div className={cn(
-      "mb-8 md:mb-12 text-center w-full",
+      "mb-8 md:mb-12 text-center w-full flex flex-col items-center",
       className
     )}>
-      <h1 className="professional-title-font scroll-m-20 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-balance mb-8 sm:mb-12 md:mb-16 leading-tight">
+      <motion.h1 
+        className="professional-title-font scroll-m-20 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-balance mb-8 sm:mb-12 md:mb-16 leading-tight"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          type: "spring",
+          damping: 20,
+          stiffness: 150,
+          delay: 0.3
+        }}
+      >
         {title}
-      </h1>
+      </motion.h1>
       
       {subtitle && (
         <p className="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed font-medium tracking-wide">

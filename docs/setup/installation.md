@@ -10,6 +10,7 @@
 
 - **shadcn/ui**: `https://ui.shadcn.com` - Composants modernes copy-paste
 - **React**: `https://react.dev`
+- **Framer Motion**: `https://motion.dev` - Animations React modernes
 - **Tailwind CSS**: `https://tailwindcss.com`
 - **Vite**: `https://vitejs.dev`
 - **Radix UI**: `https://radix-ui.com`
@@ -21,9 +22,9 @@
 npm init -y
 ```
 
-### React + TypeScript
+### React + TypeScript + Framer Motion
 ```bash
-npm install react@latest react-dom@latest
+npm install react@latest react-dom@latest framer-motion@latest
 npm install -D typescript@latest @types/react@latest @types/react-dom@latest
 npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
 ```

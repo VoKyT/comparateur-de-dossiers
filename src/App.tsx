@@ -13,27 +13,44 @@
  * @testing Logs d'initialisation avec ID unique
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles/globals.css';
 import { HomePage } from '@/pages';
+import { WelcomeScreen } from '@/components/layout';
+import { AnimatePresence } from 'framer-motion';
 
 /**
- * Application principale avec architecture modulaire professionnelle
+ * Application principale avec écran de bienvenue animé
  * 
  * Fonctionnalités :
- * - Point d'entrée clean selon CLAUDE.md
- * - Délégation totale aux pages modulaires
- * - Séparation des responsabilités stricte
- * - Logs de traçabilité centralisés
- * - Architecture évolutive pour routing futur
+ * - Écran d'accueil avec animation de transition
+ * - Interface principale révélée après clic
+ * - Architecture modulaire professionnelle
+ * - Animations fluides et élégantes
  */
 const App: React.FC = () => {
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [showInterface, setShowInterface] = useState(false);
+
   useEffect(() => {
-    console.log('🆕 [APP] [APP_INIT_01] Application React initialisée');
+    console.log('🆕 [APP] [APP_INIT_01] Application React avec écran de bienvenue initialisée');
     console.log('📊 [APP] [APP_ARCH_02] Architecture modulaire chargée');
   }, []);
 
-  return <HomePage />;
+  const handleWelcomeComplete = () => {
+    setShowWelcome(false);
+    setShowInterface(true);
+  };
+
+  return (
+    <AnimatePresence mode="wait">
+      {showWelcome ? (
+        <WelcomeScreen key="welcome" onWelcomeComplete={handleWelcomeComplete} />
+      ) : showInterface ? (
+        <HomePage key="home" />
+      ) : null}
+    </AnimatePresence>
+  );
 };
 
 export default App;

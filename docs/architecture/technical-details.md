@@ -10,7 +10,7 @@
   - Interface React avec hooks et state management
   - Design system Tailwind CSS + shadcn/ui
   - Composants réutilisables et modulaires
-  - Animations CSS fluides et interactives
+  - Animations Framer Motion professionnelles
   - Support responsive et accessibilité
   - Gestion d'erreurs React avec error boundaries
 
@@ -31,7 +31,7 @@
   - Composants shadcn/ui basés sur Radix UI
   - Interface responsive (mobile-first)
   - Thèmes et customisation Tailwind CSS
-  - Animations et transitions fluides
+  - Animations Framer Motion et transitions de page
   - Support complet de l'accessibilité (ARIA)
   - Icônes Lucide React intégrées
 
@@ -44,7 +44,7 @@
 - [x] **Build system Vite** avec HMR et optimisations
 - [x] **Design system shadcn/ui** avec composants modernes
 - [x] **Interface responsive** avec design mobile-first
-- [x] **Animations interactives** avec effets hover élégants
+- [x] **Animations Framer Motion** avec transitions de page professionnelles
 - [x] **Système de logs de débogage** avec IDs uniques
 - [x] **Suppression Electron** - Application web pure
 
@@ -85,6 +85,7 @@
 ### Production
 - `react` ^19.1.1 : Librairie UI avec hooks
 - `react-dom` ^19.1.1 : Rendu DOM pour React
+- `framer-motion` ^12.2.0 : Animations et transitions professionnelles
 - `@radix-ui/*` : Composants UI accessibles (base shadcn/ui)
 - `lucide-react` : Icônes modernes
 - `clsx` + `tailwind-merge` : Gestion classes CSS

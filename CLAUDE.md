@@ -22,9 +22,16 @@
 - ❌ **NE PAS AJOUTER** de fonctionnalités non demandées
 - ✅ **MAIS TOUJOURS ESTHÉTIQUE** - même simple, ça doit être beau
 
+### 🎯 REFORMULATION SYSTÉMATIQUE DES PROMPTS
+- ✅ **QUESTION CRITIQUE OBLIGATOIRE** : "Cette question peut-elle être mieux posée ?"
+- ✅ **REFORMULER AUTOMATIQUEMENT** chaque prompt pour optimiser la qualité de la réponse
+- ✅ **INTÉGRER LES CONTRAINTES** projet (design, architecture, modularité) dans la reformulation
+- ✅ **PRÉCISER LES ATTENTES** en termes de livrables et de respect des règles
+
 ### 🧠 THINK HARDER OBLIGATOIRE
 - ✅ **TOUJOURS** utiliser le think harder de Claude Code pour toutes les tâches
 - ✅ **RÉFLÉCHIR PROFONDÉMENT** avant d'agir et planifier les étapes
+- ✅ **APPLIQUER LA REFORMULATION** systématique des prompts utilisateur
 
 ### 🔄 RÈGLE CRITIQUE - MODULARITÉ SYSTÉMATIQUE OBLIGATOIRE
 - ✅ **À CHAQUE MODIFICATION DE FICHIER** → se demander : "Ce fichier peut-il être divisé ?"
@@ -59,7 +66,8 @@
 - **[docs/rules/design.md](docs/rules/design.md)** → Règles esthétiques détaillées, frameworks UI, responsivité complète
 
 ### 💻 Développement
-- **[docs/rules/development.md](docs/rules/development.md)** → Anti-surengineering, think harder, validation avant développement
+- **[docs/rules/development.md](docs/rules/development.md)** → Anti-surengineering, reformulation prompts, think harder, validation avant développement
+- **[docs/rules/prompt-reformulation-examples.md](docs/rules/prompt-reformulation-examples.md)** → Exemples concrets de reformulation de prompts utilisateur
 - **[docs/rules/modularity.md](docs/rules/modularity.md)** → Modularité systématique, découpage automatique, règles de décomposition
 
 ### 🏗️ Architecture & Stack
@@ -95,6 +103,7 @@
 ```markdown
 - Tâche UI/Design → Lire docs/rules/design.md
 - Développement feature → Lire docs/rules/development.md + modularity.md
+- Reformulation prompts → Lire docs/rules/prompt-reformulation-examples.md
 - Questions architecture → Lire docs/architecture/overview.md + structure.md
 - Modularisation fichier → Lire docs/rules/modularity.md  
 - Installation/Config → Lire docs/setup/installation.md

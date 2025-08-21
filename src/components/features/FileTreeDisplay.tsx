@@ -21,23 +21,27 @@ export const FileTreeDisplay: React.FC<FileTreeDisplayProps> = ({
   if (fileTree.length === 0) return null;
 
   return (
-    <div className="w-full max-w-4xl bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
-      <div className="max-h-96 overflow-y-auto relative">
-        {/* Affichage du dossier racine avec compteur */}
-        <div className="flex items-center gap-2 py-1 px-2 font-bold text-slate-800 mb-2 border-b border-slate-200 pb-2 font-mono-tree">
+    <div className="h-full flex flex-col bg-white border border-slate-200 rounded-xl shadow-sm">
+      {/* Header avec info du dossier racine */}
+      <div className="flex-shrink-0 border-b border-slate-100 p-6">
+        <div className="flex items-center gap-2 font-bold text-slate-800">
           <div className="w-4 h-4 bg-slate-400 rounded-sm flex-shrink-0"></div>
-          <span className="text-sm">{selectedFolder}/</span>
-          <span className="text-xs text-slate-500">
-            {(() => {
-              const directFolders = fileTree.filter(item => item.type === 'directory').length;
-              const directFiles = fileTree.filter(item => item.type === 'file').length;
-              const parts = [];
-              if (directFolders > 0) parts.push(`${directFolders} dossier${directFolders > 1 ? 's' : ''}`);
-              if (directFiles > 0) parts.push(`${directFiles} fichier${directFiles > 1 ? 's' : ''}`);
-              return parts.length > 0 ? `(${parts.join(' - ')})` : '';
-            })()}
-          </span>
+          <span className="text-base font-mono">{selectedFolder}/</span>
         </div>
+        <div className="text-sm text-slate-500 mt-2">
+          {(() => {
+            const directFolders = fileTree.filter(item => item.type === 'directory').length;
+            const directFiles = fileTree.filter(item => item.type === 'file').length;
+            const parts = [];
+            if (directFolders > 0) parts.push(`${directFolders} folder${directFolders > 1 ? 's' : ''}`);
+            if (directFiles > 0) parts.push(`${directFiles} file${directFiles > 1 ? 's' : ''}`);
+            return parts.length > 0 ? parts.join(' • ') : 'Empty folder';
+          })()}
+        </div>
+      </div>
+      
+      {/* Zone d'arborescence scrollable pleine hauteur */}
+      <div className="flex-1 overflow-y-auto p-4 scrollbar-custom">
         <FileTreeRenderer items={fileTree} />
       </div>
     </div>

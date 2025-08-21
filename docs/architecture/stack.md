@@ -8,8 +8,9 @@
 - **Tailwind CSS** : Framework CSS utilitaire pour tout le styling
 - **shadcn/ui** : Composants modernes basés sur Radix UI
 - **Vite** : Build tool moderne avec hot reload et optimisations
+- **Framer Motion** : Librairie d'animation moderne pour transitions fluides
 
-## 🔧 INTÉGRATION REACT + TYPESCRIPT + TAILWIND + SHADCN/UI
+## 🔧 INTÉGRATION REACT + TYPESCRIPT + TAILWIND + SHADCN/UI + FRAMER MOTION
 
 ### Configuration de base
 - **Application Web** : React + TypeScript + Tailwind CSS + shadcn/ui
@@ -17,6 +18,7 @@
 - **Composants** : shadcn/ui pour design system moderne
 - **État** : React hooks (useState, useContext, zustand si complexe)
 - **Styling** : Tailwind CSS + classes utilitaires cn(), pas de CSS custom
+- **Animations** : Framer Motion pour toutes les transitions et micro-interactions
 
 ## 📁 ARCHITECTURE ULTRA-MODULAIRE OBLIGATOIRE
 
@@ -72,7 +74,8 @@ src/
 3. **Classes CSS** : Utiliser cn() pour combiner les classes Tailwind
 4. **State Management** : React hooks (useState, useContext, zustand si complexe)
 5. **Styling** : Tailwind utility classes, pas de CSS inline ou modules
-6. **Build** : Vite avec HMR pour développement web
+6. **Animations** : Framer Motion obligatoire, éviter les animations CSS @keyframes
+7. **Build** : Vite avec HMR pour développement web
 
 ## 🔗 POINTS D'INTÉGRATION CLÉS
 
@@ -80,6 +83,7 @@ src/
 - **shadcn/ui** : Composants modernes avec Radix UI + Tailwind CSS
 - **TypeScript** : Configuration web avec support React
 - **Tailwind** : Build CSS intégré dans le processus Vite
+- **Framer Motion** : Animations déclaratives avec motion.* components et AnimatePresence
 
 ## 🧩 PRINCIPES DE MODULARITÉ MAXIMALE
 

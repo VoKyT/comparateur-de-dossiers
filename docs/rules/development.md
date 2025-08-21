@@ -15,6 +15,46 @@
 - Demande: "Un bouton au centre" → Réponse: UN bouton au centre esthétique, point final
 - Demande: "Changer la couleur" → Réponse: Changer pour une couleur harmonieuse et moderne
 
+## 🎯 RÈGLE CRITIQUE - REFORMULATION SYSTÉMATIQUE DES PROMPTS
+
+### PROCESSUS OBLIGATOIRE À CHAQUE PROMPT UTILISATEUR
+**AVANT de réaliser toute action, TOUJOURS :**
+
+1. **📝 ANALYSE DU PROMPT INITIAL**
+   - Lire et comprendre la demande utilisateur
+   - Identifier les objectifs explicites et implicites
+   - Détecter les ambiguïtés ou manques d'informations
+
+2. **🔍 QUESTION CRITIQUE**
+   - **Se demander SYSTÉMATIQUEMENT :** *"Cette question peut-elle être mieux posée ?"*
+   - Évaluer la clarté, la précision et l'exhaustivité de la demande
+   - Identifier les éléments manquants pour optimiser la réponse
+
+3. **✨ REFORMULATION OPTIMISÉE**
+   - Reformuler le prompt pour maximiser sa qualité et sa précision
+   - Ajouter les contextes techniques nécessaires
+   - Intégrer les contraintes du projet (design, architecture, etc.)
+   - Préciser les attentes en termes de livrables
+
+4. **⚡ EXÉCUTION SUR BASE REFORMULÉE**
+   - Réaliser les actions selon le prompt reformulé
+   - Appliquer toutes les règles du projet
+   - Documenter les choix effectués
+
+### EXEMPLES DE REFORMULATION
+
+#### Prompt original faible :
+> "Ajoute un bouton"
+
+#### Reformulation optimisée :
+> "Créer un bouton d'action moderne avec design shadcn/ui, conforme aux règles esthétiques du projet (palette slate/blue, hover subtils, responsif), positionné selon l'architecture modulaire existante, avec gestion d'état appropriée et intégration TypeScript complète."
+
+#### Prompt original acceptable :
+> "Améliore l'interface de comparaison"
+
+#### Reformulation optimisée :
+> "Optimiser l'interface de comparaison en analysant d'abord l'UX actuelle, puis améliorer : 1) la lisibilité des résultats, 2) la performance du scroll sur listes longues, 3) les indicateurs visuels de progression, 4) la responsivité mobile, tout en conservant l'architecture modulaire et le design système professionnel existant."
+
 ## ⚠️ RÈGLE CLAUDE CODE - THINK HARDER OBLIGATOIRE
 
 ### TOUJOURS UTILISER LE "THINK HARDER"
@@ -23,9 +63,10 @@
 - ✅ **ANALYSER** le contexte et les implications des actions
 - ✅ **VÉRIFIER** la cohérence avec les règles du projet
 - ✅ **ANTICIPER** les problèmes potentiels et les solutions
+- ✅ **APPLIQUER** la reformulation systématique des prompts
 - ❌ **JAMAIS** d'actions impulsives sans réflexion préalable
 
-**Objectif :** Garantir une réflexion approfondie et structurée pour éviter les erreurs ou oublis.
+**Objectif :** Garantir une réflexion approfondie et structurée avec une compréhension optimisée des demandes.
 
 ## 🔄 RÈGLE CRITIQUE - MODULARITÉ SYSTÉMATIQUE
 

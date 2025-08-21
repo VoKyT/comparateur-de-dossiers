@@ -70,47 +70,67 @@ export const FileList: React.FC<FileListProps> = ({
   };
 
   return (
-    <div className={`${colors.bg} border ${colors.border} rounded-lg p-4`}>
-      <h4 className={`font-bold ${colors.titleText} mb-3 text-center`}>
-        {title}
-        <span className={`block text-sm font-normal ${colors.subtitleText}`}>
-          ({files.length} file{files.length > 1 ? 's' : ''})
-        </span>
-      </h4>
+    <div className="h-full flex flex-col">
+      {/* Header fixe */}
+      <div className="flex-shrink-0 p-4 border-b border-slate-100">
+        <h4 className={`font-bold ${colors.titleText} text-center`}>
+          {title}
+          <span className={`block text-sm font-normal ${colors.subtitleText}`}>
+            ({files.length} file{files.length > 1 ? 's' : ''})
+          </span>
+        </h4>
+      </div>
       
-      <div className="max-h-80 overflow-y-auto space-y-2">
-        {files.map((file, index) => (
-          <div 
-            key={index} 
-            className={`bg-white rounded-lg p-3 border ${colors.itemBorder} ${colors.itemHover} transition-smooth`}
-          >
-            <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 ${colors.dot} rounded-full flex-shrink-0`}></div>
-              <div className="flex-1 min-w-0">
-                <div className={`font-medium ${colors.itemText} truncate`}>
-                  {isComparisonResult(file) ? file.name : file.name}
+      {/* Liste scrollable pleine hauteur */}
+      <div className="flex-1 overflow-y-auto p-4 scrollbar-custom">
+        <div className="space-y-2">
+          {files.map((file, index) => (
+            <div 
+              key={index} 
+              className={`bg-white rounded-lg p-3 border ${colors.itemBorder} ${colors.itemHover} transition-colors duration-200`}
+            >
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 ${colors.dot} rounded-full flex-shrink-0`}></div>
+                <div className="flex-1 min-w-0">
+                  <div className={`font-medium ${colors.itemText} truncate`}>
+                    {isComparisonResult(file) ? file.name : file.name}
+                  </div>
+                  <div className={`text-xs ${colors.itemSubtext}`}>
+                    {isComparisonResult(file) 
+                      ? `${(file.size / 1024).toFixed(1)} KB`
+                      : file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'N/A'
+                    }
+                  </div>
+                  
+                  {showPaths && isComparisonResult(file) && (
+                    <>
+                      <div className={`text-xs ${colors.itemSubtext} truncate mt-1`}>
+                        <span className="font-medium">A:</span> {file.pathA}
+                      </div>
+                      <div className={`text-xs ${colors.itemSubtext} truncate`}>
+                        <span className="font-medium">B:</span> {file.pathB}
+                      </div>
+                    </>
+                  )}
                 </div>
-                <div className={`text-xs ${colors.itemSubtext}`}>
-                  {isComparisonResult(file) 
-                    ? `${(file.size / 1024).toFixed(1)} KB`
-                    : file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'N/A'
-                  }
-                </div>
-                
-                {showPaths && isComparisonResult(file) && (
-                  <>
-                    <div className={`text-xs ${colors.itemSubtext} truncate`}>
-                      A: {file.pathA}
-                    </div>
-                    <div className={`text-xs ${colors.itemSubtext} truncate`}>
-                      B: {file.pathB}
-                    </div>
-                  </>
-                )}
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+          
+          {/* Message si liste vide */}
+          {files.length === 0 && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className={`w-12 h-12 ${colors.bg} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                  <svg className={`w-6 h-6 ${colors.subtitleText}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <p className={`text-sm ${colors.subtitleText}`}>No files found</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

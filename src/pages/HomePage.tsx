@@ -14,6 +14,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 // Layout components - Architecture modulaire
 import { AppLayout, PageHeader } from '@/components/layout';
@@ -123,7 +124,16 @@ export const HomePage: React.FC = () => {
 
   return (
     <AppLayout>
-      <div className="h-full flex flex-col">
+      <motion.div 
+        className="h-full flex flex-col"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 0.6, 
+          ease: "easeOut",
+          delay: 0.1 
+        }}
+      >
         {/* Header compact avec titre et actions */}
         <div className="flex-shrink-0 mb-6">
           <PageHeader 
@@ -219,7 +229,7 @@ export const HomePage: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </AppLayout>
   );
 };

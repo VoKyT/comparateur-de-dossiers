@@ -12,6 +12,38 @@
 /* Import unique Tailwind CSS v4 - remplace les @tailwind directives */
 @import "tailwindcss";
 
+/* Styles pour zone de travail pleine hauteur */
+.work-area {
+  height: calc(100vh - 60px); /* Soustrait la hauteur du footer */
+  min-height: 0; /* Permet le shrinking des flex items */
+}
+
+/* Scrollbars personnalisées professionnelles */
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 1px solid #f8fafc;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Animations professionnelles subtiles */
 .transition-smooth {
   transition: all 0.2s ease-in-out;
@@ -21,6 +53,49 @@
   transform: translateY(-1px);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
+
+/* Animations pour l'écran de bienvenue */
+.welcome-fade-in {
+  animation: welcomeFadeIn 1.2s ease-out forwards;
+}
+
+.interface-reveal {
+  animation: interfaceReveal 1s ease-out forwards;
+}
+
+/* Délais d'animation pour effet séquentiel */
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* Keyframes pour animations avancées */
+@keyframes welcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes interfaceReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animations maintenant gérées par Framer Motion pour plus de fluidité */
 
 /* Police professionnelle pour les titres */
 .professional-title-font {
@@ -38,4 +113,28 @@
 /* Police monospace pour l'arborescence de fichiers */
 .font-mono-tree {
   font-family: "Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace;
+}
+
+/* Responsive utilities pour grandes zones */
+@media (max-width: 640px) {
+  .mobile-padding {
+    padding: 1rem;
+  }
+  
+  .mobile-gap {
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* Optimisations pour les écrans très larges */
+@media (min-width: 1440px) {
+  .max-work-width {
+    max-width: calc(100vw - 4rem);
+  }
 }
