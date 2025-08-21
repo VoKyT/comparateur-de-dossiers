@@ -15,7 +15,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ActionButtonProps {
@@ -23,7 +22,6 @@ interface ActionButtonProps {
   onClick: () => void;
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'default' | 'lg';
-  icon?: LucideIcon;
   className?: string;
   disabled?: boolean;
 }
@@ -43,18 +41,17 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   onClick,
   variant = 'primary',
   size = 'lg',
-  icon: IconComponent,
   className,
   disabled = false
 }) => {
   const getVariantStyles = () => {
     switch (variant) {
       case 'primary':
-        return "group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 rounded-xl md:rounded-2xl font-bold shadow-xl hover:shadow-2xl";
+        return "group bg-gradient-to-r from-sky-300 to-pink-300 hover:from-sky-400 hover:to-pink-400 text-white border-0 rounded-full font-bold shadow-xl hover:shadow-2xl animate-pulse";
       case 'secondary':
-        return "group bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-xl font-semibold shadow-lg hover:shadow-xl";
+        return "group bg-slate-700 hover:bg-slate-800 text-white border-0 rounded-xl font-semibold shadow-lg hover:shadow-xl";
       case 'outline':
-        return "group bg-white/80 hover:bg-white text-blue-700 hover:text-blue-800 border-2 border-blue-300/50 hover:border-blue-400/70 rounded-xl font-semibold shadow-lg hover:shadow-xl";
+        return "group bg-white hover:bg-gray-50 text-slate-900 hover:text-black border-2 border-slate-300 hover:border-slate-400 rounded-xl font-semibold shadow-lg hover:shadow-xl";
       default:
         return "";
     }
@@ -67,7 +64,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       case 'default':
         return "px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base";
       case 'lg':
-        return "px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl";
+        return "px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 text-sm sm:text-base";
       default:
         return "";
     }
@@ -85,9 +82,6 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
         className
       )}
     >
-      {IconComponent && (
-        <IconComponent className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 sm:mr-3 group-hover:rotate-12 transition-transform duration-300" />
-      )}
       {children}
     </Button>
   );

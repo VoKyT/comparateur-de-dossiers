@@ -34,17 +34,16 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div className={cn(
-      "mb-8 md:mb-12 text-center",
-      "max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-3xl",
+      "mb-8 md:mb-12 text-center w-full",
       className
     )}>
-      <h1 className="scroll-m-20 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight mb-2 sm:mb-3 md:mb-4 bg-gradient-to-r from-blue-900 to-blue-700 bg-clip-text text-transparent text-balance">
+      <h1 className="scroll-m-20 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-500 bg-clip-text text-transparent drop-shadow-2xl text-balance mb-8 sm:mb-12 md:mb-16 leading-tight transition-all duration-500 hover:scale-110 hover:rotate-1 hover:drop-shadow-3xl cursor-pointer" style={{ fontFamily: '"Fredoka One", "Comic Sans MS", "Bubblegum Sans", "Nunito", cursive' }}>
         {title}
       </h1>
       
       {subtitle && (
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-blue-800/80 leading-5 sm:leading-6 md:leading-7 font-medium tracking-wide">
-          {subtitle}
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-sky-700 leading-relaxed font-medium tracking-wide drop-shadow-md">
+          💖 {subtitle} 💖
         </p>
       )}
     </div>

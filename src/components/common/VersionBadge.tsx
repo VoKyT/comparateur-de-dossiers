@@ -41,7 +41,7 @@ export const VersionBadge: React.FC<VersionBadgeProps> = ({
     <div className={cn("mb-8 md:mb-10", className)}>
       <Badge 
         variant="outline" 
-        className="bg-blue-800/10 border-blue-600/30 text-blue-800 px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold tracking-wide shadow-sm"
+        className="bg-white/90 border-slate-400/50 text-slate-800 px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold tracking-wide shadow-lg"
       >
         <IconComponent className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
         Version {version} • {mode}

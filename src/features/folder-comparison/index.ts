@@ -14,4 +14,4 @@ export * from './types';
 export * from './hooks';
 
 // Components - Interface utilisateur
-export * from './components';
+export * from './components/index';

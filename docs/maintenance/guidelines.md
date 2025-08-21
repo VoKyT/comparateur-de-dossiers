@@ -2,6 +2,22 @@
 
 ## 🔧 MAINTENANCE DU CLAUDE.MD
 
+### ⚠️ RÈGLE CRITIQUE - MODULARITÉ DES FICHIERS MD
+**PRINCIPE FONDAMENTAL : Fichiers courts et focalisés**
+- ✅ **LECTURE RAPIDE** : Chaque fichier docs/ doit se lire en < 2 minutes
+- ✅ **FOCUS UNIQUE** : Un fichier = Un domaine précis (design, dev, etc.)
+- ✅ **DIVISION SYSTÉMATIQUE** : Si > 150 lignes, chercher division possible
+- ✅ **NAVIGATION FLUIDE** : 5-10 petits fichiers > 1 gros fichier
+- ✅ **REPÉRAGE FACILE** : Titres clairs, sections courtes, exemples concis
+- ❌ **JAMAIS de fichiers MD monstre** - Diviser impérativement
+
+### Indicateurs de division nécessaire
+- **Longueur** : > 150 lignes ou lecture > 2 minutes
+- **Sujets multiples** : Mélange domaines (ex: design + git)
+- **Sections trop longues** : Une section > 50 lignes
+- **Navigation difficile** : Besoin de scroll pour retrouver info
+- **Contextes différents** : Règles pour situations distinctes
+
 ### Vérification avant mise à jour du CLAUDE.md
 Avant de modifier le fichier CLAUDE.md principal, TOUJOURS vérifier :
 

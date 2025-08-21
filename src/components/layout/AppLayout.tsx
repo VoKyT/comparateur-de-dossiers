@@ -31,7 +31,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   return (
     <div className={cn(
       "min-h-screen w-full flex items-center justify-center",
-      "bg-gradient-to-br from-blue-50 to-blue-200",
+      "bg-gradient-to-br from-blue-400 via-pink-200 to-blue-400",
       "font-sans overflow-hidden",
       "p-4 sm:p-6 md:p-8",
       className

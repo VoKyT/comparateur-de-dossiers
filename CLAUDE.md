@@ -2,9 +2,15 @@
 
 ## 🎯 RÈGLES ABSOLUES CRITIQUES
 
-### 🎨 ESTHÉTISME OBLIGATOIRE
+### 🎨 ESTHÉTISME KAWAII OBLIGATOIRE
 - ✅ **TOUTE INTERFACE** doit être visuellement magnifique avec **shadcn/ui + Tailwind CSS**
-- ❌ **JAMAIS de design basique ou laid** - L'esthétisme est NON-NÉGOCIABLE
+- ✅ **THÈME KAWAII BABY BLUE** : Style mignon obligatoire (sky-200/300/400 + pink-200/300/400 + rose-300)
+- ✅ **STYLE MIGNON KAWAII** : Esthétique douce, adorable avec formes rondes (rounded-2xl, rounded-full)
+- ✅ **EMOJIS KAWAII** : 🌸🌺🥺🎀💖✨🌈☁️ systématiquement utilisés
+- ✅ **ANIMATIONS DOUCES** : bounce, pulse, transitions délicates pour effet kawaii
+- ✅ **LISIBILITÉ CRITIQUE** : Textes TOUJOURS lisibles sur tous fonds pastels
+- ✅ **TYPOGRAPHIE HIÉRARCHISÉE** : Tailles de police logiques par catégories (Hero/Title/Body/Caption)
+- ❌ **JAMAIS de design basique ou laid** - L'esthétisme kawaii est NON-NÉGOCIABLE
 
 ### 📱 RESPONSIVITÉ PARFAITE 
 - ✅ **TOUTE INTERFACE** doit s'adapter parfaitement à toutes les tailles d'écran
@@ -21,13 +27,25 @@
 - ✅ **RÉFLÉCHIR PROFONDÉMENT** avant d'agir et planifier les étapes
 
 ## 📋 Description du projet
-- **Objectif**: Application web moderne pour comparer le contenu de deux dossiers
-- **Stack**: React + TypeScript + Tailwind CSS + shadcn/ui + Vite
-- **Architecture**: Application web pure avec interface responsive
+- **Objectif**: Application web moderne pour comparer le contenu de deux dossiers et identifier les fichiers identiques
+- **Fonctionnalités principales**:
+  - 🗂️ **Exploration de dossier unique** : Visualisation d'arborescence avec numérotation intelligente
+  - 🔍 **Comparaison de deux dossiers** : Détection de fichiers identiques par nom + taille
+  - 📊 **Résultats détaillés** : Statistiques et liste des doublons avec chemins
+  - 🌸 **Interface kawaii** : Design mignon avec emojis colorés et animations douces
+- **Stack**: React + TypeScript + Tailwind CSS + shadcn/ui + Vite + File System Access API
+- **Architecture**: Application web pure avec interface responsive kawaii
 
 ## 📚 MODULES SPÉCIALISÉS
 
 **Pour Claude Code :** Consultez les modules selon le contexte de votre tâche
+
+### ⚠️ RÈGLE CRITIQUE - MODULARITÉ DES FICHIERS MD
+- ✅ **FICHIERS COURTS** : Chaque module docs/ doit rester concis et focalisé
+- ✅ **REPÉRAGE FACILE** : Si lecture > 2 minutes, diviser en sous-modules
+- ✅ **MODULARITÉ OBLIGATOIRE** : Fichier long = signal de division nécessaire
+- ✅ **NAVIGATION FLUIDE** : Préférer plusieurs petits fichiers qu'un gros
+- ❌ **JAMAIS de fichiers MD monstre** - Diviser systématiquement
 
 ### 🎨 Design & Interface
 - **[docs/rules/design.md](docs/rules/design.md)** → Règles esthétiques détaillées, frameworks UI, responsivité complète
