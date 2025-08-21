@@ -29,10 +29,18 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWelcomeComplete 
   return (
     <motion.div 
       className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 z-50 flex items-center justify-center overflow-hidden"
-      initial={{ opacity: 1 }}
+      initial={{ 
+        opacity: 1,
+        scale: 1
+      }}
       exit={{ 
         opacity: 0,
-        transition: { duration: 0.8, ease: "easeOut" }
+        scale: 0.95,
+        y: -30,
+        transition: { 
+          duration: 0.8, 
+          ease: "easeOut" 
+        }
       }}
     >
       <div className="relative">

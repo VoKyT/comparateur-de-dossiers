@@ -45,10 +45,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
       
       {/* Footer discret fixé en bas */}
       <footer className="border-t border-slate-200 bg-white/80 backdrop-blur-sm">
-        <div className="px-6 py-3">
-          <p className="text-slate-500 text-xs font-medium text-center">
-            Made by VKT
-          </p>
+        <div className="px-6 py-4">
+          <div className="flex items-center justify-center space-x-2">
+            <div className="h-px w-8 bg-gradient-to-r from-transparent to-slate-300"></div>
+            <p className="text-slate-600 text-sm font-semibold tracking-wider uppercase">
+              Made by <span className="text-blue-700 font-bold">VKT</span>
+            </p>
+            <div className="h-px w-8 bg-gradient-to-l from-transparent to-slate-300"></div>
+          </div>
         </div>
       </footer>
     </div>

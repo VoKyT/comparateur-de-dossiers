@@ -21,6 +21,7 @@ import { AppLayout, PageHeader } from '@/components/layout';
 
 // Common reusable components - Réutilisabilité
 import { ActionButton } from '@/components/common';
+import { Button } from '@/components/ui/button';
 
 // Feature components - Composants métier
 import { ComparisonGrid, FileTreeDisplay } from '@/components/features';
@@ -34,6 +35,9 @@ import { FileItem, ComparisonResult, ComparisonData, DirectoryData } from '@/sha
 // Business logic hooks
 import { useFileSystem, useComparison, useFolderSelection } from '@/shared/hooks';
 
+// Icons
+import { ArrowLeft } from 'lucide-react';
+
 /**
  * Page d'accueil avec architecture modulaire professionnelle
  * 
@@ -46,7 +50,11 @@ import { useFileSystem, useComparison, useFolderSelection } from '@/shared/hooks
  */
 // Types déplacés dans src/shared/types/
 
-export const HomePage: React.FC = () => {
+interface HomePageProps {
+  onBackToWelcome?: () => void;
+}
+
+export const HomePage: React.FC<HomePageProps> = ({ onBackToWelcome }) => {
   const [selectedFolder, setSelectedFolder] = useState<string>('');
   const [fileTree, setFileTree] = useState<FileItem[]>([]);
   const [comparisonData, setComparisonData] = useState<ComparisonData | null>(null);
@@ -126,14 +134,172 @@ export const HomePage: React.FC = () => {
     <AppLayout>
       <motion.div 
         className="h-full flex flex-col"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ 
+          opacity: 0, 
+          y: 50,
+          scale: 0.95
+        }}
+        animate={{ 
+          opacity: 1, 
+          y: 0,
+          scale: 1
+        }}
+        exit={{
+          opacity: 0,
+          y: -30,
+          scale: 1.02,
+          transition: { 
+            duration: 0.8, 
+            ease: "easeOut" 
+          }
+        }}
         transition={{ 
-          duration: 0.6, 
+          duration: 0.8, 
           ease: "easeOut",
           delay: 0.1 
         }}
       >
+        {/* Bouton retour avec animations ultra-stylées */}
+        {onBackToWelcome && (
+          <motion.div 
+            className="absolute top-4 left-4 z-50"
+            initial={{ 
+              opacity: 0, 
+              x: -100, 
+              rotate: -25,
+              scale: 0.6
+            }}
+            animate={{ 
+              opacity: 1, 
+              x: 0, 
+              rotate: 0,
+              scale: 1
+            }}
+            exit={{
+              opacity: 0,
+              x: -80,
+              scale: 0.8,
+              rotate: -15
+            }}
+            transition={{ 
+              type: "spring",
+              damping: 15,
+              stiffness: 200,
+              delay: 0.4
+            }}
+          >
+            <motion.button
+              onClick={() => {
+                // Animation de sortie ultra-stylée
+                setTimeout(() => {
+                  onBackToWelcome();
+                }, 300);
+              }}
+              className="group relative flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-white to-slate-50 border border-slate-200 rounded-xl shadow-md text-slate-700 font-semibold overflow-hidden"
+              whileHover={{ 
+                scale: 1.15,
+                y: -4,
+                rotateX: 10,
+                boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                borderColor: "rgb(59 130 246)",
+                background: "linear-gradient(135deg, rgb(239 246 255) 0%, rgb(219 234 254) 100%)"
+              }}
+              whileTap={{ 
+                scale: 0.92,
+                y: -1,
+                rotateX: 0
+              }}
+              exit={{
+                scale: 0.85,
+                opacity: 0.5,
+                y: 10
+              }}
+              transition={{ 
+                type: "spring", 
+                damping: 12, 
+                stiffness: 500,
+                mass: 0.8
+              }}
+              style={{
+                transformStyle: "preserve-3d",
+                backfaceVisibility: "hidden"
+              }}
+            >
+              {/* Effet de brillance au hover */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "200%" }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              />
+              
+              {/* Icône avec animation avancée */}
+              <motion.div
+                className="relative z-10"
+                animate={{ 
+                  rotate: [0, -15, 5, 0],
+                  x: [0, -2, 1, 0]
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 3, 
+                  ease: "easeInOut",
+                  repeatType: "reverse",
+                  delay: 1
+                }}
+                whileHover={{
+                  rotate: -20,
+                  x: -3,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                <ArrowLeft size={18} className="text-slate-600 group-hover:text-blue-600 transition-colors duration-300" />
+              </motion.div>
+              
+              {/* Texte avec animation */}
+              <motion.span 
+                className="select-none relative z-10 text-slate-700 group-hover:text-blue-700 transition-colors duration-300"
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                Retour
+              </motion.span>
+              
+              {/* Particules décoratives */}
+              <motion.div
+                className="absolute -top-1 -right-1 w-2 h-2 bg-blue-400 rounded-full opacity-0"
+                animate={{ 
+                  opacity: [0, 1, 0],
+                  scale: [0.5, 1, 0.5],
+                  y: [0, -5, 0]
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  delay: 2,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-slate-400 rounded-full opacity-0"
+                animate={{ 
+                  opacity: [0, 0.7, 0],
+                  scale: [0.3, 1, 0.3],
+                  x: [0, 3, 0]
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2.5,
+                  delay: 1.5,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.button>
+          </motion.div>
+        )}
+
         {/* Header compact avec titre et actions */}
         <div className="flex-shrink-0 mb-6">
           <PageHeader 
@@ -142,7 +308,7 @@ export const HomePage: React.FC = () => {
           
           {/* Panel de contrôles compacts */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-            <div className="flex flex-col lg:flex-row items-center gap-4">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4">
               {/* Boutons de comparaison */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <ActionButton

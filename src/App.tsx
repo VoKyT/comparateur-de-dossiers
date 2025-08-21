@@ -42,12 +42,17 @@ const App: React.FC = () => {
     setShowInterface(true);
   };
 
+  const handleBackToWelcome = () => {
+    setShowInterface(false);
+    setShowWelcome(true);
+  };
+
   return (
     <AnimatePresence mode="wait">
       {showWelcome ? (
         <WelcomeScreen key="welcome" onWelcomeComplete={handleWelcomeComplete} />
       ) : showInterface ? (
-        <HomePage key="home" />
+        <HomePage key="home" onBackToWelcome={handleBackToWelcome} />
       ) : null}
     </AnimatePresence>
   );
