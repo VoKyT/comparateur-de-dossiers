@@ -87,3 +87,14 @@
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
 }
+
+/* Police kawaii pour le titre */
+.kawaii-title-font {
+  font-family: "Pacifico", "Righteous", "Comfortaa", "Fredoka One", cursive;
+  color: white;
+  text-shadow: 
+    2px 2px 0px #000000,
+    -2px -2px 0px #000000,
+    2px -2px 0px #000000,
+    -2px 2px 0px #000000;
+}

@@ -47,9 +47,9 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'primary':
-        return "group bg-gradient-to-r from-sky-300 to-pink-300 hover:from-sky-400 hover:to-pink-400 text-white border-0 rounded-full font-bold shadow-xl hover:shadow-2xl animate-pulse";
+        return "group bg-gradient-to-r from-sky-400 to-pink-400 hover:from-sky-500 hover:to-pink-500 text-white border-0 rounded-full font-bold shadow-xl hover:shadow-2xl";
       case 'secondary':
-        return "group bg-slate-700 hover:bg-slate-800 text-white border-0 rounded-xl font-semibold shadow-lg hover:shadow-xl";
+        return "group bg-slate-800 hover:bg-slate-900 text-white border-0 rounded-xl font-semibold shadow-lg hover:shadow-xl";
       case 'outline':
         return "group bg-white hover:bg-gray-50 text-slate-900 hover:text-black border-2 border-slate-300 hover:border-slate-400 rounded-xl font-semibold shadow-lg hover:shadow-xl";
       default:

@@ -37,7 +37,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       "mb-8 md:mb-12 text-center w-full",
       className
     )}>
-      <h1 className="scroll-m-20 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-500 bg-clip-text text-transparent drop-shadow-2xl text-balance mb-8 sm:mb-12 md:mb-16 leading-tight transition-all duration-500 hover:scale-110 hover:rotate-1 hover:drop-shadow-3xl cursor-pointer" style={{ fontFamily: '"Fredoka One", "Comic Sans MS", "Bubblegum Sans", "Nunito", cursive' }}>
+      <h1 className="kawaii-title-font scroll-m-20 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter text-balance mb-8 sm:mb-12 md:mb-16 leading-tight">
         {title}
       </h1>
       
