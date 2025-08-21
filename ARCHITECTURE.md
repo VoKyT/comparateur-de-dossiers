@@ -1,15 +1,15 @@
 # Architecture - Comparateur de Dossiers
 
 ## Vue d'ensemble
-Application Electron moderne utilisant **React + TypeScript + Tailwind CSS** pour comparer le contenu de deux dossiers avec une interface utilisateur élégante et moderne.
+Application web moderne utilisant **React + TypeScript + Tailwind CSS + Vite** pour comparer le contenu de deux dossiers avec une interface utilisateur élégante et moderne.
 
 ## Stack technique
-- **Framework Desktop** : Electron ^37.3.1
+- **Application Type** : Single Page Application (SPA)
 - **UI Framework** : React ^19.1.1 avec hooks modernes
 - **Langage** : TypeScript ^5.9.2 (strict mode)
-- **Styling** : Tailwind CSS ^4.1.12 + PostCSS
-- **Build** : Vite ^7.1.3 + plugins Electron
-- **Runtime** : Node.js ≥ 20, npm ≥ 10
+- **Styling** : Tailwind CSS ^4.1.12 + shadcn/ui
+- **Build** : Vite ^7.1.3 avec HMR
+- **Runtime** : Navigateurs modernes, Node.js ≥ 20 (dev)
 
 ## Structure actuelle
 
@@ -31,23 +31,18 @@ comparateur_de_dossiers/
 ### 🔧 Dossier src/ (Code source)
 ```
 src/
-├── electron/              # Code Electron TypeScript
-│   ├── main/             # Processus principal Electron  
-│   │   └── main.ts       # Point d'entrée TS, gestion fenêtres, handlers IPC
-│   ├── preload/          # Scripts preload sécurisés
-│   │   └── preload.ts    # API contextBridge typée, communication sécurisée
-│   └── renderer/         # Interface utilisateur
-│       └── index.html    # Shell HTML pour React
-├── components/           # Composants React + Tailwind
-│   ├── ui/              # Composants UI génériques réutilisables
+├── components/           # Composants React + Tailwind + shadcn/ui
+│   ├── ui/              # Composants UI shadcn/ui (Button, Badge, etc.)
 │   └── layout/          # Composants de mise en page
 ├── features/            # Modules métier React
 │   └── folder-comparison/ # Feature comparaison de dossiers
 │       ├── components/   # Composants React spécifiques
 │       ├── hooks/       # Hooks React personnalisés
 │       └── types/       # Types TypeScript de la feature
+├── lib/                 # Utilitaires et configuration
+│   └── utils.ts         # Utilitaires (cn, etc.)
 ├── shared/              # Code partagé TypeScript
-│   ├── types/           # Types globaux (electron.ts, etc.)
+│   ├── types/           # Types globaux
 │   ├── utils/           # Utilitaires TypeScript purs
 │   ├── hooks/           # Hooks React partagés
 │   └── constants/       # Constantes typées
@@ -57,74 +52,70 @@ src/
 └── index.tsx            # Point d'entrée React
 ```
 
-## Architecture Electron
+## Architecture Web
 
-### Processus Principal (main.ts)
-- **Responsabilité** : Gestion du cycle de vie de l'application
+### Application React (App.tsx)
+- **Responsabilité** : Interface utilisateur moderne React
 - **Langage** : TypeScript avec typage strict
 - **Fonctionnalités** :
-  - Création et gestion de la fenêtre principale (1200x800px)
-  - Configuration de sécurité renforcée (contextIsolation, sandbox en prod)
-  - Handlers IPC typés pour communication avec React
-  - Menu d'application multiplateforme avec raccourcis
-  - Gestion des événements système (fermeture, activation)
-  - APIs système : dialogues, notifications, système de fichiers
-- **Sécurité** : Isolation complète du contexte Node.js + validation des entrées
-
-### Script Preload (preload.ts)
-- **Responsabilité** : Communication sécurisée et typée entre processus
-- **Langage** : TypeScript avec interfaces strictes
-- **API exposée typée** (ElectronAPI) :
-  - `getVersions()` / `getSystemInfo()` : Informations système
-  - `fileSystem` : API de gestion fichiers (selectFolder, readDirectory, getFileStats)
-  - `app` : Contrôles fenêtre typés (closeApp, minimizeApp, maximizeApp)
-  - `notifications` : Système de notifications typé
-  - `preferences` : Gestion thèmes et préférences typées
-  - `development` : Outils de développement (mode dev uniquement)
-- **Sécurité** : contextBridge exclusivement + validation des paramètres
-
-### Interface React (index.html + App.tsx)
-- **Responsabilité** : Interface utilisateur moderne React
-- **Architecture** : Single Page Application avec composants
-- **Fonctionnalités** :
-  - Shell HTML minimal pour React
+  - Single Page Application (SPA) pure
   - Interface React avec hooks et state management
-  - Design system Tailwind CSS avec thèmes
+  - Design system Tailwind CSS + shadcn/ui
   - Composants réutilisables et modulaires
-  - Communication typée avec Electron via window.electronAPI
-  - Gestion d'erreurs React avec error boundaries
+  - Animations CSS fluides et interactives
   - Support responsive et accessibilité
+  - Gestion d'erreurs React avec error boundaries
+
+### Build System (Vite)
+- **Responsabilité** : Build moderne et développement
+- **Fonctionnalités** :
+  - Hot Module Replacement (HMR) instantané
+  - Serveur de développement rapide (port 3000)
+  - Build optimisé pour production
+  - TypeScript compilation intégrée
+  - Optimisations automatiques (tree shaking, code splitting)
+  - Support PostCSS et Tailwind CSS
+
+### Interface Utilisateur (React + shadcn/ui)
+- **Responsabilité** : Composants UI modernes et accessibles
+- **Architecture** : Design system avec composants réutilisables
+- **Fonctionnalités** :
+  - Composants shadcn/ui basés sur Radix UI
+  - Interface responsive (mobile-first)
+  - Thèmes et customisation Tailwind CSS
+  - Animations et transitions fluides
+  - Support complet de l'accessibilité (ARIA)
+  - Icones Lucide React intégrées
 
 ## État du développement
 
-### ✅ Implémenté (v1.2.2)
-- [x] **Architecture React + TypeScript + Tailwind complète**
-- [x] **Migration complète vers TypeScript** (main.ts, preload.ts)
+### ✅ Implémenté (v1.3.0)
+- [x] **Migration complète vers application web pure**
+- [x] **Architecture React + TypeScript + Tailwind + shadcn/ui**
 - [x] **Interface React moderne** avec composants et hooks
-- [x] **Build system Vite** avec hot reload et optimisations
-- [x] **Communication IPC typée** avec validation des données
-- [x] **Design system Tailwind CSS** avec thème personnalisé
-- [x] **Synchronisation Vite-Electron robuste** avec logs détaillés
+- [x] **Build system Vite** avec HMR et optimisations
+- [x] **Design system shadcn/ui** avec composants modernes
+- [x] **Interface responsive** avec design mobile-first
+- [x] **Animations interactives** avec effets hover élégants
 - [x] **Système de logs de débogage** avec IDs uniques
-- [x] **Gestion d'instances unique simplifiée** (plus de conflits)
-- [x] Structure de base Electron sécurisée
-- [x] Fenêtre principale fonctionnelle et stable
-- [x] Architecture modulaire (features, components, shared)
-- [x] Scripts de développement séparés (vite:dev + electron:dev)
-- [x] Configuration complète (tsconfig, vite, postcss, tailwind)
-- [x] Documentation mise à jour avec procédures de dépannage
+- [x] **Suppression Electron** - Application web pure
+- [x] Structure web modulaire (components, features, lib)
+- [x] Scripts simplifiés (npm run dev uniquement)
+- [x] Configuration web (tsconfig, vite, postcss, tailwind)
+- [x] Documentation mise à jour pour architecture web
 
 ### 🚧 En cours de développement
 - [ ] Aucun développement actif
 
 ### 📋 À venir (Roadmap)
 
-#### Phase 1 - Migration React + Tailwind ✅ TERMINÉ
-- [x] Installation et configuration React + TypeScript
+#### Phase 1 - Migration Web Pure ✅ TERMINÉ
+- [x] Suppression complète d'Electron
+- [x] Configuration React + TypeScript + shadcn/ui
 - [x] Configuration Tailwind CSS + PostCSS  
-- [x] Migration interface HTML vers composants React
-- [x] Structure modulaire des composants
-- [x] Build system Vite intégré
+- [x] Interface moderne avec composants shadcn/ui
+- [x] Structure modulaire web (components, lib, features)
+- [x] Build system Vite avec HMR
 
 #### Phase 2 - Fonctionnalités core
 - [ ] Interface de sélection de dossiers
@@ -145,11 +136,11 @@ src/
 - **Composants réutilisables** : UI générique dans `components/`
 - **Services partagés** : Logique métier dans `services/`
 
-### Sécurité Electron
-- **Isolation du contexte** : contextIsolation: true
-- **Node.js désactivé** : nodeIntegration: false
-- **Communication IPC** : Via contextBridge uniquement
-- **Validation des entrées** : Toutes les données utilisateur validées
+### Sécurité Web
+- **CSP (Content Security Policy)** : Protection contre XSS
+- **Validation des entrées** : Sanitisation des données utilisateur
+- **HTTPS uniquement** : Communications sécurisées
+- **Composants shadcn/ui** : Sécurité et accessibilité intégrées
 
 ### Performance
 - **Chargement différé** : Composants loadés à la demande
@@ -159,48 +150,40 @@ src/
 ## Dépendances clés
 
 ### Production
-- `electron` ^37.3.1 : Framework desktop principal
 - `react` ^19.1.1 : Librairie UI avec hooks
 - `react-dom` ^19.1.1 : Rendu DOM pour React
+- `@radix-ui/*` : Composants UI accessibles (base shadcn/ui)
+- `lucide-react` : Icônes modernes
+- `clsx` + `tailwind-merge` : Gestion classes CSS
 
 ### Développement
 - `typescript` ^5.9.2 : Compilation TypeScript
 - `@types/react` + `@types/react-dom` : Types React
 - `tailwindcss` ^4.1.12 : Framework CSS utilitaire  
-- `vite` ^7.1.3 : Build tool moderne
-- `vite-plugin-electron` : Plugin Vite pour Electron
+- `vite` ^7.1.3 : Build tool moderne avec HMR
 - `@vitejs/plugin-react` : Plugin React pour Vite
 - `@tailwindcss/postcss` : Plugin PostCSS pour Tailwind
-- `concurrently` + `wait-on` : Scripts parallèles
-- Scripts npm simplifiés avec Vite
+- `autoprefixer` : Compatibilité navigateurs CSS
+- Scripts npm simplifiés pour web
 
 ## Configuration et Build
 
 ### Scripts disponibles
 
-**Exécution :**
-- `npm start` : Lance l'application avec les sources actuelles
-- `npm run start:build` : Build + lancement production
-- `npm run dev` : Développement concurrently (Vite + Electron)
-- `npm run vite:dev` : Lance uniquement le serveur Vite (recommandé)
-- `npm run electron:dev` : Lance uniquement Electron en mode dev
-
-⚠️ **Procédure de démarrage recommandée :**
-1. Terminal 1 : `npm run vite:dev` (attendre "VITE ready")
-2. Terminal 2 : `npm run electron:dev` (attendre logs de synchronisation)
+**Développement :**
+- `npm run dev` : Lance le serveur de développement Vite avec HMR
+- `npm run preview` : Aperçu de la version de production
 
 **Build :**
-- `npm run build` : Build complet Vite (main + preload + renderer)
-- `npm run preview` : Aperçu du build en mode production
-- `npm run clean` : Nettoyage du dossier dist/
+- `npm run build` : Build optimisé pour la production
 
-**Distribution :**
-- `npm run pack` : Build local non distribuable
-- `npm run dist` : Distribution complète avec installateurs
+**URL d'accès :**
+- Développement : http://localhost:3000
+- Production : Serveur web statique ou CDN
 
 ### Environnements
-- **Développement** : DevTools ouvertes, NODE_ENV=development
-- **Production** : Application optimisée, pas de debug
+- **Développement** : HMR Vite, console logs, NODE_ENV=development
+- **Production** : Build optimisé, minification, pas de debug
 
 ## Notes de maintenance
 
@@ -223,48 +206,55 @@ src/
   - Scripts optimisés pour développement et production
 
 ### À surveiller
-- ✅ Migration vers React : **TERMINÉE** - Impact majeur sur structure et build
+- ✅ Migration vers Web pur : **TERMINÉE** - Suppression Electron, architecture SPA
 - Ajout de fonctionnalités métier : Interface de sélection, comparaison
 - Nouvelles features : Documentation obligatoire dans ce fichier
 - Performance : Optimisations Vite et React
 - Tests : Ajout de tests unitaires et d'intégration
+- Compatibilité navigateurs : Support multi-navigateurs
 
-### Points d'attention v1.1.0+
-- **Communication IPC** : Toujours utiliser les types `ElectronAPI`
-- **Structure modulaire** : Respecter l'architecture features/components/shared
-- **Imports** : Utiliser les alias TypeScript `@/` configurés
-- **Styles** : Privilégier Tailwind CSS, éviter CSS custom sauf exceptions
+### Points d'attention v1.3.0+
+- **Composants shadcn/ui** : Utiliser les composants officiels quand possible
+- **Structure modulaire** : Respecter l'architecture components/lib/features
+- **Utilitaires** : Utiliser `cn()` pour combiner les classes CSS
+- **Styles** : Privilégier Tailwind CSS + shadcn/ui, éviter CSS custom
 - **Build** : Surveiller taille des bundles et performances Vite
+- **Responsivité** : Tester sur mobile, tablette et desktop
 
-## Amélioration v1.2.2 - Synchronisation Vite-Electron
+## Migration v1.3.0 - Application Web Pure
 
-### Problème résolu
-**Symptôme** : L'application Electron se lançait avant que le serveur Vite soit prêt, causant des pages blanches et des erreurs de connexion.
+### Changement majeur
+**Migration complète** : Suppression d'Electron, transformation en application web moderne avec React + Vite.
 
-### Solution implémentée
-1. **Système d'attente robuste** dans `main.ts` :
-   - Attente active du serveur Vite avec tentatives répétées (60 tentatives sur 30s)
-   - Logs détaillés avec IDs uniques pour faciliter le débogage
-   - Page d'erreur explicite si Vite n'est pas accessible
+### Améliorations réalisées
+1. **Suppression d'Electron** :
+   - Suppression des processus main, preload, renderer
+   - Suppression de toutes les dépendances Electron
+   - Application 100% web fonctionnant dans le navigateur
 
-2. **Scripts séparés** pour contrôle précis :
-   - `npm run vite:dev` : Lance uniquement Vite
-   - `npm run electron:dev` : Lance uniquement Electron
-   - `npm run dev` : Version concurrente (moins fiable)
+2. **Intégration shadcn/ui** :
+   - Composants modernes avec Radix UI
+   - Design system cohérent et accessible
+   - Animations et interactions élégantes
 
-3. **Logs de synchronisation** :
+3. **Interface utilisateur améliorée** :
+   - Design responsive mobile-first
+   - Gradients et effets visuels modernes
+   - Animations hover avec rotation d'icônes
+   - Espacement optimisé entre les éléments
+
+4. **Simplification des scripts** :
    ```
-   🔥 [VITE_WAIT_01] Mode développement - Attente du serveur Vite...
-   🔍 [VITE_WAIT_02] Tentative X/60 - Vérification serveur Vite...
-   ✅ [VITE_READY_03] Serveur Vite prêt et accessible !
-   🌐 [VITE_LOAD_04] Chargement de l'interface React...
-   ✅ [VITE_LOADED_05] Interface React chargée avec succès !
-   ✅ [WINDOW] Fenêtre principale affichée
+   npm run dev    # Développement avec HMR Vite
+   npm run build  # Build de production
+   npm run preview # Aperçu de production
    ```
 
-### Procédure recommandée
-1. **Terminal 1** : `npm run vite:dev` → Attendre "VITE ready"
-2. **Terminal 2** : `npm run electron:dev` → Attendre les logs de synchronisation
+### Avantages de la migration
+- **Performance** : Chargement instantané, HMR ultra-rapide
+- **Simplicité** : Plus de synchronisation Vite-Electron
+- **Compatibilité** : Fonctionne sur tous navigateurs modernes
+- **Développement** : Workflow simplifié, moins de complexité
 
 ---
-*Dernière mise à jour : v1.2.2 - 2025-08-20 (Synchronisation Vite-Electron + Logs débogage)*
+*Dernière mise à jour : v1.3.0 - 2025-08-21 (Migration application web pure + shadcn/ui)*

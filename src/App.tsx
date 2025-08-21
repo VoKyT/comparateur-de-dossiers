@@ -45,26 +45,26 @@ const App: React.FC = () => {
           </Badge>
         </div>
 
-        {/* Container pour les boutons avec espacement professionnel */}
-        <div className="flex flex-col items-center space-y-6 sm:space-y-8">
-          {/* Bouton test principal responsive */}
+        {/* Container pour les boutons avec design moderne et compact */}
+        <div className="flex flex-col items-center space-y-3 sm:space-y-4">
+          {/* Bouton test principal responsive avec design élégant */}
           <Button 
             onClick={handleTestClick}
             size="lg"
-            className="px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 bg-white hover:bg-gray-50 text-blue-700 rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl tracking-wide shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-2 border-blue-200/50"
+            className="group px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl md:rounded-2xl font-bold text-base sm:text-lg md:text-xl tracking-wide shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border-0"
           >
-            <Zap className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 sm:mr-3" />
+            <Zap className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 mr-2 sm:mr-3 group-hover:rotate-12 transition-transform duration-300" />
             Lancer le Test
           </Button>
           
-          {/* Bouton Console Web responsive */}
+          {/* Bouton Console Web responsive avec style harmonieux */}
           <Button 
             onClick={openWebConsole}
             variant="outline"
             size="lg"
-            className="px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-blue-800/10 hover:bg-blue-800/20 text-blue-800 rounded-lg md:rounded-xl font-semibold text-sm sm:text-base md:text-lg tracking-wide shadow-md hover:shadow-lg transform hover:scale-102 transition-all duration-300 border-2 border-blue-600/30"
+            className="group px-6 sm:px-8 md:px-10 py-3 sm:py-3.5 md:py-4 bg-white/80 hover:bg-white text-blue-700 hover:text-blue-800 rounded-xl md:rounded-xl font-semibold text-sm sm:text-base md:text-lg tracking-wide shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-blue-300/50 hover:border-blue-400/70"
           >
-            <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3" />
+            <Globe className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 group-hover:rotate-12 transition-transform duration-300" />
             Console Web (F12)
           </Button>
         </div>

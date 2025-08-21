@@ -87,51 +87,42 @@
 **Objectif :** Garantir une réflexion approfondie et structurée pour éviter les erreurs ou oublis.
 
 ## Description du projet
-- **Objectif**: Application Electron pour comparer le contenu de deux dossiers et identifier les différences.
+- **Objectif**: Application web moderne pour comparer le contenu de deux dossiers et identifier les différences.
 - **Fonctionnalités principales**: 
-  - Interface graphique pour sélectionner les dossiers à comparer
+  - Interface graphique responsive pour sélectionner les dossiers à comparer
   - Algorithme de comparaison (fichiers présents/absents, tailles, dates de modification)
   - Affichage des résultats avec différences mises en évidence
   - Export des résultats (JSON, CSV, rapport)
-- **Public cible**: Utilisateurs Windows ayant besoin de synchroniser ou vérifier des dossiers
-- **Stack technique**: Electron + React + TypeScript + Tailwind CSS
+- **Public cible**: Utilisateurs ayant besoin de synchroniser ou vérifier des dossiers
+- **Stack technique**: React + TypeScript + Tailwind CSS + shadcn/ui + Vite
 
 ## Architecture technique obligatoire
 
 ### Stack imposée
-- **Electron** : Framework desktop principal (process main, renderer, preload)
 - **React** : Librairie UI pour tous les composants interface
 - **TypeScript** : Langage obligatoire pour tout le code applicatif
 - **Tailwind CSS** : Framework CSS utilitaire pour tout le styling
+- **shadcn/ui** : Composants modernes basés sur Radix UI
 - **Vite** : Build tool moderne avec hot reload et optimisations
 
-### Intégration Electron + React + Tailwind
-- **Process Main** : Electron pur (Node.js + Electron APIs)
-- **Process Renderer** : React + TypeScript + Tailwind CSS
-- **Process Preload** : TypeScript avec APIs Electron sécurisées
-- **Communication** : IPC sécurisé via contextBridge uniquement
-- **Styling** : Tailwind CSS exclusivement, pas de CSS custom sauf exceptions documentées
+### Intégration React + TypeScript + Tailwind + shadcn/ui
+- **Application Web** : React + TypeScript + Tailwind CSS + shadcn/ui
+- **Build System** : Vite avec HMR pour développement rapide
+- **Composants** : shadcn/ui pour design system moderne
+- **État** : React hooks (useState, useContext, zustand si complexe)
+- **Styling** : Tailwind CSS + classes utilitaires cn(), pas de CSS custom
 
 ### Architecture modulaire obligatoire
 ```
 src/
-├── electron/                    # Code Electron natif
-│   ├── main/                   # Process principal Electron
-│   │   ├── main.ts             # Point d'entrée principal
-│   │   ├── window-manager.ts   # Gestion des fenêtres
-│   │   └── ipc-handlers.ts     # Handlers IPC sécurisés
-│   ├── preload/                # Scripts preload sécurisés
-│   │   └── preload.ts          # API sécurisée via contextBridge
-│   └── renderer/               # Interface React
-│       └── index.html          # Shell HTML minimal
-├── components/                  # Composants React + Tailwind
-│   ├── ui/                     # Composants UI génériques
-│   │   ├── Button.tsx          # Boutons avec variants Tailwind
-│   │   ├── Modal.tsx           # Modales réutilisables
+├── components/                  # Composants React + Tailwind + shadcn/ui
+│   ├── ui/                     # Composants shadcn/ui (Button, Badge, etc.)
+│   │   ├── button.tsx          # Bouton shadcn/ui avec variants
+│   │   ├── badge.tsx           # Badge avec styles harmonieux
 │   │   └── index.ts            # Barrel export
 │   └── layout/                 # Composants de mise en page
-│       ├── Header.tsx          # En-tête application
-│       ├── Sidebar.tsx         # Barre latérale
+│       ├── Header.tsx          # En-tête application responsive
+│       ├── Sidebar.tsx         # Barre latérale collapsible
 │       └── index.ts            # Barrel export
 ├── features/                    # Modules métier React
 │   ├── folder-comparison/       # Feature comparaison
@@ -151,30 +142,32 @@ src/
 │       ├── hooks/
 │       ├── types/
 │       └── index.ts
+├── lib/                         # Utilitaires et configuration
+│   └── utils.ts                # Utilitaire cn() pour classes CSS
 ├── shared/                      # Code partagé React/TS
 │   ├── types/                  # Types globaux TypeScript
 │   ├── utils/                  # Utilitaires purs TypeScript
 │   ├── hooks/                  # Hooks React partagés
 │   └── constants/              # Constantes TypeScript
 ├── styles/                      # Configuration Tailwind
-│   ├── globals.css             # Imports Tailwind + custom CSS minimal
+│   ├── globals.css             # Imports Tailwind + CSS custom minimal
 │   └── tailwind.config.js      # Configuration Tailwind
 └── App.tsx                     # Composant racine React
 ```
 
 ### Règles d'intégration strictes
-1. **Electron Main** : Aucun import React, uniquement Electron/Node.js APIs
-2. **React Components** : Obligatoirement TypeScript + Tailwind classes
-3. **Communication IPC** : Via contextBridge uniquement, typée TypeScript
+1. **React Components** : Obligatoirement TypeScript + Tailwind + shadcn/ui
+2. **Composants UI** : Privilégier shadcn/ui, éviter les composants custom
+3. **Classes CSS** : Utiliser cn() pour combiner les classes Tailwind
 4. **State Management** : React hooks (useState, useContext, zustand si complexe)
 5. **Styling** : Tailwind utility classes, pas de CSS inline ou modules
-6. **Build** : Vite pour bundle React dans Electron renderer
+6. **Build** : Vite avec HMR pour développement web
 
 ### Points d'intégration clés
-- **Electron → React** : Chargement du bundle React dans BrowserWindow
-- **React → Electron** : Via window.electronAPI (contextBridge)
-- **TypeScript** : Configuration partagée pour Electron et React
-- **Tailwind** : Build CSS intégré dans le processus Electron
+- **React → Vite** : Chargement via serveur de développement Vite
+- **shadcn/ui** : Composants modernes avec Radix UI + Tailwind CSS
+- **TypeScript** : Configuration web avec support React
+- **Tailwind** : Build CSS intégré dans le processus Vite
 
 ## Installation et configuration
 
@@ -187,8 +180,8 @@ src/
 - **shadcn/ui**: `https://ui.shadcn.com` - Composants modernes copy-paste
 - React: `https://react.dev`
 - Tailwind CSS: `https://tailwindcss.com`
-- Electron: `https://www.electronjs.org`
 - Vite: `https://vitejs.dev`
+- Radix UI: `https://radix-ui.com`
 
 ### Initialisation complète du projet
 ```bash

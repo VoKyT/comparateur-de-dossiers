@@ -1,14 +1,14 @@
 # Comparateur de Dossiers
 
-Application Electron moderne avec React, TypeScript et Tailwind CSS pour comparer le contenu de deux dossiers et identifier les différences de manière intuitive.
+Application web moderne avec React, TypeScript et Tailwind CSS pour comparer le contenu de deux dossiers et identifier les différences de manière intuitive.
 
 ## 🚀 Fonctionnalités
 
-- **Interface React moderne** : Composants React avec design system Tailwind CSS
+- **Interface React moderne** : Composants React avec design system Tailwind CSS et shadcn/ui
 - **TypeScript intégral** : Typage strict pour une meilleure robustesse
-- **Architecture sécurisée** : Isolation du contexte et communication IPC sécurisée
+- **Architecture web pure** : Application web sans dépendances desktop
 - **Build moderne** : Vite avec hot reload et optimisations
-- **Cross-platform** : Compatible Windows, macOS et Linux
+- **Multi-plateforme** : Fonctionne dans tous les navigateurs modernes
 - **Mode développement** : DevTools intégrés et rechargement automatique
 
 ### Fonctionnalités à venir
@@ -22,7 +22,7 @@ Application Electron moderne avec React, TypeScript et Tailwind CSS pour compare
 - **Node.js** ≥ 20.0.0
 - **npm** ≥ 10.0.0
 - **TypeScript** (installé automatiquement)
-- **Système d'exploitation** : Windows 10/11, macOS 10.15+, ou Linux Ubuntu 18.04+
+- **Navigateur moderne** : Chrome, Firefox, Safari, Edge (dernières versions)
 
 ## 🛠 Installation
 
@@ -41,86 +41,55 @@ Application Electron moderne avec React, TypeScript et Tailwind CSS pour compare
    - React & React DOM
    - TypeScript & types associés  
    - Tailwind CSS & PostCSS
-   - Vite & plugins Electron
-   - Electron & outils de build
+   - Vite & plugins React
+   - shadcn/ui & Radix UI
 
 ## 🎯 Usage
 
-### ⚠️ Mode développement (RECOMMANDÉ)
+### 🚀 Mode développement
 
-**Pour un démarrage fiable et synchronisé :**
+**Lancement simple :**
 
-1. **Étape 1 : Démarrer Vite seul**
-   ```bash
-   npm run vite:dev
-   ```
-   ✅ Attendre le message : `VITE v7.x.x ready in XXXms`  
-   ✅ Vérifier l'accès : `Local: http://localhost:3000/`
-
-2. **Étape 2 : Dans un second terminal, démarrer Electron**
-   ```bash
-   npm run electron:dev
-   ```
-   ✅ Attendre les logs : `✅ [VITE_READY_03] Serveur Vite prêt et accessible !`  
-   ✅ Attendre : `✅ [VITE_LOADED_05] Interface React chargée avec succès !`
-
-**Alternative (moins fiable) :**
 ```bash
 npm run dev
 ```
-⚠️ **Note** : Cette commande peut parfois échouer à cause de problèmes de timing entre Vite et Electron. Utilisez la méthode en 2 étapes si vous rencontrez des problèmes.
+
+✅ Démarrage automatique du serveur Vite  
+✅ Hot Module Replacement (HMR) activé  
+✅ Accès : `http://localhost:3000`  
+✅ Interface React avec rechargement instantané
 
 ### Mode production
 ```bash
-# Lance l'application avec les sources actuelles
-npm start
-
-# Build puis lance l'application
-npm run start:build
+# Aperçu de la version de production
+npm run preview
 ```
 
-### Build manuel
+### Build de production
 ```bash
-# Build complet (TypeScript + React + Vite)
+# Build complet optimisé
 npm run build
 
 # Aperçu du build
 npm run preview
-
-# Nettoyage des fichiers générés
-npm run clean
-```
-
-### Construction de l'application
-```bash
-# Construction pour la plateforme actuelle
-npm run pack
-
-# Distribution complète
-npm run dist
 ```
 
 ## 📁 Structure du projet
 
 ```
 src/
-├── electron/              # Code Electron TypeScript
-│   ├── main/             # Processus principal
-│   │   └── main.ts       # Point d'entrée Electron (TypeScript)
-│   ├── preload/          # Scripts preload sécurisés  
-│   │   └── preload.ts    # API typée pour le renderer
-│   └── renderer/         # Interface utilisateur
-│       └── index.html    # Shell HTML pour React
-├── components/           # Composants React + Tailwind
-│   ├── ui/              # Composants UI génériques
+├── components/           # Composants React + Tailwind + shadcn/ui
+│   ├── ui/              # Composants UI génériques (shadcn/ui)
 │   └── layout/          # Composants de mise en page
 ├── features/            # Modules métier React
 │   └── folder-comparison/ # Feature comparaison
 │       ├── components/   # Composants spécifiques
 │       ├── hooks/       # Hooks React personnalisés
 │       └── types/       # Types TypeScript
+├── lib/                 # Utilitaires et configuration
+│   └── utils.ts         # Utilitaires (cn, etc.)
 ├── shared/              # Code partagé TypeScript
-│   ├── types/           # Types globaux (electron.ts, etc.)
+│   ├── types/           # Types globaux
 │   ├── utils/           # Utilitaires TypeScript
 │   ├── hooks/           # Hooks React partagés
 │   └── constants/       # Constantes typées
@@ -132,21 +101,12 @@ src/
 
 ## ⚡ Scripts disponibles
 
-### Exécution
-- `npm start` - Lance l'application avec les sources actuelles
-- `npm run start:build` - Build + lance l'application en mode production
-- `npm run dev` - Lance en mode développement (concurrently Vite + Electron)
-- `npm run vite:dev` - Lance uniquement le serveur Vite de développement
-- `npm run electron:dev` - Lance uniquement Electron en mode développement
+### Développement
+- `npm run dev` - Lance le serveur de développement Vite avec HMR
+- `npm run preview` - Aperçu de la version de production
 
-### Build et développement
-- `npm run build` - Build complet avec Vite (main + preload + renderer)
-- `npm run preview` - Aperçu du build en mode production
-- `npm run clean` - Supprime le dossier dist/
-
-### Distribution
-- `npm run pack` - Construit l'application (non distribuable)
-- `npm run dist` - Crée les installateurs pour la distribution
+### Build
+- `npm run build` - Build optimisé pour la production
 - `npm test` - Lance les tests (à implémenter)
 
 ## 🔧 Configuration
@@ -154,10 +114,10 @@ src/
 ### Variables d'environnement
 - `NODE_ENV` : Mode d'exécution (`development` ou `production`)
 
-### Configuration Electron
-- **Sécurité** : `nodeIntegration: false`, `contextIsolation: true`, `sandbox: true` (production)
-- **DevTools** : Ouverture automatique en mode développement
-- **Fenêtre** : 1200x800px (minimum 800x600px)
+### Configuration Vite
+- **HMR** : Hot Module Replacement pour développement rapide
+- **Port** : 3000 (configurable)
+- **Build** : Optimisations automatiques pour la production
 
 ### Configuration TypeScript
 - **Target** : ES2020 avec support React JSX
@@ -173,32 +133,13 @@ src/
 
 ### Problèmes de démarrage
 
-#### Page blanche dans l'application Electron
-**Symptôme** : L'application Electron s'ouvre mais affiche une page blanche ou une erreur "Le serveur Vite n'est pas accessible".
+#### Page blanche dans le navigateur
+**Symptôme** : Le navigateur affiche une page blanche ou des erreurs de chargement.
 
 **Solution** :
-1. Arrêter tous les processus en cours (`Ctrl+C`)
-2. Utiliser la méthode en 2 étapes :
-   ```bash
-   # Terminal 1
-   npm run vite:dev
-   
-   # Attendre le message "VITE ready" puis dans Terminal 2
-   npm run electron:dev
-   ```
-
-#### Erreur "Lock file can not be created"
-**Symptôme** : Messages d'erreur sur les instances multiples.
-
-**Solution** :
-```bash
-# Windows - Tuer tous les processus Electron
-taskkill /f /im electron.exe
-taskkill /f /im node.exe /fi "WINDOWTITLE eq npm*"
-
-# Puis relancer
-npm run vite:dev
-```
+1. Vérifier que le serveur Vite est démarré (`npm run dev`)
+2. Actualiser la page (F5)
+3. Vérifier la console développeur (F12)
 
 #### Port 3000 déjà utilisé
 **Symptôme** : `Error: listen EADDRINUSE :::3000`
@@ -209,60 +150,57 @@ npm run vite:dev
 netstat -ano | findstr :3000
 taskkill /F /PID [PID_DU_PROCESSUS]
 
-# Alternative - Utiliser un autre port
-npm run vite:dev -- --port 3001
+# Alternative - Vite choisira automatiquement un autre port
+npm run dev
 ```
 
 ### Logs de débogage
 
-L'application génère des logs détaillés avec des IDs uniques pour faciliter le débogage :
+L'application génère des logs détaillés dans la console du navigateur :
 
-- `🔥 [VITE_WAIT_01]` : Démarrage de l'attente du serveur Vite
-- `🔍 [VITE_WAIT_02]` : Tentatives de connexion au serveur
-- `✅ [VITE_READY_03]` : Serveur Vite prêt et accessible
-- `🌐 [VITE_LOAD_04]` : Début du chargement de l'interface React
-- `✅ [VITE_LOADED_05]` : Interface React chargée avec succès
-- `✅ [WINDOW]` : Fenêtre principale affichée
+- `🆕 [APP_INIT]` : Initialisation de l'application React
+- `👆 [TEST_BUTTON]` : Interactions utilisateur
+- `🔧 [WEB_CONSOLE]` : Actions développeur
 
-Si vous ne voyez pas ces logs, vérifiez que `NODE_ENV=development` est bien défini.
+Ouvrez la console développeur (F12) pour voir les logs détaillés.
 
 ## 🏗 Architecture technique
 
 ### Stack technologique
-- **Electron** ^37.3.1 - Framework desktop multiplateforme
 - **React** ^19.1.1 - Librairie UI avec hooks modernes
 - **TypeScript** ^5.9.2 - Langage typé pour robustesse
 - **Tailwind CSS** ^4.1.12 - Framework CSS utilitaire
-- **Vite** ^7.1.3 - Build tool moderne avec plugins Electron
+- **Vite** ^7.1.3 - Build tool moderne avec HMR
+- **shadcn/ui** - Composants modernes avec Radix UI
 - **PostCSS** - Traitement CSS avec Autoprefixer
 
 ### Principes architecturaux
 - **Modularité** : Séparation claire des responsabilités
-- **Sécurité** : Isolation des processus et communication sécurisée
+- **Accessibilité** : Composants shadcn/ui avec support ARIA
 - **Maintenabilité** : Code documenté et structure claire
-- **Performance** : Optimisations pour les applications desktop
+- **Performance** : Optimisations web modernes avec Vite
 
 ## 🚧 Roadmap
 
-### Version 1.1.0 ✅
+### Version 1.3.0 ✅
+- [x] Migration complète vers application web pure
 - [x] Architecture React + TypeScript + Tailwind CSS
-- [x] Migration complète vers TypeScript
-- [x] Interface React moderne avec composants
-- [x] Build system Vite optimisé
-- [x] Communication IPC sécurisée et typée
+- [x] Interface React moderne avec shadcn/ui
+- [x] Build system Vite avec HMR
+- [x] Design responsive et esthétique
 - [ ] Interface de sélection de dossiers
 - [ ] Algorithme de comparaison basique
 - [ ] Affichage des résultats
 
-### Version 1.2.0
+### Version 1.4.0
 - [ ] Comparaison avancée (tailles, dates, checksums)
 - [ ] Filtres et options de comparaison
 - [ ] Mode recursif pour sous-dossiers
 
-### Version 1.3.0
+### Version 1.5.0
 - [ ] Export des résultats (JSON, CSV)
-- [ ] Thèmes personnalisables
-- [ ] Paramètres utilisateur
+- [ ] Thèmes personnalisables (dark/light)
+- [ ] Paramètres utilisateur persistants
 
 ## 🤝 Contribution
 

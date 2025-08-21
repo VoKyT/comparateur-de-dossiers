@@ -17,6 +17,28 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ---
 
+## [v1.3.0] - 2025-08-21
+
+### Modifié
+- **Migration complète vers application web pure** : Suppression totale d'Electron
+- **Architecture Vite + React** : Application web moderne avec hot reload
+- **Interface utilisateur améliorée** : Design plus compact et esthétique avec gradients
+- **Animations interactives** : Effets hover avec rotation d'icônes et transitions fluides
+- **Scripts npm simplifiés** : `npm run dev` pour développement, plus de complexité Electron
+
+### Supprimé
+- **Electron** : Suppression complète du framework desktop
+- **Process main/preload** : Plus d'architecture multiprocess
+- **Scripts Electron** : Suppression de tous les scripts desktop
+- **Dépendances Electron** : Nettoyage du package.json
+
+### Technique
+- **Build tool** : Vite 7.1.3 avec HMR
+- **Port de développement** : http://localhost:3000
+- **Stack finale** : React 19 + TypeScript + Tailwind CSS + Vite
+
+---
+
 ## [v1.0.0] - 2025-08-19
 
 ### Ajouté
