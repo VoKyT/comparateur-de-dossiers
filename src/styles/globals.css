@@ -12,94 +12,25 @@
 /* Import unique Tailwind CSS v4 - remplace les @tailwind directives */
 @import "tailwindcss";
 
-/* Animations spectaculaires pour le fond */
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0) rotate(0deg); 
-    opacity: 0.6;
-  }
-  25% { 
-    transform: translateY(-20px) rotate(90deg); 
-    opacity: 0.8;
-  }
-  50% { 
-    transform: translateY(-10px) rotate(180deg); 
-    opacity: 1;
-  }
-  75% { 
-    transform: translateY(-30px) rotate(270deg); 
-    opacity: 0.7;
-  }
+/* Animations professionnelles subtiles */
+.transition-smooth {
+  transition: all 0.2s ease-in-out;
 }
 
-@keyframes morphing {
-  0%, 100% { 
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
-    transform: rotate(0deg) scale(1);
-  }
-  25% { 
-    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; 
-    transform: rotate(90deg) scale(1.1);
-  }
-  50% { 
-    border-radius: 50% 60% 30% 40% / 30% 50% 60% 70%; 
-    transform: rotate(180deg) scale(0.9);
-  }
-  75% { 
-    border-radius: 40% 30% 60% 50% / 70% 40% 50% 30%; 
-    transform: rotate(270deg) scale(1.05);
-  }
+.hover-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-@keyframes gradientShift {
-  0%, 100% { 
-    background-position: 0% 50%; 
-  }
-  50% { 
-    background-position: 100% 50%; 
-  }
+/* Police professionnelle pour les titres */
+.professional-title-font {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1e293b;
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
-@keyframes particleFloat {
-  0%, 100% { 
-    transform: translateY(0) translateX(0) scale(1); 
-    opacity: 0.4;
-  }
-  33% { 
-    transform: translateY(-100px) translateX(50px) scale(1.2); 
-    opacity: 0.8;
-  }
-  66% { 
-    transform: translateY(-50px) translateX(-30px) scale(0.8); 
-    opacity: 0.6;
-  }
-}
-
-.animate-float {
-  animation: particleFloat 6s ease-in-out infinite;
-}
-
-.animate-morphing {
-  animation: morphing 8s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
-}
-
-/* Police kawaii pour le titre */
-.kawaii-title-font {
-  font-family: "Pacifico", "Righteous", "Comfortaa", "Fredoka One", cursive;
-  color: white;
-  text-shadow: 
-    2px 2px 0px #000000,
-    -2px -2px 0px #000000,
-    2px -2px 0px #000000,
-    -2px 2px 0px #000000;
-}
-
-/* Police Pacifico pour les signatures */
-.font-pacifico {
-  font-family: "Pacifico", cursive;
+/* Police system moderne */
+.font-system {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }

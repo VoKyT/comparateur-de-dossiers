@@ -118,3 +118,7 @@ export function useLoading(initialState = false) {
     toggleLoading
   };
 }
+
+// Business Logic Hooks
+export { useFileSystem } from './useFileSystem';
+export { useComparison } from './useComparison';

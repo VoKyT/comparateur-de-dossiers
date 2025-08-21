@@ -37,13 +37,13 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
       "mb-8 md:mb-12 text-center w-full",
       className
     )}>
-      <h1 className="kawaii-title-font scroll-m-20 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter text-balance mb-8 sm:mb-12 md:mb-16 leading-tight">
+      <h1 className="professional-title-font scroll-m-20 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-balance mb-8 sm:mb-12 md:mb-16 leading-tight">
         {title}
       </h1>
       
       {subtitle && (
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-sky-700 leading-relaxed font-medium tracking-wide drop-shadow-md">
-          💖 {subtitle} 💖
+        <p className="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed font-medium tracking-wide">
+          {subtitle}
         </p>
       )}
     </div>

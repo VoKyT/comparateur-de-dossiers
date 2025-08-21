@@ -1,5 +1,14 @@
 # Standards de Code
 
+## 🔄 RÈGLE CRITIQUE - MODULARITÉ AVANT TOUT
+
+**AVANT tout standard de code, respecter la règle absolue :**
+- **📏 200 lignes maximum** par fichier - division obligatoire au-delà
+- **🎯 1 responsabilité** par fichier uniquement
+- **🔍 Question systématique** : "Ce fichier peut-il être divisé ?"
+
+**Voir → [../rules/modularity.md](../rules/modularity.md) pour le guide complet**
+
 ## 📚 MODULES STANDARDS
 
 ### 📝 En-têtes de fichiers

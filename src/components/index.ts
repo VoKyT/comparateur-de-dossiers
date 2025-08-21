@@ -15,6 +15,9 @@ export * from './layout';
 // Common reusable components  
 export * from './common';
 
+// Feature components - Composants métier modulaires
+export * from './features';
+
 // UI components (shadcn/ui)
 export * from './ui/button';
 export * from './ui/badge';

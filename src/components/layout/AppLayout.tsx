@@ -31,8 +31,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   return (
     <div className={cn(
       "min-h-screen w-full flex flex-col",
-      "bg-gradient-to-br from-blue-600 via-red-200 to-blue-600",
-      "font-sans overflow-hidden",
+      "bg-slate-50",
+      "font-system overflow-hidden",
       "p-4 sm:p-6 md:p-8",
       className
     )}>
@@ -42,8 +42,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </div>
       </div>
       <footer className="text-center py-4">
-        <p className="text-white text-lg sm:text-xl md:text-2xl opacity-100 font-medium font-pacifico">
-          made by ~ VKT ✨
+        <p className="text-slate-600 text-sm font-medium">
+          Made by VKT
         </p>
       </footer>
     </div>

@@ -2,15 +2,15 @@
 
 ## 🎯 RÈGLES ABSOLUES CRITIQUES
 
-### 🎨 ESTHÉTISME KAWAII OBLIGATOIRE
-- ✅ **TOUTE INTERFACE** doit être visuellement magnifique avec **shadcn/ui + Tailwind CSS**
-- ✅ **THÈME KAWAII BABY BLUE** : Style mignon obligatoire (sky-200/300/400 + pink-200/300/400 + rose-300)
-- ✅ **STYLE MIGNON KAWAII** : Esthétique douce, adorable avec formes rondes (rounded-2xl, rounded-full)
-- ✅ **EMOJIS KAWAII** : 🌸🌺🥺🎀💖✨🌈☁️ systématiquement utilisés
-- ✅ **ANIMATIONS DOUCES** : bounce, pulse, transitions délicates pour effet kawaii
-- ✅ **LISIBILITÉ CRITIQUE** : Textes TOUJOURS lisibles sur tous fonds pastels
-- ✅ **TYPOGRAPHIE HIÉRARCHISÉE** : Tailles de police logiques par catégories (Hero/Title/Body/Caption)
-- ❌ **JAMAIS de design basique ou laid** - L'esthétisme kawaii est NON-NÉGOCIABLE
+### 🎯 DESIGN ULTRA PROFESSIONNEL OBLIGATOIRE
+- ✅ **TOUTE INTERFACE** doit être ultra professionnelle avec **shadcn/ui + Tailwind CSS**
+- ✅ **PALETTE NEUTRE PROFESSIONNELLE** : Gris élégants (slate-100/600/900) + bleu professionnel (blue-700/800)
+- ✅ **STYLE CORPORATE MODERNE** : Esthétique épurée, minimaliste avec formes géométriques (rounded-lg)
+- ✅ **ICÔNES MODERNES** : Heroicons, Lucide ou équivalent - PAS d'emojis
+- ✅ **ANIMATIONS SUBTILES** : hover discret, transitions courtes (200-300ms) uniquement
+- ✅ **LISIBILITÉ CRITIQUE** : Contrastes élevés pour lisibilité parfaite
+- ✅ **TYPOGRAPHIE HIÉRARCHISÉE** : Tailles moderées par catégories (Hero/Title/Body/Caption)
+- ❌ **JAMAIS de design amateur** - L'excellence professionnelle est NON-NÉGOCIABLE
 
 ### 📱 RESPONSIVITÉ PARFAITE 
 - ✅ **TOUTE INTERFACE** doit s'adapter parfaitement à toutes les tailles d'écran
@@ -26,15 +26,23 @@
 - ✅ **TOUJOURS** utiliser le think harder de Claude Code pour toutes les tâches
 - ✅ **RÉFLÉCHIR PROFONDÉMENT** avant d'agir et planifier les étapes
 
+### 🔄 RÈGLE CRITIQUE - MODULARITÉ SYSTÉMATIQUE OBLIGATOIRE
+- ✅ **À CHAQUE MODIFICATION DE FICHIER** → se demander : "Ce fichier peut-il être divisé ?"
+- ✅ **SIGNAL D'ALARME** : Fichier > 200 lignes = division obligatoire immédiate
+- ✅ **RÉFLEXE AUTOMATIQUE** : 1 responsabilité = 1 fichier maximum
+- ✅ **DÉCOUPAGE IMMÉDIAT** : Si oui, diviser AVANT de continuer la tâche
+- ✅ **DOCUMENTATION** : Mettre à jour les fichiers MD après chaque modularisation
+- ❌ **JAMAIS ignorer** - La modularité est NON-NÉGOCIABLE
+
 ## 📋 Description du projet
 - **Objectif**: Application web moderne pour comparer le contenu de deux dossiers et identifier les fichiers identiques
 - **Fonctionnalités principales**:
   - 🗂️ **Exploration de dossier unique** : Visualisation d'arborescence avec numérotation intelligente
   - 🔍 **Comparaison de deux dossiers** : Détection de fichiers identiques par nom + taille
   - 📊 **Résultats détaillés** : Statistiques et liste des doublons avec chemins
-  - 🌸 **Interface kawaii** : Design mignon avec emojis colorés et animations douces
+  - 🎯 **Interface professionnelle** : Design épuré moderne avec icônes élégantes
 - **Stack**: React + TypeScript + Tailwind CSS + shadcn/ui + Vite + File System Access API
-- **Architecture**: Application web pure avec interface responsive kawaii
+- **Architecture**: Application web pure avec interface responsive ultra professionnelle
 
 ## 📚 MODULES SPÉCIALISÉS
 
@@ -52,6 +60,7 @@
 
 ### 💻 Développement
 - **[docs/rules/development.md](docs/rules/development.md)** → Anti-surengineering, think harder, validation avant développement
+- **[docs/rules/modularity.md](docs/rules/modularity.md)** → Modularité systématique, découpage automatique, règles de décomposition
 
 ### 🏗️ Architecture & Stack
 - **[docs/architecture/stack.md](docs/architecture/stack.md)** → Architecture technique, stack imposée, structure modulaire
@@ -73,11 +82,12 @@
 
 ## 🚀 UTILISATION POUR CLAUDE CODE
 
-### Navigation contextulle
+### Navigation contextuelle
 ```markdown
 - Tâche UI/Design → Lire docs/rules/design.md
-- Développement feature → Lire docs/rules/development.md  
+- Développement feature → Lire docs/rules/development.md + modularity.md
 - Questions architecture → Lire docs/architecture/stack.md
+- Modularisation fichier → Lire docs/rules/modularity.md  
 - Installation/Config → Lire docs/setup/installation.md
 - Problèmes dev → Lire docs/dev/workflow.md
 - Standards code → Lire docs/standards/coding.md
@@ -88,8 +98,9 @@
 ### Consultation multiple
 Consultez plusieurs modules si la tâche couvre plusieurs domaines :
 ```markdown
-Nouvelle feature = development.md + architecture.md + coding.md
-Interface complète = design.md + development.md + workflow.md
+Nouvelle feature = development.md + modularity.md + architecture.md + coding.md
+Interface complète = design.md + development.md + modularity.md + workflow.md
+Refactoring code = modularity.md + architecture.md + coding.md
 Setup projet = installation.md + architecture.md + versioning.md
 ```
 

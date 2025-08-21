@@ -1,24 +1,24 @@
 # Règles Design & Interface
 
-## 🎨 RÈGLE ABSOLUE - TOUT DOIT ÊTRE ESTHÉTIQUE
+## 🎯 RÈGLE ABSOLUE - DESIGN ULTRA PROFESSIONNEL
 
-### PRINCIPE FONDAMENTAL : L'ESTHÉTISME AVANT TOUT
-- ✅ **TOUTE INTERFACE** doit être visuellement magnifique et moderne
-- ✅ **CHAQUE COMPOSANT** doit avoir un design soigné et professionnel
-- ✅ **PRIVILÉGIER LA BEAUTÉ** : si c'est moche, c'est inacceptable
-- ✅ **UTILISER DES FRAMEWORKS MODERNES** pour un rendu esthétique optimal
-- ✅ **ANIMATIONS FLUIDES** et transitions élégantes obligatoires
-- ✅ **COULEURS HARMONIEUSES** et typographie moderne
+### PRINCIPE FONDAMENTAL : EXCELLENCE PROFESSIONNELLE
+- ✅ **TOUTE INTERFACE** doit être visuellement excellente et ultra professionnelle
+- ✅ **CHAQUE COMPOSANT** doit avoir un design épuré et moderne
+- ✅ **SIMPLICITÉ ÉLÉGANTE** : moins c'est plus, design minimaliste
+- ✅ **UTILISER DES FRAMEWORKS MODERNES** pour un rendu professionnel optimal
+- ✅ **ANIMATIONS SUBTILES** et transitions discrètes uniquement
+- ✅ **COULEURS NEUTRES** et typographie system moderne
 
-### 🎨 THÈME COULEUR PRINCIPAL OBLIGATOIRE - KAWAII BABY BLUE
-- ✅ **STYLE KAWAII** : Esthétique mignonne, douce et adorable obligatoire
-- ✅ **BABY BLUE + ROSE KAWAII** : Combinaison baby blue (sky-200, sky-300, sky-400) + rose kawaii (pink-200, pink-300, pink-400, rose-300)
-- ✅ **PALETTE PASTEL** : Tons ultra-doux et apaisants, effet "nuage cotton candy"
-- ✅ **EMOJIS KAWAII** : 🌸🌺🥺🎀💖✨🌈☁️ systématiquement utilisés
-- ✅ **FORMES RONDES** : rounded-2xl, rounded-full pour effet mignon
-- ✅ **ANIMATIONS DOUCES** : bounce, pulse, transitions délicates
-- ✅ **CONTRASTE DÉLICAT** : Fonds ultra-clairs avec pastels kawaii
-- ✅ **COHÉRENCE MIGNONNE** : Tous les composants doivent respirer la douceur
+### 🎨 PALETTE DE COULEURS ULTRA PROFESSIONNELLE
+- ✅ **STYLE CORPORATE** : Esthétique épurée, moderne et professionnelle obligatoire
+- ✅ **GRIS + BLEU PROFESSIONNEL** : Gris neutres (slate-100, slate-600, slate-900) + bleu professionnel (blue-700, blue-800)
+- ✅ **PALETTE NEUTRE** : Tons sobres et élégants, effet "bureau moderne"
+- ✅ **PAS D'EMOJIS** : Interface textuelle claire et professionnelle
+- ✅ **FORMES GÉOMÉTRIQUES** : rounded-lg, angles droits pour effet moderne
+- ✅ **ANIMATIONS MINIMALES** : hover subtil, transitions 200-300ms uniquement
+- ✅ **CONTRASTE ÉLEVÉ** : Fonds blancs avec textes sombres pour lisibilité
+- ✅ **COHÉRENCE PROFESSIONNELLE** : Tous les composants respirent la modernité
 
 ### 📖 LISIBILITÉ CRITIQUE OBLIGATOIRE
 - ✅ **CONTRASTE MINIMUM** : Ratio 4.5:1 pour texte normal, 3:1 pour texte large
@@ -28,26 +28,26 @@
 - ✅ **TESTS SYSTÉMATIQUES** : Vérifier sur différents écrans et luminosités
 - ❌ **JAMAIS de texte illisible** - La lisibilité prime sur l'esthétique
 
-### 🎨 EMOJIS COLORÉS OBLIGATOIRES
-- ✅ **COMPRÉHENSION VISUELLE** : Utiliser des emojis colorés pour illustrer le contenu
-- ✅ **EMOJIS SIGNIFICATIFS** : Choisir des emojis qui représentent clairement l'action/contenu
-- ✅ **COULEURS VIVES** : Les emojis apportent naturellement de la couleur à l'interface
-- ✅ **UNIVERSALITÉ** : Emojis compris dans toutes les cultures et langues
-- ✅ **PAS D'ICÔNES MONOCHROMES** : Éviter les icônes Lucide sans couleur
-- ❌ **JAMAIS d'icônes ternes** - Privilégier la couleur et la vie
+### 🎯 ICÔNES PROFESSIONNELLES OBLIGATOIRES
+- ✅ **CLARTÉ VISUELLE** : Utiliser des icônes modernes et épurées pour illustrer le contenu
+- ✅ **ICÔNES SIGNIFICATIVES** : Choisir des icônes qui représentent clairement l'action/contenu
+- ✅ **STYLE UNIFORME** : Icônes de même famille pour cohérence visuelle (Heroicons, Lucide)
+- ✅ **TAILLES COHÉRENTES** : 16px, 20px, 24px pour différents contextes
+- ✅ **COULEURS NEUTRES** : Gris foncé, noir ou bleu professionnel uniquement
+- ❌ **JAMAIS d'emojis** - Privilégier les icônes modernes et professionnelles
 
 ### 📐 TYPOGRAPHIE HIÉRARCHISÉE OBLIGATOIRE
 **PRINCIPE : Catégories logiques de tailles selon l'importance**
 
-#### 🏆 HERO (Titres principaux - Impact maximum)
-- **Mobile** : `text-6xl` (60px) - `text-8xl` (96px)
-- **Desktop** : `text-[10rem]` (160px) - `text-[20rem]` (320px)
-- **Usage** : Titre principal de page, slogan, call-to-action majeur
-- **Effet** : Taille gigantesque pour dominer l'écran
+#### 🏆 HERO (Titres principaux - Impact professionnel)
+- **Mobile** : `text-3xl` (30px) - `text-4xl` (36px)
+- **Desktop** : `text-5xl` (48px) - `text-6xl` (60px)
+- **Usage** : Titre principal de page, en-tête d'application
+- **Effet** : Taille imposante mais élégante et lisible
 
 #### 📋 TITLE (Titres secondaires - Structure claire)
-- **Mobile** : `text-2xl` (24px) - `text-3xl` (30px)
-- **Desktop** : `text-4xl` (36px) - `text-6xl` (60px)
+- **Mobile** : `text-xl` (20px) - `text-2xl` (24px)
+- **Desktop** : `text-2xl` (24px) - `text-3xl` (30px)
 - **Usage** : Titres de sections, sous-titres importants
 
 #### 📄 BODY (Contenu principal - Lisibilité)
@@ -67,21 +67,21 @@
 - ✅ **CONTRASTE PRÉSERVÉ** : Toutes tailles restent lisibles
 - ❌ **JAMAIS de taille arbitraire** - Respecter les catégories
 
-#### 🎯 RÈGLE HIÉRARCHIE VISUELLE - IMPORTANCE = TAILLE
-**PRINCIPE FONDAMENTAL : Plus c'est important, plus ça grossit sur grand écran**
+#### 🎯 RÈGLE HIÉRARCHIE VISUELLE PROFESSIONNELLE
+**PRINCIPE FONDAMENTAL : Hiérarchie subtile et élégante**
 
-- ✅ **ÉLÉMENTS CRITIQUES** (Hero, Titles) : Scaling agressif sur desktop
-  - Hero : `text-4xl` → `text-9xl` (grossit énormément)
-  - Title : `text-2xl` → `text-4xl` (grossit modérément)
+- ✅ **ÉLÉMENTS CRITIQUES** (Hero, Titles) : Scaling modéré sur desktop
+  - Hero : `text-3xl` → `text-5xl` (progression élégante)
+  - Title : `text-xl` → `text-2xl` (progression subtile)
   
 - ✅ **ÉLÉMENTS SECONDAIRES** (Body, Buttons, UI) : Scaling minimal
-  - Boutons : `text-sm` → `text-base` (grossit peu)
-  - Body : `text-base` → `text-lg` (grossit peu)
-  - UI : Tailles fixes ou micro-variations
+  - Boutons : `text-sm` → `text-base` (tailles fixes préférées)
+  - Body : `text-base` → `text-lg` (progression minimale)
+  - UI : Tailles fixes pour cohérence
   
-- ✅ **CONTRASTE HIÉRARCHIQUE** : Différence de taille amplifiée sur desktop
-- ✅ **LISIBILITÉ MOBILE** : Tous les éléments restent lisibles sur petit écran
-- ❌ **JAMAIS d'uniformité** - Les éléments importants doivent dominer visuellement
+- ✅ **CONTRASTE HIÉRARCHIQUE** : Différences subtiles mais perceptibles
+- ✅ **LISIBILITÉ MOBILE** : Tous les éléments parfaitement lisibles
+- ❌ **JAMAIS d'excès** - Élégance et modération avant tout
 
 ### Frameworks esthétiques recommandés (par ordre de préférence)
 1. **shadcn/ui** - LE framework moderne 2025, 200+ composants copy-paste, Radix UI + Tailwind CSS
@@ -91,7 +91,7 @@
 5. **Ant Design** - Professionnel, niveau entreprise
 6. **Tailwind CSS** - Contrôle total, design custom moderne
 
-**JAMAIS de design basique ou laid - L'esthétisme est NON-NÉGOCIABLE**
+**JAMAIS de design amateur ou non-professionnel - L'excellence est NON-NÉGOCIABLE**
 
 ## 📱 RÈGLE ABSOLUE - RESPONSIVITÉ PARFAITE OBLIGATOIRE
 

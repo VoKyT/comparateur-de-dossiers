@@ -47,7 +47,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'primary':
-        return "group bg-gradient-to-r from-sky-400 to-pink-400 hover:from-sky-500 hover:to-pink-500 text-white border-0 rounded-full font-bold shadow-xl hover:shadow-2xl";
+        return "group bg-blue-700 hover:bg-blue-800 text-white border-0 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-smooth";
       case 'secondary':
         return "group bg-slate-800 hover:bg-slate-900 text-white border-0 rounded-xl font-semibold shadow-lg hover:shadow-xl";
       case 'outline':
@@ -78,7 +78,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       className={cn(
         getVariantStyles(),
         getSizeStyles(),
-        "tracking-wide transform hover:scale-105 transition-all duration-300",
+        "tracking-wide transition-smooth hover-lift",
         className
       )}
     >

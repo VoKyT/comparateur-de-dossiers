@@ -371,13 +371,13 @@ export const HomePage: React.FC = () => {
           
           return (
             <div key={item.path}>
-              <div className="flex items-center gap-1 py-1 px-2 hover:bg-sky-50 transition-colors text-sm" style={{ fontFamily: '"Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace' }}>
+              <div className="flex items-center gap-1 py-1 px-2 hover:bg-slate-50 transition-smooth text-sm" style={{ fontFamily: '"Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace' }}>
                 {/* Lignes d'arborescence avec caractères Unicode */}
                 {level > 0 && (
                   <div className="flex items-center">
                     {isLast.map((isParentLast, i) => (
                       <div key={i} className="w-4 flex justify-center">
-                        <span className="text-sky-400">
+                        <span className="text-slate-400">
                           {!isParentLast ? '│' : ' '}
                         </span>
                       </div>
@@ -393,17 +393,15 @@ export const HomePage: React.FC = () => {
                   </div>
                 )}
                 
-                <span className="text-sm">
-                  {item.type === 'directory' ? '📁' : '📄'}
-                </span>
-                <span className="text-sm text-sky-700 font-medium">
+                <div className={`w-3 h-3 rounded-sm flex-shrink-0 ${item.type === 'directory' ? 'bg-slate-500' : 'bg-slate-400'}`}></div>
+                <span className="text-sm text-slate-700 font-medium">
                   {item.name}{item.type === 'directory' ? '/' : ''}
                 </span>
                 {item.type === 'directory' && (
-                  <span className="text-xs text-sky-500 ml-2">
+                  <span className="text-xs text-slate-500 ml-2">
                     {(() => {
                       if (!item.children || item.children.length === 0) {
-                        return '(vide ☁️)';
+                        return '(empty)';
                       }
                       const folders = item.children.filter(child => child.type === 'directory').length;
                       const files = item.children.filter(child => child.type === 'file').length;
@@ -438,7 +436,7 @@ export const HomePage: React.FC = () => {
             variant="primary"
             size="lg"
           >
-            💙 Dossier A {folderA ? `(${folderA.name})` : ''} ✨
+            Select Folder A {folderA ? `(${folderA.name})` : ''}
           </ActionButton>
           
           <ActionButton
@@ -446,15 +444,15 @@ export const HomePage: React.FC = () => {
             variant="primary"
             size="lg"
           >
-            💖 Dossier B {folderB ? `(${folderB.name})` : ''} ✨
+            Select Folder B {folderB ? `(${folderB.name})` : ''}
           </ActionButton>
         </div>
         
         {/* Séparateur OU pour la navigation simple */}
         <div className="flex items-center gap-4 w-full max-w-md">
-          <div className="flex-1 h-px bg-sky-300"></div>
-          <span className="text-sky-500 font-medium">OU</span>
-          <div className="flex-1 h-px bg-sky-300"></div>
+          <div className="flex-1 h-px bg-slate-300"></div>
+          <span className="text-slate-500 font-medium">OR</span>
+          <div className="flex-1 h-px bg-slate-300"></div>
         </div>
         
         <ActionButton
@@ -462,51 +460,51 @@ export const HomePage: React.FC = () => {
           variant="secondary"
           size="default"
         >
-          🗂️ Explorer un seul dossier
+          Explore Single Folder
         </ActionButton>
 
         {/* Affichage du dossier sélectionné */}
         {selectedFolder && (
-          <div className="bg-sky-50/90 border-2 border-sky-300 rounded-2xl px-6 py-4 shadow-lg mb-6">
-            <p className="text-base sm:text-lg text-sky-800 font-semibold">
-              💙 Dossier choisi : <span className="text-sky-700">{selectedFolder}</span> ✨
+          <div className="bg-white border border-slate-200 rounded-lg px-6 py-4 shadow-sm mb-6">
+            <p className="text-base sm:text-lg text-slate-800 font-semibold">
+              Selected Folder: <span className="text-slate-700">{selectedFolder}</span>
             </p>
           </div>
         )}
 
         {/* Interface 3 colonnes de comparaison */}
         {comparisonData && (
-          <div className="w-full max-w-7xl bg-sky-50/95 border-2 border-sky-300 rounded-2xl p-6 shadow-lg">
+          <div className="w-full max-w-7xl bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
             {/* En-tête statistiques */}
             <div className="mb-6 text-center">
-              <h3 className="text-lg sm:text-xl font-bold text-sky-800 mb-2">
-                🔍 Comparaison de dossiers
+              <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">
+                Folder Comparison
               </h3>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-sky-600">
-                <span>📁 {folderA?.name} ({comparisonData.uniqueA.length + comparisonData.common.length} fichiers)</span>
-                <span>🤝 {comparisonData.common.length} commun{comparisonData.common.length > 1 ? 's' : ''}</span>
-                <span>📁 {folderB?.name} ({comparisonData.uniqueB.length + comparisonData.common.length} fichiers)</span>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-slate-600">
+                <span>{folderA?.name} ({comparisonData.uniqueA.length + comparisonData.common.length} files)</span>
+                <span>{comparisonData.common.length} common</span>
+                <span>{folderB?.name} ({comparisonData.uniqueB.length + comparisonData.common.length} files)</span>
               </div>
             </div>
             
             {/* Interface 3 colonnes */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {/* Colonne A - Fichiers uniques au dossier A */}
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <h4 className="font-bold text-blue-800 mb-3 text-center">
-                  💙 Uniquement dans {folderA?.name}
-                  <span className="block text-sm font-normal text-blue-600">
-                    ({comparisonData.uniqueA.length} fichier{comparisonData.uniqueA.length > 1 ? 's' : ''})
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                <h4 className="font-bold text-slate-800 mb-3 text-center">
+                  Only in {folderA?.name}
+                  <span className="block text-sm font-normal text-slate-600">
+                    ({comparisonData.uniqueA.length} file{comparisonData.uniqueA.length > 1 ? 's' : ''})
                   </span>
                 </h4>
                 <div className="max-h-80 overflow-y-auto space-y-2">
                   {comparisonData.uniqueA.map((file, index) => (
-                    <div key={index} className="bg-white rounded-lg p-3 border border-blue-200 hover:bg-blue-50 transition-colors">
+                    <div key={index} className="bg-white rounded-lg p-3 border border-slate-200 hover:bg-slate-50 transition-smooth">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">📄</span>
+                        <div className="w-2 h-2 bg-slate-400 rounded-full flex-shrink-0"></div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-blue-700 truncate">{file.name}</div>
-                          <div className="text-xs text-blue-500">
+                          <div className="font-medium text-slate-700 truncate">{file.name}</div>
+                          <div className="text-xs text-slate-500">
                             {file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'N/A'}
                           </div>
                         </div>
@@ -517,27 +515,27 @@ export const HomePage: React.FC = () => {
               </div>
               
               {/* Colonne centrale - Fichiers communs */}
-              <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <h4 className="font-bold text-green-800 mb-3 text-center">
-                  🤝 Fichiers communs
-                  <span className="block text-sm font-normal text-green-600">
-                    ({comparisonData.common.length} fichier{comparisonData.common.length > 1 ? 's' : ''})
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 className="font-bold text-blue-800 mb-3 text-center">
+                  Common Files
+                  <span className="block text-sm font-normal text-blue-600">
+                    ({comparisonData.common.length} file{comparisonData.common.length > 1 ? 's' : ''})
                   </span>
                 </h4>
                 <div className="max-h-80 overflow-y-auto space-y-2">
                   {comparisonData.common.map((file, index) => (
-                    <div key={index} className="bg-white rounded-lg p-3 border border-green-200 hover:bg-green-50 transition-colors">
+                    <div key={index} className="bg-white rounded-lg p-3 border border-blue-200 hover:bg-blue-50 transition-smooth">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">🔗</span>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-green-700 truncate">{file.name}</div>
-                          <div className="text-xs text-green-500">
+                          <div className="font-medium text-blue-700 truncate">{file.name}</div>
+                          <div className="text-xs text-blue-500">
                             {(file.size / 1024).toFixed(1)} KB
                           </div>
-                          <div className="text-xs text-green-400 truncate">
+                          <div className="text-xs text-blue-400 truncate">
                             A: {file.pathA}
                           </div>
-                          <div className="text-xs text-green-400 truncate">
+                          <div className="text-xs text-blue-400 truncate">
                             B: {file.pathB}
                           </div>
                         </div>
@@ -548,21 +546,21 @@ export const HomePage: React.FC = () => {
               </div>
               
               {/* Colonne B - Fichiers uniques au dossier B */}
-              <div className="bg-pink-50 border border-pink-200 rounded-xl p-4">
-                <h4 className="font-bold text-pink-800 mb-3 text-center">
-                  💖 Uniquement dans {folderB?.name}
-                  <span className="block text-sm font-normal text-pink-600">
-                    ({comparisonData.uniqueB.length} fichier{comparisonData.uniqueB.length > 1 ? 's' : ''})
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h4 className="font-bold text-gray-800 mb-3 text-center">
+                  Only in {folderB?.name}
+                  <span className="block text-sm font-normal text-gray-600">
+                    ({comparisonData.uniqueB.length} file{comparisonData.uniqueB.length > 1 ? 's' : ''})
                   </span>
                 </h4>
                 <div className="max-h-80 overflow-y-auto space-y-2">
                   {comparisonData.uniqueB.map((file, index) => (
-                    <div key={index} className="bg-white rounded-lg p-3 border border-pink-200 hover:bg-pink-50 transition-colors">
+                    <div key={index} className="bg-white rounded-lg p-3 border border-gray-200 hover:bg-gray-50 transition-smooth">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">📄</span>
+                        <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-pink-700 truncate">{file.name}</div>
-                          <div className="text-xs text-pink-500">
+                          <div className="font-medium text-gray-700 truncate">{file.name}</div>
+                          <div className="text-xs text-gray-500">
                             {file.size ? `${(file.size / 1024).toFixed(1)} KB` : 'N/A'}
                           </div>
                         </div>
@@ -577,13 +575,13 @@ export const HomePage: React.FC = () => {
 
         {/* Affichage de l'arbre des fichiers */}
         {fileTree.length > 0 && (
-          <div className="w-full max-w-4xl bg-sky-50/95 border-2 border-sky-300 rounded-2xl p-6 shadow-lg">
+          <div className="w-full max-w-4xl bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
             <div className="max-h-96 overflow-y-auto relative">
               {/* Affichage du dossier racine avec compteur */}
-              <div className="flex items-center gap-2 py-1 px-2 font-bold text-sky-800 mb-2 border-b border-sky-300 pb-2" style={{ fontFamily: '"Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace' }}>
-                <span className="text-sm">📁</span>
+              <div className="flex items-center gap-2 py-1 px-2 font-bold text-slate-800 mb-2 border-b border-slate-200 pb-2" style={{ fontFamily: '"Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace' }}>
+                <div className="w-4 h-4 bg-slate-400 rounded-sm flex-shrink-0"></div>
                 <span className="text-sm">{selectedFolder}/</span>
-                <span className="text-xs text-sky-500">
+                <span className="text-xs text-slate-500">
                   {(() => {
                     const directFolders = fileTree.filter(item => item.type === 'directory').length;
                     const directFiles = fileTree.filter(item => item.type === 'file').length;

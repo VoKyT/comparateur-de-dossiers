@@ -27,6 +27,26 @@
 
 **Objectif :** Garantir une réflexion approfondie et structurée pour éviter les erreurs ou oublis.
 
+## 🔄 RÈGLE CRITIQUE - MODULARITÉ SYSTÉMATIQUE
+
+### QUESTION AUTOMATIQUE À CHAQUE MODIFICATION
+**AVANT de modifier/créer un fichier, TOUJOURS se demander :**
+1. "Ce fichier fait-il plus d'une chose ?"
+2. "Peut-il être divisé logiquement ?"
+3. "Dépasse-t-il ou va-t-il dépasser 200 lignes ?"
+4. "Y a-t-il des parties réutilisables ?"
+
+**Si OUI à une question → MODULARISER IMMÉDIATEMENT**
+
+### PROCESS DE MODULARISATION OBLIGATOIRE
+1. **🔍 ANALYSE** : Identifier les responsabilités distinctes
+2. **✂️ DÉCOUPAGE** : Créer fichiers spécialisés
+3. **🔗 CONNEXION** : Barrel exports + imports propres
+4. **✅ VALIDATION** : Compilation TypeScript réussie
+5. **📝 DOCUMENTATION** : Mettre à jour fichiers MD concernés
+
+**Voir → [docs/rules/modularity.md](modularity.md) pour le guide complet**
+
 ## 🔍 VALIDATION AVANT AJOUT/MODIFICATION
 
 ### Vérification obligatoire avant développement
