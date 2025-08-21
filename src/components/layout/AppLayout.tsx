@@ -42,7 +42,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </div>
       </div>
       <footer className="text-center py-4">
-        <p className="text-white text-lg sm:text-xl md:text-2xl opacity-100 font-medium" style={{ fontFamily: '"Pacifico", cursive' }}>
+        <p className="text-white text-lg sm:text-xl md:text-2xl opacity-100 font-medium font-pacifico">
           made by ~ VKT ✨
         </p>
       </footer>

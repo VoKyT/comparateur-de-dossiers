@@ -98,3 +98,8 @@
     2px -2px 0px #000000,
     -2px 2px 0px #000000;
 }
+
+/* Police Pacifico pour les signatures */
+.font-pacifico {
+  font-family: "Pacifico", cursive;
+}
