@@ -122,3 +122,4 @@ export function useLoading(initialState = false) {
 // Business Logic Hooks
 export { useFileSystem } from './useFileSystem';
 export { useComparison } from './useComparison';
+export { useFolderSelection } from './useFolderSelection';

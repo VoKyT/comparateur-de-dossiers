@@ -8,3 +8,5 @@ export { FolderSelector } from './FolderSelector';
 export { ComparisonGrid } from './ComparisonGrid';
 export { ComparisonStatsDisplay } from './ComparisonStats';
 export { FileList } from './FileList';
+export { FileTreeRenderer } from './FileTreeRenderer';
+export { FileTreeDisplay } from './FileTreeDisplay';

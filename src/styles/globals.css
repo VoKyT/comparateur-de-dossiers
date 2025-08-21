@@ -34,3 +34,8 @@
 .font-system {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
+
+/* Police monospace pour l'arborescence de fichiers */
+.font-mono-tree {
+  font-family: "Consolas", "DejaVu Sans Mono", "Lucida Console", "Courier New", monospace;
+}
