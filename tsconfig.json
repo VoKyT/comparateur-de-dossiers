@@ -19,9 +19,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@/components/*": ["src/components/*"],
+      "@/pages/*": ["src/pages/*"],
       "@/features/*": ["src/features/*"],
       "@/shared/*": ["src/shared/*"],
-      "@/electron/*": ["src/electron/*"]
+      "@/lib/*": ["src/lib/*"]
     }
   },
   "include": [
