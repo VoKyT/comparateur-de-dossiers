@@ -16,12 +16,13 @@ interface AppLayoutProps {
 }
 
 /**
- * Layout principal de l'application avec design responsive
+ * Layout principal de l'application avec grande zone de travail
  * 
  * Fonctionnalités :
- * - Container centré avec contraintes max-width
- * - Padding responsive selon la taille d'écran
- * - Background gradient moderne
+ * - Zone de travail pleine largeur et hauteur
+ * - Header fixe compact en haut
+ * - Footer discret en bas
+ * - Padding minimal pour maximiser l'espace
  * - Support mobile, tablette et desktop
  */
 export const AppLayout: React.FC<AppLayoutProps> = ({ 
@@ -32,19 +33,23 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     <div className={cn(
       "min-h-screen w-full flex flex-col",
       "bg-slate-50",
-      "font-system overflow-hidden",
-      "p-4 sm:p-6 md:p-8",
+      "font-system",
       className
     )}>
-      <div className="flex-1 flex items-center justify-center">
-        <div className="flex flex-col items-center w-full max-w-4xl">
+      {/* Zone de travail principale - pleine hauteur */}
+      <main className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 w-full p-4 sm:p-6 md:p-8 overflow-auto">
           {children}
         </div>
-      </div>
-      <footer className="text-center py-4">
-        <p className="text-slate-600 text-sm font-medium">
-          Made by VKT
-        </p>
+      </main>
+      
+      {/* Footer discret fixé en bas */}
+      <footer className="border-t border-slate-200 bg-white/80 backdrop-blur-sm">
+        <div className="px-6 py-3">
+          <p className="text-slate-500 text-xs font-medium text-center">
+            Made by VKT
+          </p>
+        </div>
       </footer>
     </div>
   );

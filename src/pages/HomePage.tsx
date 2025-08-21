@@ -123,69 +123,102 @@ export const HomePage: React.FC = () => {
 
   return (
     <AppLayout>
-      {/* En-tête stylé et attirant */}
-      <PageHeader 
-        title="Comparateur de Dossiers"
-      />
-
-      {/* Boutons de comparaison */}
-      <div className="flex flex-col items-center gap-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <ActionButton
-            onClick={handleFolderSelectA}
-            variant="primary"
-            size="lg"
-          >
-            Select Folder A {folderA ? `(${folderA.name})` : ''}
-          </ActionButton>
-          
-          <ActionButton
-            onClick={handleFolderSelectB}
-            variant="primary"
-            size="lg"
-          >
-            Select Folder B {folderB ? `(${folderB.name})` : ''}
-          </ActionButton>
-        </div>
-        
-        {/* Séparateur OU pour la navigation simple */}
-        <div className="flex items-center gap-4 w-full max-w-md">
-          <div className="flex-1 h-px bg-slate-300"></div>
-          <span className="text-slate-500 font-medium">OR</span>
-          <div className="flex-1 h-px bg-slate-300"></div>
-        </div>
-        
-        <ActionButton
-          onClick={handleFolderSelect}
-          variant="secondary"
-          size="default"
-        >
-          Explore Single Folder
-        </ActionButton>
-
-        {/* Affichage du dossier sélectionné */}
-        {selectedFolder && (
-          <div className="bg-white border border-slate-200 rounded-lg px-6 py-4 shadow-sm mb-6">
-            <p className="text-base sm:text-lg text-slate-800 font-semibold">
-              Selected Folder: <span className="text-slate-700">{selectedFolder}</span>
-            </p>
-          </div>
-        )}
-
-        {/* Interface 3 colonnes de comparaison */}
-        {comparisonData && folderA && folderB && (
-          <ComparisonGrid
-            comparisonData={comparisonData}
-            folderAName={folderA.name}
-            folderBName={folderB.name}
+      <div className="h-full flex flex-col">
+        {/* Header compact avec titre et actions */}
+        <div className="flex-shrink-0 mb-6">
+          <PageHeader 
+            title="Comparateur de Dossiers"
           />
-        )}
+          
+          {/* Panel de contrôles compacts */}
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
+            <div className="flex flex-col lg:flex-row items-center gap-4">
+              {/* Boutons de comparaison */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <ActionButton
+                  onClick={handleFolderSelectA}
+                  variant="primary"
+                  size="default"
+                >
+                  Folder A {folderA ? `(${folderA.name})` : ''}
+                </ActionButton>
+                
+                <ActionButton
+                  onClick={handleFolderSelectB}
+                  variant="primary"
+                  size="default"
+                >
+                  Folder B {folderB ? `(${folderB.name})` : ''}
+                </ActionButton>
+              </div>
+              
+              {/* Séparateur vertical/horizontal */}
+              <div className="hidden lg:block w-px h-8 bg-slate-300"></div>
+              <div className="lg:hidden w-full h-px bg-slate-300"></div>
+              
+              <ActionButton
+                onClick={handleFolderSelect}
+                variant="secondary"
+                size="default"
+              >
+                Single Folder
+              </ActionButton>
+            </div>
 
-        {/* Affichage de l'arbre des fichiers */}
-        <FileTreeDisplay
-          fileTree={fileTree}
-          selectedFolder={selectedFolder}
-        />
+            {/* Status bar si dossier sélectionné */}
+            {selectedFolder && (
+              <div className="mt-4 pt-4 border-t border-slate-100">
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium">Selected:</span> {selectedFolder}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Zone de travail principale - extensible */}
+        <div className="flex-1 min-h-0">
+          {/* Interface de comparaison 3 colonnes - pleine hauteur */}
+          {comparisonData && folderA && folderB && (
+            <div className="h-full">
+              <ComparisonGrid
+                comparisonData={comparisonData}
+                folderAName={folderA.name}
+                folderBName={folderB.name}
+              />
+            </div>
+          )}
+
+          {/* Affichage de l'arbre des fichiers - pleine hauteur */}
+          {fileTree.length > 0 && !comparisonData && (
+            <div className="h-full">
+              <FileTreeDisplay
+                fileTree={fileTree}
+                selectedFolder={selectedFolder}
+              />
+            </div>
+          )}
+
+          {/* État vide - zone d'accueil */}
+          {!comparisonData && fileTree.length === 0 && (
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center max-w-md">
+                <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 1v6" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  Ready to Compare
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Select folders above to start comparing files or explore a single folder structure.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </AppLayout>
   );

@@ -63,7 +63,10 @@
 - **[docs/rules/modularity.md](docs/rules/modularity.md)** → Modularité systématique, découpage automatique, règles de décomposition
 
 ### 🏗️ Architecture & Stack
-- **[docs/architecture/stack.md](docs/architecture/stack.md)** → Architecture technique, stack imposée, structure modulaire
+- **[docs/architecture/overview.md](docs/architecture/overview.md)** → Vue d'ensemble, objectifs, stack technique
+- **[docs/architecture/structure.md](docs/architecture/structure.md)** → Organisation dossiers et fichiers
+- **[docs/architecture/technical-details.md](docs/architecture/technical-details.md)** → Implémentation détaillée
+- **[docs/architecture/stack.md](docs/architecture/stack.md)** → Stack technique imposée et configuration
 
 ### ⚙️ Installation & Configuration
 - **[docs/setup/installation.md](docs/setup/installation.md)** → Installation complète, versions, liens officiels
@@ -73,9 +76,15 @@
 
 ### 📝 Standards de code
 - **[docs/standards/coding.md](docs/standards/coding.md)** → En-têtes fichiers, modularité, imports, nommage
+- **[docs/standards/headers/file-headers.md](docs/standards/headers/file-headers.md)** → Format standard des en-têtes
+- **[docs/standards/naming/conventions.md](docs/standards/naming/conventions.md)** → Conventions de nommage
+- **[docs/standards/structure/best-practices.md](docs/standards/structure/best-practices.md)** → Bonnes pratiques structure
 
 ### 🔀 Git & Versioning
 - **[docs/git/versioning.md](docs/git/versioning.md)** → Conventions commits, versioning, branches, gitignore
+- **[docs/git/commits/conventions.md](docs/git/commits/conventions.md)** → Détail conventions commits
+- **[docs/git/workflow/branching.md](docs/git/workflow/branching.md)** → Stratégie de branches
+- **[docs/git/documentation/maintenance.md](docs/git/documentation/maintenance.md)** → Maintenance documentation
 
 ### 🔧 Maintenance
 - **[docs/maintenance/guidelines.md](docs/maintenance/guidelines.md)** → Documentation obligatoire, maintenance architecture
@@ -86,7 +95,7 @@
 ```markdown
 - Tâche UI/Design → Lire docs/rules/design.md
 - Développement feature → Lire docs/rules/development.md + modularity.md
-- Questions architecture → Lire docs/architecture/stack.md
+- Questions architecture → Lire docs/architecture/overview.md + structure.md
 - Modularisation fichier → Lire docs/rules/modularity.md  
 - Installation/Config → Lire docs/setup/installation.md
 - Problèmes dev → Lire docs/dev/workflow.md
@@ -98,10 +107,10 @@
 ### Consultation multiple
 Consultez plusieurs modules si la tâche couvre plusieurs domaines :
 ```markdown
-Nouvelle feature = development.md + modularity.md + architecture.md + coding.md
+Nouvelle feature = development.md + modularity.md + overview.md + coding.md
 Interface complète = design.md + development.md + modularity.md + workflow.md
-Refactoring code = modularity.md + architecture.md + coding.md
-Setup projet = installation.md + architecture.md + versioning.md
+Refactoring code = modularity.md + structure.md + coding.md
+Setup projet = installation.md + overview.md + versioning.md
 ```
 
 ---
