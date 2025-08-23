@@ -9,19 +9,22 @@
 import React from 'react';
 import { ActionButton } from '@/components/common';
 import { DirectoryData } from '@/shared/types';
+import { createAccessibleProps, AccessibilityLabelKey } from '@/shared/accessibility';
 
 interface FolderSelectorProps {
   onFolderSelect: (folder: DirectoryData | null) => void;
   label: string;
   selectedFolder?: DirectoryData | null;
   variant?: 'primary' | 'secondary';
+  accessibilityKey: AccessibilityLabelKey;
 }
 
 export const FolderSelector: React.FC<FolderSelectorProps> = ({
   onFolderSelect,
   label,
   selectedFolder,
-  variant = 'primary'
+  variant = 'primary',
+  accessibilityKey
 }) => {
   const handleSelect = async () => {
     try {
@@ -43,6 +46,7 @@ export const FolderSelector: React.FC<FolderSelectorProps> = ({
       onClick={handleSelect}
       variant={variant}
       size="lg"
+      {...createAccessibleProps(accessibilityKey)}
     >
       {label} {selectedFolder ? `(${selectedFolder.name})` : ''}
     </ActionButton>

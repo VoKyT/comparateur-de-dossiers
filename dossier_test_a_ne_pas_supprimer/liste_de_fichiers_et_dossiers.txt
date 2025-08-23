@@ -1,0 +1,61 @@
+
+==================================================
+LISTE RÉCURSIVE DES FICHIERS ET DOSSIERS - FORMAT ARBORESCENT
+==================================================
+Date de génération: 2025-08-16 00:32:13
+Version: 2.0.0
+
+
+==================================================
+            Configuration de l'analyse            
+==================================================
+DOSSIER RACINE ANALYSÉ: C:\Users\voky\Documents\PROJETS\listeur_de_fichiers_et_dossiers\dossier_test_a_ne_pas_supprimer
+DATE DE GÉNÉRATION: 2025-08-16 00:32:13
+STATISTIQUES: 19 éléments (5 dossiers, 14 fichiers)
+TEMPS D'EXPLORATION: 2ms
+MODE: Exploration récursive avec structure arborescente
+
+⚠️  EXCLUSIONS APPLIQUÉES:
+   • node_modules/ (dépendances npm)
+   • Dossiers cachés (.*)
+   • Fichiers système ($RECYCLE.BIN)
+
+
+
+==================================================
+              STRUCTURE ARBORESCENTE              
+==================================================
+📁 dossier_test_a_ne_pas_supprimer/ (2 dossiers - 2 fichiers)
+├── 1. ouiiii/
+├── 2. tstttttt/ (1 dossier)
+│   └── 1. ttttttttt/ (2 dossiers)
+│       ├── 1. hah/
+│       └── 2. test/ (12 fichiers)
+│           ├── 01. dgfcv
+│           ├── 02. ertfyg
+│           ├── 03. esdgfh
+│           ├── 04. i
+│           ├── 05. iii
+│           ├── 06. p
+│           ├── 07. tfghb
+│           ├── 08. tfhg
+│           ├── 09. tfhgjkl
+│           ├── 10. tfhjn
+│           ├── 11. uhkj
+│           └── 12. ygjh
+├── 1. ffff
+└── 2. rapport_complet_dossier_test_a_ne_pas_supprimer.txt
+
+
+==================================================
+        RÉSUMÉ DE L'EXPLORATION RÉCURSIVE         
+==================================================
+TOTAL GÉNÉRAL: 19 éléments trouvés
+DÉTAIL: 5 dossiers, 14 fichiers
+TEMPS D'EXPLORATION: 2ms
+
+⚠️  EXCLUSIONS APPLIQUÉES:
+   • node_modules/ (dépendances npm)
+   • Dossiers cachés (.*)
+   • Fichiers système ($RECYCLE.BIN)
+

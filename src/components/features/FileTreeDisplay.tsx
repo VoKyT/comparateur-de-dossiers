@@ -8,6 +8,7 @@
 import React from 'react';
 import { FileTree } from '@/shared/types';
 import { FileTreeRenderer } from './FileTreeRenderer';
+import { useTranslation } from '@/shared/i18n';
 
 interface FileTreeDisplayProps {
   fileTree: FileTree;
@@ -18,6 +19,8 @@ export const FileTreeDisplay: React.FC<FileTreeDisplayProps> = ({
   fileTree,
   selectedFolder
 }) => {
+  const { t } = useTranslation();
+  
   if (fileTree.length === 0) return null;
 
   return (
@@ -33,9 +36,15 @@ export const FileTreeDisplay: React.FC<FileTreeDisplayProps> = ({
             const directFolders = fileTree.filter(item => item.type === 'directory').length;
             const directFiles = fileTree.filter(item => item.type === 'file').length;
             const parts = [];
-            if (directFolders > 0) parts.push(`${directFolders} folder${directFolders > 1 ? 's' : ''}`);
-            if (directFiles > 0) parts.push(`${directFiles} file${directFiles > 1 ? 's' : ''}`);
-            return parts.length > 0 ? parts.join(' • ') : 'Empty folder';
+            if (directFolders > 0) {
+              const folderLabel = directFolders > 1 ? t('comparison.placeholders.folders') : t('comparison.placeholders.folder');
+              parts.push(`${directFolders} ${folderLabel}`);
+            }
+            if (directFiles > 0) {
+              const fileLabel = directFiles > 1 ? t('comparison.placeholders.files') : t('comparison.placeholders.file');
+              parts.push(`${directFiles} ${fileLabel}`);
+            }
+            return parts.length > 0 ? parts.join(' • ') : t('comparison.placeholders.emptyFolder');
           })()}
         </div>
       </div>

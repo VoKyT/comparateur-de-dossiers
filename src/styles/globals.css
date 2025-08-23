@@ -12,6 +12,23 @@
 /* Import unique Tailwind CSS v4 - remplace les @tailwind directives */
 @import "tailwindcss";
 
+/* Fix pour couleurs oklch non-animables avec Framer Motion */
+html {
+  color-scheme: light;
+}
+
+/* Force RGB color space pour Framer Motion */
+* {
+  color-interpolation: sRGB;
+}
+
+/* Disable oklch/hsl/lab colors globally pour animations */
+@supports (color: oklch(0 0 0)) {
+  :root {
+    color-scheme: light;
+  }
+}
+
 /* Styles pour zone de travail pleine hauteur */
 .work-area {
   height: calc(100vh - 60px); /* Soustrait la hauteur du footer */

@@ -16,12 +16,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PageHeader } from './PageHeader';
+import { useTranslation } from '@/shared/i18n';
 
 interface WelcomeScreenProps {
   onWelcomeComplete: () => void;
 }
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWelcomeComplete }) => {
+  const { t } = useTranslation();
+  
   const handleTitleClick = () => {
     onWelcomeComplete();
   };
@@ -57,7 +60,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWelcomeComplete 
           }}
         >
           <h1 className="professional-title-font text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-center leading-tight">
-            Comparateur de Dossiers
+            {t('ui.title')}
           </h1>
         </motion.div>
         
@@ -72,14 +75,14 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWelcomeComplete 
           }}
         >
           <p className="text-xl md:text-2xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            Analysez et comparez vos fichiers avec élégance
+            {t('ui.subtitle')}
           </p>
           <motion.p 
             className="text-base md:text-lg text-slate-500 mt-16 md:mt-20 font-medium"
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
-            Cliquez sur le titre pour commencer
+            {t('ui.messages.selectFoldersToStart')}
           </motion.p>
         </motion.div>
       </div>

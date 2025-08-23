@@ -14,6 +14,7 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Globe, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/shared/i18n';
 
 interface VersionBadgeProps {
   version: string;
@@ -33,10 +34,12 @@ interface VersionBadgeProps {
  */
 export const VersionBadge: React.FC<VersionBadgeProps> = ({ 
   version, 
-  mode = "Mode Web", 
+  mode, 
   icon: IconComponent = Globe,
   className 
 }) => {
+  const { t } = useTranslation();
+  const defaultMode = mode || t('ui.labels.webMode');
   return (
     <div className={cn("mb-8 md:mb-10", className)}>
       <Badge 
@@ -44,7 +47,7 @@ export const VersionBadge: React.FC<VersionBadgeProps> = ({
         className="bg-white/90 border-slate-400/50 text-slate-800 px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold tracking-wide shadow-lg"
       >
         <IconComponent className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-        Version {version} • {mode}
+        {t('ui.labels.version')} {version} • {defaultMode}
       </Badge>
     </div>
   );

@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { ComparisonStats } from '@/shared/types';
+import { useTranslation } from '@/shared/i18n';
 
 interface ComparisonStatsProps {
   stats: ComparisonStats;
@@ -20,15 +21,17 @@ export const ComparisonStatsDisplay: React.FC<ComparisonStatsProps> = ({
   folderAName,
   folderBName
 }) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="mb-6 text-center">
       <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2">
-        Folder Comparison
+        {t('comparison.header.folderComparison')}
       </h3>
       <div className="flex flex-wrap justify-center gap-4 text-sm text-slate-600">
-        <span>{folderAName} ({stats.totalFilesA} files)</span>
-        <span>{stats.commonFiles} common</span>
-        <span>{folderBName} ({stats.totalFilesB} files)</span>
+        <span>{folderAName} ({stats.totalFilesA} {t('comparison.stats.files')})</span>
+        <span>{stats.commonFiles} {t('comparison.stats.common')}</span>
+        <span>{folderBName} ({stats.totalFilesB} {t('comparison.stats.files')})</span>
       </div>
     </div>
   );

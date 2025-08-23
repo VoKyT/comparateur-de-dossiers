@@ -9,7 +9,8 @@
 import React from 'react';
 import { ComparisonData, ComparisonStats } from '@/shared/types';
 import { useComparison } from '@/shared/hooks';
-import { ComparisonStatsDisplay } from './ComparisonStats';
+import { useTranslation } from '@/shared/i18n';
+import { ComparisonHeader } from './ComparisonHeader';
 import { FileList } from './FileList';
 
 interface ComparisonGridProps {
@@ -24,16 +25,18 @@ export const ComparisonGrid: React.FC<ComparisonGridProps> = ({
   folderBName
 }) => {
   const { calculateStats } = useComparison();
+  const { t } = useTranslation();
   const stats = calculateStats(comparisonData);
 
   return (
     <div className="h-full flex flex-col bg-white border border-slate-200 rounded-xl shadow-sm">
-      {/* Stats header compact */}
+      {/* Header avec stats et export */}
       <div className="flex-shrink-0 border-b border-slate-100 p-6">
-        <ComparisonStatsDisplay 
+        <ComparisonHeader 
           stats={stats}
           folderAName={folderAName}
           folderBName={folderBName}
+          comparisonData={comparisonData}
         />
       </div>
       
@@ -43,7 +46,7 @@ export const ComparisonGrid: React.FC<ComparisonGridProps> = ({
         <div className="border-r border-slate-100 md:border-r lg:border-r md:last:border-r-0 lg:last:border-r-0">
           <FileList
             files={comparisonData.uniqueA}
-            title={`Only in ${folderAName}`}
+            title={`${t('comparison.columns.uniqueA')} ${folderAName}`}
             colorScheme="slate"
           />
         </div>
@@ -52,7 +55,7 @@ export const ComparisonGrid: React.FC<ComparisonGridProps> = ({
         <div className="border-r border-slate-100 md:border-r lg:border-r md:last:border-r-0 lg:last:border-r-0">
           <FileList
             files={comparisonData.common}
-            title="Common Files"
+            title={t('comparison.columns.commonFiles')}
             colorScheme="blue"
             showPaths={true}
           />
@@ -62,7 +65,7 @@ export const ComparisonGrid: React.FC<ComparisonGridProps> = ({
         <div className="md:border-r-0 lg:border-r-0">
           <FileList
             files={comparisonData.uniqueB}
-            title={`Only in ${folderBName}`}
+            title={`${t('comparison.columns.uniqueB')} ${folderBName}`}
             colorScheme="gray"
           />
         </div>

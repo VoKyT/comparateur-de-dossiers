@@ -42,10 +42,14 @@ export const useFolderSelection = (): UseFolderSelectionReturn => {
       if ('showDirectoryPicker' in window) {
         const dirHandle = await (window as any).showDirectoryPicker();
         const tree = await buildFileTreeFromAPI(dirHandle);
-        const files = extractAllFiles(tree);
+        const allFiles = extractAllFiles(tree);
         
-        setFolderA({ name: dirHandle.name, files });
-        console.log(`✅ [FOLDER_SELECTION] Dossier A sélectionné: ${dirHandle.name} (${files.length} fichiers)`);
+        setFolderA({ 
+          name: dirHandle.name, 
+          files: tree,
+          allFiles: allFiles
+        });
+        console.log(`✅ [FOLDER_SELECTION] Dossier A sélectionné: ${dirHandle.name} (${tree.length} éléments, ${allFiles.length} fichiers total)`);
       } else {
         console.warn(`⚠️ [FOLDER_SELECTION] File System Access API non supportée`);
       }
@@ -61,10 +65,14 @@ export const useFolderSelection = (): UseFolderSelectionReturn => {
       if ('showDirectoryPicker' in window) {
         const dirHandle = await (window as any).showDirectoryPicker();
         const tree = await buildFileTreeFromAPI(dirHandle);
-        const files = extractAllFiles(tree);
+        const allFiles = extractAllFiles(tree);
         
-        setFolderB({ name: dirHandle.name, files });
-        console.log(`✅ [FOLDER_SELECTION] Dossier B sélectionné: ${dirHandle.name} (${files.length} fichiers)`);
+        setFolderB({ 
+          name: dirHandle.name, 
+          files: tree,
+          allFiles: allFiles
+        });
+        console.log(`✅ [FOLDER_SELECTION] Dossier B sélectionné: ${dirHandle.name} (${tree.length} éléments, ${allFiles.length} fichiers total)`);
       } else {
         console.warn(`⚠️ [FOLDER_SELECTION] File System Access API non supportée`);
       }

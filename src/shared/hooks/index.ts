@@ -123,3 +123,8 @@ export function useLoading(initialState = false) {
 export { useFileSystem } from './useFileSystem';
 export { useComparison } from './useComparison';
 export { useFolderSelection } from './useFolderSelection';
+export { useReportGenerator } from './useReportGenerator';
+export { useFileListExport } from './useFileListExport';
+
+// Motion & Animation Hooks
+export { useMotionColor, useMotionColorAnimation, createSafeGradient, getSafeColor } from './useMotionColors';

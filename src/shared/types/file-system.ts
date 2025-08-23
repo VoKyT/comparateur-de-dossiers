@@ -14,7 +14,8 @@ export interface FileItem {
 
 export interface DirectoryData {
   name: string;
-  files: FileItem[];
+  files: FileItem[];          // Arborescence hiérarchique pour l'affichage
+  allFiles: FileItem[];       // Tous les fichiers aplatis pour la comparaison
 }
 
 export type FileTree = FileItem[];

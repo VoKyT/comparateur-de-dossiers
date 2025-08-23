@@ -31,7 +31,7 @@ export const FileList: React.FC<FileListProps> = ({
           titleText: 'text-blue-800',
           subtitleText: 'text-blue-600',
           itemBorder: 'border-blue-200',
-          itemHover: 'hover:bg-blue-50',
+          itemHover: 'hover:bg-slate-50',
           itemText: 'text-blue-700',
           itemSubtext: 'text-blue-500',
           dot: 'bg-blue-500'

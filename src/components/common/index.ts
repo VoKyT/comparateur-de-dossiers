@@ -5,10 +5,13 @@
  * @exports ActionButton - Bouton d'action avec animations
  * @exports ButtonGroup - Groupe de boutons avec espacement
  * @exports IconText - Texte avec icône pour meilleure compréhension
- * @usage import { VersionBadge, ActionButton, ButtonGroup, IconText } from '@/components/common'
+ * @exports LanguageToggle - Sélecteur de langue animé avec drapeaux
+ * @usage import { VersionBadge, ActionButton, ButtonGroup, IconText, LanguageToggle } from '@/components/common'
  */
 
 export { VersionBadge, default as VersionBadgeDefault } from './VersionBadge';
 export { ActionButton, default as ActionButtonDefault } from './ActionButton';
 export { ButtonGroup, default as ButtonGroupDefault } from './ButtonGroup';
 export { IconText, default as IconTextDefault } from './IconText';
+export { LanguageToggle } from './LanguageToggle';
+export { FrenchFlag, BritishFlag } from './FlagIcon';
