@@ -17,6 +17,128 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ---
 
+## [v1.8.0] - 2025-08-23
+
+### Ajouté
+- **Système d'internationalisation complet** : Support FR/EN avec détection automatique langue navigateur
+- **Hook useTranslation** : Accès aux traductions dans tous les composants React
+- **Sélecteur de langue animé** : LanguageToggle avec drapeaux SVG personnalisés et animations fluides
+- **Drapeaux personnalisés** : Composants FrenchFlag et BritishFlag avec SVG optimisés
+- **Support accessibilité i18n** : Labels ARIA et navigation clavier pour sélecteur langue
+- **Footer enrichi** : Lien Instagram professionnel VKT avec photo de profil
+
+### Modifié
+- **Interface multilingue** : Toutes les chaînes traduites en FR/EN
+- **Configuration Tailwind** : Palette de couleurs étendue avec classes motion-safe/motion-reduce
+- **App.tsx** : Intégration I18nProvider et wrapper pour sélecteur de langue
+- **Composants UI** : VersionBadge, ComparisonGrid, FileTreeDisplay avec traductions
+
+### Technique
+- **Contexte I18nProvider** : Gestion état langue avec React Context
+- **Types TypeScript** : Interfaces pour traductions et langues supportées
+- **Optimisations performance** : Logs conditionnels selon NODE_ENV
+- **Architecture modulaire** : Module src/shared/i18n/ avec sous-modules
+
+---
+
+## [v1.7.0] - 2025-08-22
+
+### Ajouté
+- **Intégration Framer Motion** : Animations professionnelles pour écran de bienvenue
+- **Transitions symétriques ultra-stylées** : Animations entre écrans avec durées cohérentes
+- **Bouton retour animé** : Effets de brillance, transformations 3D et micro-interactions
+
+### Modifié
+- **WelcomeScreen** : Animations d'entrée et de sortie avec Framer Motion
+- **Navigation entre écrans** : Transitions fluides et professionnelles
+- **Optimisations CSS** : Support motion-safe et motion-reduce pour accessibilité
+
+### Technique
+- **Dépendances** : framer-motion ^12.23.12 pour animations avancées
+- **Configuration** : Support préférences utilisateur pour animations réduites
+
+---
+
+## [v1.6.2] - 2025-08-22
+
+### Modifié
+- **Références documentation** : Amélioration interface avec références complètes
+- **Interface utilisateur** : Optimisations mineures pour meilleure expérience
+
+### Corrigé
+- **Documentation** : Correction des liens et références dans les fichiers MD
+
+---
+
+## [v1.6.1] - 2025-08-22
+
+### Ajouté
+- **Modularité CRITIQUE** : Division automatique des fichiers >200 lignes selon CLAUDE.md
+- **Règles de modularité** : Application systématique des règles de découpage
+
+### Modifié
+- **Architecture components** : Refactoring complet selon règles de modularité
+- **Fichiers volumineux** : Division en modules spécialisés plus maintenables
+
+### Technique
+- **Respect CLAUDE.md** : Application stricte des règles de modularité systématique
+
+---
+
+## [v1.6.0] - 2025-08-22
+
+### Ajouté
+- **Architecture ultra-modulaire** : Design professionnel avec règles modularité systématique
+- **ReportExporter** : Composant d'export de rapports avec statistiques complètes
+- **PermanentComparisonGrid** : Interface de comparaison permanente et responsive
+- **Composants de colonnes** : EmptyColumn, FilledColumn, CommonFilesColumn pour modularité
+- **FileTreeItem avancés** : FileTreeItem et FileTreeItemWithComparison pour comparaisons détaillées
+
+### Modifié
+- **Structure components** : Réorganisation complète selon principes de modularité
+- **Interface de comparaison** : Amélioration UX avec composants spécialisés
+
+### Technique
+- **Hooks spécialisés** : useFileListExport, useReportGenerator, useMotionColors
+- **Types modulaires** : Interfaces TypeScript pour export et génération de rapports
+
+---
+
+## [v1.5.0] - 2025-08-22
+
+### Ajouté
+- **Fonctionnalités core de comparaison** : Algorithme de comparaison de fichiers complet
+- **ComparisonHeader** : En-tête avec statistiques en temps réel et boutons d'export
+- **Support accessibilité** : Module src/shared/accessibility/ avec labels ARIA
+- **Export de données** : Génération de rapports détaillés au format JSON/CSV
+
+### Modifié
+- **Interface de comparaison** : Affichage amélioré des résultats avec stats détaillées
+- **Navigation** : Amélioration de l'accessibilité pour tous les utilisateurs
+
+### Technique
+- **Hooks métier** : useComparison avec logique de comparaison optimisée
+- **Types comparison** : Interfaces pour données de comparaison et statistiques
+
+---
+
+## [v1.4.0] - 2025-08-21
+
+### Ajouté
+- **Sélection de dossiers** : Interface FolderSelector avec File System Access API
+- **Navigation arborescente** : FileTreeDisplay pour exploration des dossiers
+- **Gestion d'état avancée** : Hooks personnalisés pour sélection de dossiers
+
+### Modifié
+- **Interface responsive** : Amélioration de l'adaptabilité mobile et desktop
+- **UX de sélection** : Processus de sélection de dossiers plus intuitif
+
+### Technique
+- **File System Access API** : Intégration native pour accès aux dossiers
+- **Hooks spécialisés** : useFolderSelection pour logique de sélection
+
+---
+
 ## [v1.3.0] - 2025-08-21
 
 ### Modifié
