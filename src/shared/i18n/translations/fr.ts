@@ -117,7 +117,8 @@ export const frTranslations: TranslationValues = {
       generateReport: "Générer un Rapport",
       folderComparisonReport: "RAPPORT DE COMPARAISON DE DOSSIERS",
       deletionRecommendations: "RECOMMANDATIONS DE SUPPRESSION",
-      filesUniqueTo: "FICHIERS UNIQUES À"
+      filesUniqueTo: "FICHIERS UNIQUES À",
+      endOfReport: "FIN DU RAPPORT"
     },
     content: {
       generatedOn: "Généré le",
@@ -144,7 +145,23 @@ export const frTranslations: TranslationValues = {
       existsInBoth: "Ce fichier existe dans les deux dossiers et peut être supprimé en toute sécurité d'un emplacement",
       folder: "Dossier",
       noExtension: "Pas d'extension",
-      files: "fichiers"
+      files: "fichiers",
+      csvHeaders: {
+        type: "Type",
+        fileName: "NomFichier",
+        size: "Taille",
+        pathA: "CheminA",
+        pathB: "CheminB",
+        canDelete: "PeutSupprimer",
+        folder: "Dossier"
+      },
+      csvValues: {
+        common: "Commun",
+        unique: "Unique",
+        yes: "OUI",
+        no: "NON",
+        both: "Les deux"
+      }
     },
     formats: {
       txt: "Rapport Texte",

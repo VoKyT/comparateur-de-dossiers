@@ -35,6 +35,8 @@ export interface TranslationValues {
       selected: string;
       notSelected: string;
       ready: string;
+      version: string;
+      webMode: string;
     };
     messages: {
       readyToCompare: string;
@@ -117,9 +119,14 @@ export interface TranslationValues {
       summary: string;
       results: string;
       generateReport: string;
+      folderComparisonReport: string;
+      deletionRecommendations: string;
+      filesUniqueTo: string;
+      endOfReport: string;
     };
     content: {
       generatedOn: string;
+      generated: string;
       folderA: string;
       folderB: string;
       totalFiles: string;
@@ -129,6 +136,36 @@ export interface TranslationValues {
       filePath: string;
       fileName: string;
       fileSize: string;
+      summary: string;
+      filesOnlyIn: string;
+      safelyDelete: string;
+      file: string;
+      files: string;
+      noCommonFilesFound: string;
+      canDelete: string;
+      cannotDelete: string;
+      bothFolders: string;
+      recommendation: string;
+      onlyExistsIn: string;
+      shouldNotBeDeleted: string;
+      existsInBoth: string;
+      folder: string;
+      csvHeaders: {
+        type: string;
+        fileName: string;
+        size: string;
+        pathA: string;
+        pathB: string;
+        canDelete: string;
+        folder: string;
+      };
+      csvValues: {
+        common: string;
+        unique: string;
+        yes: string;
+        no: string;
+        both: string;
+      };
     };
     formats: {
       txt: string;

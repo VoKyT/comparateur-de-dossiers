@@ -13,8 +13,8 @@ export { enTranslations } from './translations/en';
 import { useI18n } from './context';
 
 export const useTranslation = () => {
-  const { t, language, setLanguage } = useI18n();
-  return { t, language, setLanguage };
+  const { t, language, setLanguage, translations } = useI18n();
+  return { t, language, setLanguage, translations };
 };
 
 // Flags et métadonnées des langues

@@ -114,10 +114,15 @@ export const enTranslations: TranslationValues = {
       fileList: "File List",
       summary: "Summary",
       results: "Folder Comparison Results",
-      generateReport: "Generate Report"
+      generateReport: "Generate Report",
+      folderComparisonReport: "FOLDER COMPARISON REPORT",
+      deletionRecommendations: "DELETION RECOMMENDATIONS",
+      filesUniqueTo: "FILES UNIQUE TO",
+      endOfReport: "END OF REPORT"
     },
     content: {
       generatedOn: "Generated on",
+      generated: "Generated",
       folderA: "Folder A",
       folderB: "Folder B",
       totalFiles: "Total files",
@@ -126,7 +131,37 @@ export const enTranslations: TranslationValues = {
       uniqueFilesB: "Unique files B",
       filePath: "File path",
       fileName: "File name",
-      fileSize: "File size"
+      fileSize: "File size",
+      summary: "SUMMARY",
+      filesOnlyIn: "Files only in",
+      safelyDelete: "You can safely DELETE the following",
+      file: "file",
+      files: "files",
+      noCommonFilesFound: "No common files found - nothing can be safely deleted",
+      canDelete: "YES",
+      cannotDelete: "NO",
+      bothFolders: "Both",
+      recommendation: "recommendation",
+      onlyExistsIn: "This file only exists in",
+      shouldNotBeDeleted: "and should NOT be deleted",
+      existsInBoth: "This file exists in both folders and can be safely deleted from one location",
+      folder: "Folder",
+      csvHeaders: {
+        type: "Type",
+        fileName: "FileName",
+        size: "Size",
+        pathA: "PathA",
+        pathB: "PathB",
+        canDelete: "CanDelete",
+        folder: "Folder"
+      },
+      csvValues: {
+        common: "Common",
+        unique: "Unique",
+        yes: "YES",
+        no: "NO",
+        both: "Both"
+      }
     },
     formats: {
       txt: "Text Report",

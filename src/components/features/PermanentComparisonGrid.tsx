@@ -10,7 +10,7 @@
 
 import React from 'react';
 import { ComparisonData, DirectoryData } from '@/shared/types';
-import { useComparison, useReportGenerator } from '@/shared/hooks';
+import { useComparison } from '@/shared/hooks';
 import { createAccessibleProps } from '@/shared/accessibility';
 import { useTranslation } from '@/shared/i18n';
 import { Button } from '@/components/ui/button';

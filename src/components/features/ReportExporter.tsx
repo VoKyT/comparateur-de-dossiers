@@ -11,6 +11,7 @@
 import React, { cloneElement, ReactElement } from 'react';
 import { ComparisonData } from '@/shared/types';
 import { useReportGenerator } from '@/shared/hooks';
+import { useTranslation } from '@/shared/i18n';
 
 type ExportFormat = 'txt' | 'csv' | 'json';
 
@@ -29,7 +30,8 @@ export const ReportExporter: React.FC<ReportExporterProps> = ({
   children,
   onExportComplete
 }) => {
-  const { generateReport, downloadReport } = useReportGenerator();
+  const { t, translations } = useTranslation();
+  const { generateReport, downloadReport } = useReportGenerator(translations);
 
   const handleExport = async (format: ExportFormat) => {
     try {

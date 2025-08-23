@@ -7,10 +7,11 @@
 
 import { useCallback } from 'react';
 import { ComparisonData, ComparisonResult, FileItem } from '@/shared/types';
+import { TranslationValues } from '@/shared/i18n/types';
 
 type ExportFormat = 'txt' | 'csv' | 'json';
 
-export const useReportGenerator = () => {
+export const useReportGenerator = (translations: TranslationValues) => {
   /**
    * Génère un rapport de comparaison dans le format spécifié
    */
@@ -27,18 +28,18 @@ export const useReportGenerator = () => {
 
     switch (format) {
       case 'txt':
-        return generateTextReport(data, folderAName, folderBName, timestamp);
+        return generateTextReport(data, folderAName, folderBName, timestamp, translations);
       
       case 'csv':
-        return generateCsvReport(data, folderAName, folderBName);
+        return generateCsvReport(data, folderAName, folderBName, translations);
       
       case 'json':
-        return generateJsonReport(data, folderAName, folderBName, timestamp);
+        return generateJsonReport(data, folderAName, folderBName, timestamp, translations);
       
       default:
         throw new Error(`Format non supporté: ${format}`);
     }
-  }, []);
+  }, [translations]);
 
   /**
    * Télécharge le rapport généré
@@ -77,33 +78,35 @@ function generateTextReport(
   data: ComparisonData, 
   folderAName: string, 
   folderBName: string, 
-  timestamp: string
+  timestamp: string,
+  t: TranslationValues
 ): string {
   const lines: string[] = [];
   
   // En-tête
   lines.push('='.repeat(60));
-  lines.push('FOLDER COMPARISON REPORT');
+  lines.push(t.reports.titles.folderComparisonReport);
   lines.push('='.repeat(60));
   lines.push('');
-  lines.push(`Generated: ${timestamp}`);
-  lines.push(`Folder A: ${folderAName}`);
-  lines.push(`Folder B: ${folderBName}`);
+  lines.push(`${t.reports.content.generated}: ${timestamp}`);
+  lines.push(`${t.reports.content.folderA}: ${folderAName}`);
+  lines.push(`${t.reports.content.folderB}: ${folderBName}`);
   lines.push('');
   
   // Résumé statistiques
-  lines.push('SUMMARY');
+  lines.push(t.reports.content.summary);
   lines.push('-'.repeat(20));
-  lines.push(`• Common files: ${data.common.length}`);
-  lines.push(`• Files only in ${folderAName}: ${data.uniqueA.length}`);
-  lines.push(`• Files only in ${folderBName}: ${data.uniqueB.length}`);
+  lines.push(`• ${t.reports.content.commonFiles}: ${data.common.length}`);
+  lines.push(`• ${t.reports.content.filesOnlyIn} ${folderAName}: ${data.uniqueA.length}`);
+  lines.push(`• ${t.reports.content.filesOnlyIn} ${folderBName}: ${data.uniqueB.length}`);
   lines.push('');
 
   // Recommandations de suppression
-  lines.push('DELETION RECOMMENDATIONS');
+  lines.push(t.reports.titles.deletionRecommendations);
   lines.push('-'.repeat(30));
   if (data.common.length > 0) {
-    lines.push(`✅ You can safely DELETE the following ${data.common.length} file(s) from one of the folders:`);
+    const fileWord = data.common.length > 1 ? t.reports.content.files : t.reports.content.file;
+    lines.push(`✅ ${t.reports.content.safelyDelete} ${data.common.length} ${fileWord}:`);
     lines.push('');
     data.common.forEach((file: ComparisonResult) => {
       lines.push(`   📄 ${file.name} (${formatSize(file.size)})`);
@@ -112,13 +115,13 @@ function generateTextReport(
       lines.push('');
     });
   } else {
-    lines.push('❌ No common files found - nothing can be safely deleted.');
+    lines.push(`❌ ${t.reports.content.noCommonFilesFound}.`);
   }
 
   // Fichiers uniques
   if (data.uniqueA.length > 0) {
     lines.push('');
-    lines.push(`FILES UNIQUE TO ${folderAName.toUpperCase()}`);
+    lines.push(`${t.reports.titles.filesUniqueTo} ${folderAName.toUpperCase()}`);
     lines.push('-'.repeat(30));
     data.uniqueA.forEach((file: FileItem) => {
       if (file.type === 'file') {
@@ -129,7 +132,7 @@ function generateTextReport(
 
   if (data.uniqueB.length > 0) {
     lines.push('');
-    lines.push(`FILES UNIQUE TO ${folderBName.toUpperCase()}`);
+    lines.push(`${t.reports.titles.filesUniqueTo} ${folderBName.toUpperCase()}`);
     lines.push('-'.repeat(30));
     data.uniqueB.forEach((file: FileItem) => {
       if (file.type === 'file') {
@@ -140,7 +143,7 @@ function generateTextReport(
 
   lines.push('');
   lines.push('='.repeat(60));
-  lines.push('END OF REPORT');
+  lines.push(t.reports.titles.endOfReport);
   lines.push('='.repeat(60));
 
   return lines.join('\n');
@@ -152,29 +155,39 @@ function generateTextReport(
 function generateCsvReport(
   data: ComparisonData, 
   folderAName: string, 
-  folderBName: string
+  folderBName: string,
+  t: TranslationValues
 ): string {
   const lines: string[] = [];
   
-  // En-tête CSV
-  lines.push('Type,FileName,Size,PathA,PathB,CanDelete,Folder');
+  // En-tête CSV avec traductions
+  const header = [
+    t.reports.content.csvHeaders.type,
+    t.reports.content.csvHeaders.fileName,
+    t.reports.content.csvHeaders.size,
+    t.reports.content.csvHeaders.pathA,
+    t.reports.content.csvHeaders.pathB,
+    t.reports.content.csvHeaders.canDelete,
+    t.reports.content.csvHeaders.folder
+  ].join(',');
+  lines.push(header);
   
   // Fichiers communs (peuvent être supprimés)
   data.common.forEach((file: ComparisonResult) => {
-    lines.push(`Common,"${file.name}",${file.size},"${file.pathA}","${file.pathB}",YES,Both`);
+    lines.push(`${t.reports.content.csvValues.common},"${file.name}",${file.size},"${file.pathA}","${file.pathB}",${t.reports.content.csvValues.yes},${t.reports.content.csvValues.both}`);
   });
   
   // Fichiers uniques A
   data.uniqueA.forEach((file: FileItem) => {
     if (file.type === 'file') {
-      lines.push(`Unique,"${file.name}",${file.size || 0},"${file.path}","",NO,${folderAName}`);
+      lines.push(`${t.reports.content.csvValues.unique},"${file.name}",${file.size || 0},"${file.path}","",${t.reports.content.csvValues.no},${folderAName}`);
     }
   });
   
   // Fichiers uniques B
   data.uniqueB.forEach((file: FileItem) => {
     if (file.type === 'file') {
-      lines.push(`Unique,"${file.name}",${file.size || 0},"","${file.path}",NO,${folderBName}`);
+      lines.push(`${t.reports.content.csvValues.unique},"${file.name}",${file.size || 0},"","${file.path}",${t.reports.content.csvValues.no},${folderBName}`);
     }
   });
 
@@ -188,7 +201,8 @@ function generateJsonReport(
   data: ComparisonData, 
   folderAName: string, 
   folderBName: string, 
-  timestamp: string
+  timestamp: string,
+  t: TranslationValues
 ): string {
   const report = {
     metadata: {
@@ -210,7 +224,7 @@ function generateJsonReport(
           folderB: file.pathB
         },
         canDelete: true,
-        recommendation: 'This file exists in both folders and can be safely deleted from one location'
+        recommendation: t.reports.content.existsInBoth
       })),
       uniqueToFolderA: data.uniqueA
         .filter((file: FileItem) => file.type === 'file')
@@ -219,7 +233,7 @@ function generateJsonReport(
           size: file.size || 0,
           path: file.path,
           canDelete: false,
-          recommendation: `This file only exists in ${folderAName} and should NOT be deleted`
+          recommendation: `${t.reports.content.onlyExistsIn} ${folderAName} ${t.reports.content.shouldNotBeDeleted}`
         })),
       uniqueToFolderB: data.uniqueB
         .filter((file: FileItem) => file.type === 'file')
@@ -228,7 +242,7 @@ function generateJsonReport(
           size: file.size || 0,
           path: file.path,
           canDelete: false,
-          recommendation: `This file only exists in ${folderBName} and should NOT be deleted`
+          recommendation: `${t.reports.content.onlyExistsIn} ${folderBName} ${t.reports.content.shouldNotBeDeleted}`
         }))
     }
   };

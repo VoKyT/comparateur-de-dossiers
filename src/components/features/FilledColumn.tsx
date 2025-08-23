@@ -46,7 +46,7 @@ export const FilledColumn: React.FC<FilledColumnProps> = ({
       bg: 'bg-blue-50',
       border: 'border-blue-200',
       text: 'text-blue-700',
-      button: 'bg-slate-600 hover:bg-slate-700',
+      button: 'bg-blue-600 hover:bg-blue-700',
       icon: 'text-blue-500'
     },
     green: {
