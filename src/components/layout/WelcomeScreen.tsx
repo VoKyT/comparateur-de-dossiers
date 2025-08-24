@@ -49,17 +49,17 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onWelcomeComplete 
       <div className="relative">
         {/* Titre principal avec layoutId pour transition fluide */}
         <motion.div 
-          className="select-none cursor-default relative z-[60]"
+          className="select-none cursor-default relative z-[60] px-4 max-w-full"
           onClick={handleTitleClick}
           data-testid="welcome-title-trigger"
-          initial={{ scale: 1.4 }}
+          initial={{ scale: 1.2 }}
           transition={{ 
             type: "spring",
             damping: 20,
             stiffness: 150
           }}
         >
-          <h1 className="professional-title-font text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-center leading-tight">
+          <h1 className="professional-title-font text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-center leading-tight max-w-full overflow-hidden">
             {t('ui.title')}
           </h1>
         </motion.div>

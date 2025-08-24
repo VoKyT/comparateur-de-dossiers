@@ -6,7 +6,8 @@
  * @exports ButtonGroup - Groupe de boutons avec espacement
  * @exports IconText - Texte avec icône pour meilleure compréhension
  * @exports LanguageToggle - Sélecteur de langue animé avec drapeaux
- * @usage import { VersionBadge, ActionButton, ButtonGroup, IconText, LanguageToggle } from '@/components/common'
+ * @exports ProfileIcon - Icône de profil circulaire réutilisable
+ * @usage import { VersionBadge, ActionButton, ButtonGroup, IconText, LanguageToggle, ProfileIcon } from '@/components/common'
  */
 
 export { VersionBadge, default as VersionBadgeDefault } from './VersionBadge';
@@ -15,3 +16,4 @@ export { ButtonGroup, default as ButtonGroupDefault } from './ButtonGroup';
 export { IconText, default as IconTextDefault } from './IconText';
 export { LanguageToggle } from './LanguageToggle';
 export { FrenchFlag, BritishFlag } from './FlagIcon';
+export { ProfileIcon, default as ProfileIconDefault } from './ProfileIcon';

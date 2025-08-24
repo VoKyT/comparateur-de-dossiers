@@ -15,11 +15,18 @@
 /* Fix pour couleurs oklch non-animables avec Framer Motion */
 html {
   color-scheme: light;
+  overflow-x: hidden; /* Empêche le débordement horizontal global */
 }
 
 /* Force RGB color space pour Framer Motion */
 * {
   color-interpolation: sRGB;
+}
+
+/* Protection contre débordement horizontal */
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Disable oklch/hsl/lab colors globally pour animations */
