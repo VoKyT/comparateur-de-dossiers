@@ -17,6 +17,58 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ---
 
+## [v1.9.0] - 2025-08-24
+
+### 🚀 Ajouté
+- **Service Email Moderne** : Migration d'EmailJS vers Resend API pour envoi d'emails plus fiables
+- **Envoi d'emails** : Bouton "Envoyer" pour transmettre rapports par email directement
+- **Templates HTML automatiques** : Emails professionnels avec design moderne généré automatiquement
+- **Modal EmailModal** : Interface dédiée envoi email avec validation et gestion d'erreurs
+- **Configuration Resend** : Documentation complète setup API avec guide pas-à-pas
+- **Architecture modulaire critique** : Division FilledColumn (301→3 fichiers) et EmailModal (286→4 fichiers)
+- **Protection débordement** : Fix barre défilement horizontale WelcomeScreen transitoire
+
+### 🔄 Modifié
+- **Boutons export** : Tooltips conditionnels selon état de la comparaison (actifs/inactifs)
+- **Interface responsive** : Améliorations mobile pour modals et composants
+- **Gestion d'erreurs** : Messages contextuels spécifiques à Resend API
+- **Scale animation** : WelcomeScreen titre réduit de 1.4→1.2 pour éviter overflow horizontal
+
+### 🔧 Technique
+- **Package migration** : `@emailjs/browser` supprimé → `resend` v6.5.0 ajouté
+- **Types modernisés** : Interfaces EmailData et ResendConfig pour API Resend
+- **Sécurité renforcée** : Clés API privées côté backend (vs publiques EmailJS)
+- **Validation** : Vérification configuration avant envoi avec messages d'aide
+- **CSS protection** : `overflow-x: hidden` global pour prévenir débordements futurs
+
+### 📚 Documentation
+- **Guide Resend complet** : `docs/email/configuration.md` avec comparaison EmailJS
+- **README v1.9.0** : Mise à jour avec nouvelles fonctionnalités email et stack technique
+- **CHANGELOG** : Historique détaillé avec catégorisation des changements
+- **Migration path** : Instructions passage EmailJS → Resend étape par étape
+
+---
+
+## [v1.8.2] - 2025-08-24
+
+### Ajouté
+- **Internationalisation complète des rapports** : Support FR/EN pour tous exports TXT/CSV/JSON
+- **Hook useReportGenerator i18n** : Génération rapports traduits selon langue interface
+
+### Modifié
+- **Exports multilingues** : Messages et en-têtes traduits dans rapports générés
+- **Types traductions** : Interfaces étendues pour système i18n des rapports
+
+---
+
+## [v1.8.1] - 2025-08-24
+
+### Ajouté
+- **Documentation système i18n** : Guide complet internationalisation dans docs/
+- **Modules docs/ structurés** : Architecture modulaire pour documentation technique
+
+---
+
 ## [v1.8.0] - 2025-08-23
 
 ### Ajouté

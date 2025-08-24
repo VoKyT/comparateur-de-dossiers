@@ -1,5 +1,5 @@
 /**
- * @fileoverview Modal d'envoi de rapport par email
+ * @fileoverview Modal d'envoi de rapport par email - Version modulaire
  * @description Interface professionnelle pour saisir email et envoyer rapport
  * @props isOpen - État ouvert/fermé du modal
  * @props onClose - Callback fermeture modal
@@ -13,10 +13,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { X, Mail, Send, Check, AlertCircle, Settings } from 'lucide-react';
-import { useTranslation } from '@/shared/i18n';
+import { Send, Check } from 'lucide-react';
 import { createAccessibleProps } from '@/shared/accessibility';
 import { emailService } from '@/shared/services/emailService';
+import { EmailModalHeader } from './EmailModalHeader';
+import { EmailConfiguration } from './EmailConfiguration';
+import { EmailStatus } from './EmailStatus';
 
 type EmailStatus = 'idle' | 'sending' | 'success' | 'error';
 
@@ -37,7 +39,6 @@ export const EmailModal: React.FC<EmailModalProps> = ({
   folderBName,
   onEmailSent
 }) => {
-  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<EmailStatus>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -71,7 +72,7 @@ export const EmailModal: React.FC<EmailModalProps> = ({
       const summaryMatch = reportLines.find(line => line.includes('fichiers communs'));
       const comparisonSummary = summaryMatch || `Comparaison entre ${folderAName} et ${folderBName}`;
       
-      // Envoyer via EmailJS
+      // Envoyer via Resend
       await emailService.sendReport(
         email,
         reportData,
@@ -136,27 +137,10 @@ export const EmailModal: React.FC<EmailModalProps> = ({
               onClick={e => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Mail size={16} className="text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    Envoyer par email
-                  </h3>
-                </div>
-                
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleClose}
-                  disabled={status === 'sending'}
-                  className="h-8 w-8"
-                  {...createAccessibleProps('closeEmailModal')}
-                >
-                  <X size={16} />
-                </Button>
-              </div>
+              <EmailModalHeader
+                onClose={handleClose}
+                disabled={status === 'sending'}
+              />
 
               {/* Content */}
               <div className="p-6">
@@ -173,33 +157,9 @@ export const EmailModal: React.FC<EmailModalProps> = ({
                 </div>
 
                 {/* Configuration warning si Resend pas configuré */}
-                {!emailService.isConfigurationValid() && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-lg"
-                  >
-                    <div className="flex items-start gap-3">
-                      <Settings size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <h5 className="font-medium text-amber-800 mb-1">
-                          Configuration Resend requise
-                        </h5>
-                        <p className="text-sm text-amber-700 mb-2">
-                          Pour utiliser l'envoi par email, vous devez configurer Resend avec votre clé API :
-                        </p>
-                        <ul className="text-xs text-amber-600 space-y-1 ml-4">
-                          <li>• Créer un compte sur <strong>resend.com</strong> (100 emails/jour gratuits)</li>
-                          <li>• Obtenir votre clé API et vérifier votre domaine</li>
-                          <li>• Mettre à jour le fichier <code>emailService.ts</code></li>
-                        </ul>
-                        <div className="mt-3 text-xs text-amber-600">
-                          <strong>✨ Avantages Resend :</strong> API moderne, meilleure délivrabilité, templates React
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
+                <EmailConfiguration 
+                  isConfigurationValid={emailService.isConfigurationValid()}
+                />
 
                 {/* Champ email */}
                 <div className="mb-6">
@@ -219,30 +179,7 @@ export const EmailModal: React.FC<EmailModalProps> = ({
                 </div>
 
                 {/* Messages d'état */}
-                <AnimatePresence>
-                  {status === 'error' && errorMessage && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2"
-                    >
-                      <AlertCircle size={16} className="text-red-500 flex-shrink-0" />
-                      <p className="text-sm text-red-700">{errorMessage}</p>
-                    </motion.div>
-                  )}
-
-                  {status === 'success' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2"
-                    >
-                      <Check size={16} className="text-green-500 flex-shrink-0" />
-                      <p className="text-sm text-green-700">Email envoyé avec succès !</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <EmailStatus status={status} errorMessage={errorMessage} />
 
                 {/* Actions */}
                 <div className="flex gap-3">
@@ -285,3 +222,5 @@ export const EmailModal: React.FC<EmailModalProps> = ({
     </AnimatePresence>
   );
 };
+
+export default EmailModal;
