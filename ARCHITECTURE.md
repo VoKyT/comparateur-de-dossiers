@@ -15,17 +15,34 @@ Application web moderne **React + TypeScript + Tailwind CSS + Vite** pour compar
 - `npm run build` → Build de production
 - `npm run preview` → Aperçu production
 
-## État actuel (v1.8.0)
+## État actuel (v1.9.2)
 - ✅ **Migration web complète** (v1.3.0) - Suppression Electron
 - ✅ **Architecture modulaire** - React + TypeScript + shadcn/ui
 - ✅ **Système d'internationalisation** (v1.8.0) - Support FR/EN complet
 - ✅ **Fonctionnalités core** - Sélection et comparaison de dossiers
 - ✅ **Export de rapports** - Génération rapports détaillés
 - ✅ **Interface animée** - Animations Framer Motion professionnelles
+- ✅ **Envoi d'emails** (v1.9.0) - Service Resend pour envoi rapports
+- ✅ **Intégration Google Drive** (v1.9.2) - Boutons cloud professionnels
 
 ## Notes de maintenance
 
 ### Évolutions récentes
+- **v1.9.2 : INTÉGRATION BOUTONS GOOGLE DRIVE + RÈGLES LOGS DEBUGGING**
+  - Boutons Google Drive dans colonnes vides pour sélection cloud future
+  - Interface ultra-professionnelle avec icône officiel Google Drive
+  - Handlers préparés pour future intégration API Google Drive
+  - Tooltips informatifs et animations élégantes
+  - Règle critique logs obligatoires pour debugging efficace 10x plus rapide
+  - Guide complet format standardisé logs avec emojis contextuels
+  - Infrastructure Express/CORS pour serveur local et futures extensions
+
+- **v1.9.0 : SERVICE EMAIL MODERNE RESEND**
+  - Migration EmailJS → Resend API pour fiabilité emails professionnels
+  - Templates HTML automatiques avec design moderne généré
+  - Modal EmailModal avec validation et gestion d'erreurs contextuelles
+  - Protection débordement horizontal WelcomeScreen avec scale optimisé
+
 - **v1.8.0 : SYSTÈME D'INTERNATIONALISATION COMPLET FR/EN**
   - Contexte I18nProvider avec détection automatique langue navigateur
   - Hook useTranslation pour accès aux traductions dans tous les composants
@@ -61,14 +78,17 @@ Application web moderne **React + TypeScript + Tailwind CSS + Vite** pour compar
 
 ### Fonctionnalités implémentées
 - ✅ **Migration web complète** - Suppression Electron, architecture SPA
-- ✅ **Interface de sélection** - Sélection de dossiers avec API native
+- ✅ **Interface de sélection** - Sélection de dossiers avec API native + Google Drive UI
 - ✅ **Comparaison de dossiers** - Algorithme de détection différences
-- ✅ **Export de rapports** - Génération rapports détaillés JSON/CSV
+- ✅ **Export de rapports** - Génération rapports détaillés JSON/CSV + envoi email
 - ✅ **Système i18n** - Support multilingue FR/EN complet
 - ✅ **Animations professionnelles** - Framer Motion avec transitions fluides
 - ✅ **Design system** - Interface ultra professionnelle shadcn/ui
 - ✅ **Accessibilité** - Support ARIA et navigation clavier
 - ✅ **Architecture modulaire** - Respect strict des règles CLAUDE.md
+- ✅ **Service email moderne** - Resend API pour envoi rapports fiables
+- ✅ **Intégration cloud** - UI Google Drive pour future extension fonctionnalités
+- ✅ **Debugging optimisé** - Système de logs standardisé avec emojis contextuels
 
 ### Points d'attention v1.3.0+
 - **Composants shadcn/ui** : Utiliser les composants officiels quand possible
@@ -114,4 +134,4 @@ Application web moderne **React + TypeScript + Tailwind CSS + Vite** pour compar
 - **Développement** : Workflow simplifié, moins de complexité
 
 ---
-*Dernière mise à jour : v1.8.0 - 2025-08-23 (Système internationalisation complet FR/EN + export rapports)*
+*Dernière mise à jour : v1.9.2 - 2025-08-25 (Intégration Google Drive UI + règles logs debugging + infrastructure Express)*
