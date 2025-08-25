@@ -32,7 +32,7 @@ export interface GoogleAuthResponse {
 
 // Configuration Google Auth par défaut
 const DEFAULT_CONFIG: GoogleAuthConfig = {
-  clientId: '742737777568-5ak9rlvh0d7e5fnj2o5k4l4p8c3sfr74.apps.googleusercontent.com', // Client ID publique pour tests
+  clientId: 'DEMO_MODE', // Mode démo - Remplacer par votre vrai Client ID Google
   scopes: ['profile', 'email'],
   cookiePolicy: 'single_host_origin'
 };
@@ -49,9 +49,16 @@ class GoogleAuthService {
 
   /**
    * Initialise Google Identity Services
-   * Charge le script Google et configure l'OAuth
+   * Charge le script Google et configure l'OAuth (sauf en mode démo)
    */
   private async initialize(): Promise<void> {
+    // Skip initialisation en mode démo
+    if (this.config.clientId === 'DEMO_MODE') {
+      console.log('🎭 [GOOGLE_AUTH] Mode démo - Skip initialisation Google Services');
+      this.isInitialized = true;
+      return Promise.resolve();
+    }
+
     if (this.isInitialized) return;
     
     if (this.initPromise) {
@@ -200,12 +207,40 @@ class GoogleAuthService {
   }
 
   /**
-   * Connexion Google - Affiche la popup de connexion
+   * Connexion Google - Mode démo ou vraie connexion
    */
   async signIn(): Promise<GoogleUser> {
     try {
       console.log('🔐 [GOOGLE_AUTH] Tentative de connexion Google');
       
+      // Mode démo pour test sans vrai Client ID
+      if (this.config.clientId === 'DEMO_MODE') {
+        console.log('🎭 [GOOGLE_AUTH] Mode démo activé - Simulation utilisateur');
+        
+        // Simuler un délai de connexion réaliste
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Utilisateur de démonstration
+        const demoUser: GoogleUser = {
+          id: 'demo_user_123',
+          email: 'demo@example.com',
+          name: 'John Doe',
+          given_name: 'John',
+          family_name: 'Doe',
+          picture: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCA5NiA5NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI0OCIgY3k9IjQ4IiByPSI0OCIgZmlsbD0iIzQyODVGNCIvPjx0ZXh0IHg9IjQ4IiB5PSI1OCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtd2VpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5KREQ8L3RleHQ+PC9zdmc+',
+          locale: 'fr'
+        };
+        
+        this.currentUser = demoUser;
+        console.log('✅ [GOOGLE_AUTH] Connexion démo réussie:', demoUser.name);
+        
+        // Déclencher l'événement de connexion
+        this.dispatchAuthEvent('signin', demoUser);
+        
+        return demoUser;
+      }
+      
+      // Mode production avec vrai Client ID
       await this.initialize();
       
       if (!window.google?.accounts?.id) {

@@ -5,6 +5,7 @@ Application web moderne utilisant **React + TypeScript + Tailwind CSS + Vite** p
 
 ## Objectifs techniques
 - Interface utilisateur ultra professionnelle avec shadcn/ui
+- Système d'authentification Google OAuth avec mode démo
 - Architecture modulaire strict selon CLAUDE.md 
 - Performance optimale avec build Vite moderne
 - Compatibilité multi-navigateurs avec File System Access API

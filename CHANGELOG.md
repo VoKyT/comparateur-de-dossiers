@@ -17,6 +17,47 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ---
 
+## [v1.9.4] - 2025-08-25
+
+### Ajouté
+- 🔐 **Authentification Google complète** avec mode démo intégré
+  - Service d'authentification modulaire (`googleAuthService.ts`)
+  - Hook React personnalisé (`useAuth.ts`) pour gestion d'états
+  - Composant professionnel (`GoogleAuthButton.tsx`) avec variants
+  - Support complet des états : déconnecté, loading, connecté, erreur
+  - Mode démo fonctionnel pour tests sans Client ID Google
+
+- 🎨 **Interface utilisateur authentification**
+  - Bouton de connexion avec logo Google local (`/public/g.webp`)
+  - Profil utilisateur avec avatar, prénom et badge "DÉMO"
+  - Bouton de déconnexion avec icône Lucide React
+  - Position fixe dans le header avec container responsive
+  - Animations et transitions fluides professionnelles
+
+- 📚 **Documentation authentification**
+  - Guide complet `GOOGLE_AUTH_SETUP.md` pour configuration production
+  - Instructions détaillées Google Cloud Console OAuth 2.0
+  - Explications mode démo vs mode production
+
+### Modifié
+- 🖼️ **Avatar système amélioré**
+  - Remplacement service externe `via.placeholder.com` par SVG local
+  - Avatar généré en base64 intégré directement dans le code
+  - Fallback intelligent avec initiales utilisateur (ex: "JD")
+  - Gestion d'erreurs robuste avec logs de debugging
+
+- 🎯 **Architecture modulaire renforcée**
+  - Types TypeScript pour Google Identity Services (`google.d.ts`)
+  - Export centralisé dans `src/components/common/index.ts`
+  - Intégration harmonieuse avec l'écosystème shadcn/ui existant
+
+### Corrigé
+- ❌ **Erreurs réseau avatar** via service externe non fiable
+- 🔧 **Problèmes Client ID Google** avec solution démo temporaire
+- 📱 **Position instable du bouton** dans le header responsive
+
+---
+
 ## [v1.9.3] - 2025-08-25
 
 ### 🚀 Ajouté

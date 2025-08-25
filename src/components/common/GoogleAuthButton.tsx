@@ -152,7 +152,7 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({
             
             {showText && (
               <span className="font-medium">
-                {isLoading ? 'Connexion...' : 'Se connecter'}
+                {isLoading ? 'Connexion...' : 'Se connecter (Démo)'}
               </span>
             )}
           </div>
@@ -175,22 +175,33 @@ export const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({
     <div className="flex items-center gap-3">
       {/* Avatar utilisateur */}
       <Avatar className="w-8 h-8 ring-2 ring-slate-200 hover:ring-slate-300 transition-all duration-200">
-        <AvatarImage 
-          src={user?.picture} 
-          alt={user?.name || 'Utilisateur'}
-          className="object-cover"
-        />
+        {user?.picture ? (
+          <AvatarImage 
+            src={user.picture} 
+            alt={user?.name || 'Utilisateur'}
+            className="object-cover"
+            onError={() => {
+              // Force fallback en cas d'erreur de chargement
+              console.log('⚠️ [GOOGLE_AUTH_BUTTON] Avatar failed to load, using fallback');
+            }}
+          />
+        ) : null}
         <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-600 text-white text-sm font-semibold">
-          <User className="w-4 h-4" />
+          {user?.given_name?.[0]}{user?.family_name?.[0] || user?.name?.[1] || ''}
         </AvatarFallback>
       </Avatar>
 
       {/* Informations utilisateur */}
       {showText && variant === 'default' && (
         <div className="flex flex-col min-w-0">
-          <span className="text-sm font-medium text-slate-800 truncate">
-            {user?.given_name || user?.name}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-slate-800 truncate">
+              {user?.given_name || user?.name}
+            </span>
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5 bg-blue-100 text-blue-700 border-blue-200">
+              DÉMO
+            </Badge>
+          </div>
           <span className="text-xs text-slate-500 truncate">
             {user?.email}
           </span>
