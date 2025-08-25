@@ -126,5 +126,8 @@ export { useFolderSelection } from './useFolderSelection';
 export { useReportGenerator } from './useReportGenerator';
 export { useFileListExport } from './useFileListExport';
 
+// Authentication Hooks
+export { useAuth } from './useAuth';
+
 // Motion & Animation Hooks
 export { useMotionColor, useMotionColorAnimation, createSafeGradient, getSafeColor } from './useMotionColors';

@@ -22,9 +22,10 @@
 npm init -y
 ```
 
-### React + TypeScript + Framer Motion
+### React + TypeScript + Framer Motion + Google Auth
 ```bash
 npm install react@latest react-dom@latest framer-motion@latest
+npm install google-auth-library@latest @types/google.accounts@latest
 npm install -D typescript@latest @types/react@latest @types/react-dom@latest
 npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --jsx react-jsx
 ```

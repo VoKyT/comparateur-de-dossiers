@@ -155,32 +155,14 @@ export const EmptyColumn: React.FC<EmptyColumnProps> = ({
                         whileHover={{ rotate: 10, scale: 1.1 }}
                         transition={{ type: "spring", stiffness: 400 }}
                       >
-                        {/* Google Drive official icon colors */}
-                        <svg 
+                        {/* Google Drive official logo */}
+                        <img 
+                          src="/google-drive.webp"
+                          alt="Google Drive"
                           width="16" 
-                          height="16" 
-                          viewBox="0 0 24 24"
-                          className="transition-all duration-200"
-                        >
-                          {/* Triangle bleu (partie gauche) */}
-                          <path 
-                            d="M7.71 3.5L1.15 15h4.55l6.56-11.5h-4.55z" 
-                            fill="#1fa463" 
-                            className="group-hover:brightness-110"
-                          />
-                          {/* Triangle jaune (partie droite) */}
-                          <path 
-                            d="M20.84 15H14.3l-3.28 5.74h10.26L20.84 15z" 
-                            fill="#ffc107" 
-                            className="group-hover:brightness-110"
-                          />
-                          {/* Triangle rouge (partie du haut) */}
-                          <path 
-                            d="M16.84 3.5L5.72 20.74h5.56L20.84 9.24 16.84 3.5z" 
-                            fill="#4285f4" 
-                            className="group-hover:brightness-110"
-                          />
-                        </svg>
+                          height="16"
+                          className="transition-all duration-200 group-hover:brightness-110 group-hover:scale-110"
+                        />
                       </motion.div>
                       <span className="text-sm">Google Drive</span>
                     </Button>

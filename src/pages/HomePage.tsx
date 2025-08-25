@@ -23,7 +23,7 @@ import { AppLayout } from '@/components/layout';
 import { PermanentComparisonGrid } from '@/components/features';
 
 // Common components
-import { LanguageToggle } from '@/components/common';
+import { LanguageToggle, GoogleAuthButton } from '@/components/common';
 
 // Shared constants - Configuration centralisée
 import { APP_CONFIG, LOG_IDS } from '@/shared/constants';
@@ -222,8 +222,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onBackToWelcome }) => {
               </h1>
             </motion.div>
 
-            {/* Contrôles de langue stylés */}
-            <div className="flex items-center gap-3 z-10">
+            {/* Contrôles utilisateur stylés */}
+            <div className="flex items-center gap-4 z-10">
+              <div className="min-w-[120px] flex justify-center">
+                <GoogleAuthButton 
+                  variant="compact" 
+                  size="sm" 
+                  showText={false}
+                  onAuthStateChange={(isSignedIn) => {
+                    console.log('🔐 [HOME_PAGE] État auth changé:', isSignedIn);
+                  }}
+                />
+              </div>
+              <div className="w-px h-6 bg-slate-300 opacity-60" />
               <LanguageToggle variant="inline" />
             </div>
           </motion.header>

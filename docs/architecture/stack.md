@@ -9,6 +9,8 @@
 - **shadcn/ui** : Composants modernes basés sur Radix UI
 - **Vite** : Build tool moderne avec hot reload et optimisations
 - **Framer Motion** : Librairie d'animation moderne pour transitions fluides
+- **Google Auth Library** : Authentification Google OAuth officielle
+- **Express + CORS** : Serveur local pour extensions et APIs
 
 ## 🔧 INTÉGRATION REACT + TYPESCRIPT + TAILWIND + SHADCN/UI + FRAMER MOTION
 

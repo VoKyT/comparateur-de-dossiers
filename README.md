@@ -1,8 +1,14 @@
-# Comparateur de Dossiers v1.9.2
+# Comparateur de Dossiers v1.9.3
 
-Application web moderne **React + TypeScript + Tailwind CSS** pour comparer le contenu de deux dossiers avec interface professionnelle shadcn/ui, **envoi d'emails Resend** et **intégration Google Drive**.
+Application web moderne **React + TypeScript + Tailwind CSS** pour comparer le contenu de deux dossiers avec interface professionnelle shadcn/ui, **envoi d'emails Resend** et **authentification Google Drive**.
 
-## ✨ Nouveautés v1.9.2
+## ✨ Nouveautés v1.9.3
+- 🔐 **Authentification Google** OAuth fonctionnelle intégrée
+- 👤 **GoogleAuthButton** modulaire avec gestion état utilisateur  
+- 🛡️ **Sécurité renforcée** pour accès Google Drive API
+- 🎨 **Interface header** avec contrôles utilisateur centrés
+
+## ✨ Nouveautés v1.9.2  
 - ☁️ **Boutons Google Drive** professionnels pour future sélection cloud
 - 🎯 **Interface ultra-moderne** avec icône Google officiel
 - 🐛 **Logs debugging** système standardisé avec emojis
@@ -41,6 +47,8 @@ npm run preview
 - **Tailwind CSS** ^4.1.12 + **shadcn/ui**
 - **Vite** ^7.1.3 + **Framer Motion** ^12.1.0
 - **Resend** ^6.5.0 (email moderne)
+- **Google Auth Library** ^10.2.1 (OAuth Google)
+- **Express** ^5.1.0 + **CORS** ^2.8.5 (serveur)
 
 ## 🔧 Scripts
 ```bash

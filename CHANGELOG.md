@@ -17,6 +17,43 @@ et ce projet adhère au [Versioning Sémantique](https://semver.org/lang/fr/).
 
 ---
 
+## [v1.9.3] - 2025-08-25
+
+### 🚀 Ajouté
+- **Authentification Google OAuth fonctionnelle** : Intégration complète google-auth-library pour connexion utilisateur
+- **GoogleAuthButton modulaire** : Composant réutilisable avec variants (compact) et gestion état auth
+- **Gestion état utilisateur** : Handler onAuthStateChange pour suivi connexion/déconnexion temps réel  
+- **Types Google Accounts** : @types/google.accounts pour typage TypeScript strict
+- **Interface header améliorée** : Positionnement centré avec séparateur visuel élégant
+- **Logs standardisés auth** : Traçabilité complète des événements authentification avec emojis
+- **Architecture sécurisée** : Base solide pour accès Google Drive API avec tokens OAuth
+
+### 🔄 Modifié
+- **HomePage header** : Intégration GoogleAuthButton avec wrapper centré et gap optimisé
+- **Stack technique** : Ajout dépendances Google Auth officielles au package.json
+- **Interface utilisateur** : Contrôles auth + langue dans header avec séparateur professionnel
+- **Gestion état** : Logs contextuels pour debugging authentification et flux utilisateur
+
+### 🔧 Technique
+- **Dépendances production** : google-auth-library ^10.2.1 + @types/google.accounts ^0.0.17
+- **Composant modulaire** : GoogleAuthButton dans @/components/common avec architecture scalable
+- **Props configurables** : variant, size, showText, onAuthStateChange pour flexibilité maximale
+- **Sécurité OAuth** : Implémentation standard Google pour tokens sécurisés
+- **TypeScript strict** : Typage complet pour API Google et gestion erreurs
+
+### 📚 Documentation
+- **README v1.9.3** : Stack technique étendu avec Google Auth Library
+- **ARCHITECTURE.md** : État actuel v1.9.3 avec authentification OAuth fonctionnelle
+- **Fonctionnalités** : Authentification Google OAuth et GoogleAuthButton modulaire documentées
+
+### 🎯 Objectif
+Passage d'interface mockée vers authentification Google réelle :
+- Base solide pour accès sécurisé Google Drive API
+- Architecture extensible pour sélection dossiers cloud
+- Gestion utilisateur complète avec état auth persistant
+
+---
+
 ## [v1.9.2] - 2025-08-25
 
 ### 🚀 Ajouté
