@@ -29,6 +29,8 @@ interface PermanentComparisonGridProps {
   folderB?: DirectoryData | null;
   onFolderSelectA: () => void;
   onFolderSelectB: () => void;
+  onGoogleDriveSelectA?: () => void;
+  onGoogleDriveSelectB?: () => void;
 }
 
 export const PermanentComparisonGrid: React.FC<PermanentComparisonGridProps> = ({
@@ -36,7 +38,9 @@ export const PermanentComparisonGrid: React.FC<PermanentComparisonGridProps> = (
   folderA,
   folderB,
   onFolderSelectA,
-  onFolderSelectB
+  onFolderSelectB,
+  onGoogleDriveSelectA,
+  onGoogleDriveSelectB
 }) => {
   const { calculateStats } = useComparison();
   const { t, translations } = useTranslation();
@@ -215,18 +219,20 @@ export const PermanentComparisonGrid: React.FC<PermanentComparisonGridProps> = (
         <div className="border-r border-slate-100 md:border-r lg:border-r md:last:border-r-0 lg:last:border-r-0">
           {folderA ? (
             <FilledColumn
-              title={t('comparison.columns.folderA')}
-              files={comparisonData?.uniqueA || []}
+              title={t('comparison.columns.folderA') || 'Folder A'}
+              files={folderA?.files || []}
               folderData={folderA}
               colorScheme="blue"
               onReselect={onFolderSelectA}
+              comparisonData={comparisonData}
             />
           ) : (
             <EmptyColumn
-              title={t('comparison.columns.folderA')}
+              title={t('comparison.columns.folderA') || 'Folder A'}
               onFolderSelect={onFolderSelectA}
+              onGoogleDriveSelect={onGoogleDriveSelectA}
               colorScheme="blue"
-              description={t('comparison.placeholders.selectFolder')}
+              description={t('comparison.placeholders.selectFolder') || 'Select a folder'}
             />
           )}
         </div>
@@ -244,18 +250,20 @@ export const PermanentComparisonGrid: React.FC<PermanentComparisonGridProps> = (
         <div className="md:border-r-0 lg:border-r-0">
           {folderB ? (
             <FilledColumn
-              title={t('comparison.columns.folderB')}
-              files={comparisonData?.uniqueB || []}
+              title={t('comparison.columns.folderB') || 'Folder B'}
+              files={folderB?.files || []}
               folderData={folderB}
               colorScheme="purple"
               onReselect={onFolderSelectB}
+              comparisonData={comparisonData}
             />
           ) : (
             <EmptyColumn
-              title={t('comparison.columns.folderB')}
+              title={t('comparison.columns.folderB') || 'Folder B'}
               onFolderSelect={onFolderSelectB}
+              onGoogleDriveSelect={onGoogleDriveSelectB}
               colorScheme="purple"
-              description={t('comparison.placeholders.selectFolder')}
+              description={t('comparison.placeholders.selectFolder') || 'Select a folder'}
             />
           )}
         </div>

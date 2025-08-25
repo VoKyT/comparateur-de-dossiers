@@ -22,7 +22,8 @@ export const enTranslations: TranslationValues = {
       back: "Back",
       close: "Close",
       open: "Open",
-      change: "Change"
+      change: "Change",
+      reselect: "Reselect"
     },
     labels: {
       folderA: "Folder A",
@@ -104,7 +105,21 @@ export const enTranslations: TranslationValues = {
       folderBSelected: "selected",
       nowSelectB: "Now select Folder B to compare",
       nowSelectA: "Now select Folder A to compare",
-      selectBothToFind: "Select Folder A and Folder B to find common files between them"
+      selectBothToFind: "Select Folder A and Folder B to find common files between them",
+      noFiles: "No files"
+    }
+  },
+
+  export: {
+    formats: {
+      txt: "Text Report",
+      csv: "CSV Export",
+      json: "JSON Data"
+    },
+    descriptions: {
+      txt: "Human-readable summary",
+      csv: "Spreadsheet compatible",
+      json: "Machine-readable format"
     }
   },
 

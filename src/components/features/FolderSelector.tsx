@@ -10,6 +10,7 @@ import React from 'react';
 import { ActionButton } from '@/components/common';
 import { DirectoryData } from '@/shared/types';
 import { createAccessibleProps, AccessibilityLabelKey } from '@/shared/accessibility';
+import { useFileSystem } from '@/shared/hooks';
 
 interface FolderSelectorProps {
   onFolderSelect: (folder: DirectoryData | null) => void;
@@ -26,17 +27,28 @@ export const FolderSelector: React.FC<FolderSelectorProps> = ({
   variant = 'primary',
   accessibilityKey
 }) => {
+  const { buildFileTreeFromAPI, extractAllFiles } = useFileSystem();
+
   const handleSelect = async () => {
     try {
       if ('showDirectoryPicker' in window) {
         const dirHandle = await (window as any).showDirectoryPicker();
-        // Ici on devrait utiliser le hook useFileSystem mais pour simplifier
-        // on fait un appel direct pour l'instant
-        const folder: DirectoryData = { name: dirHandle.name, files: [] };
+        
+        // Utilisation complète du système de fichiers
+        const tree = await buildFileTreeFromAPI(dirHandle);
+        const allFiles = extractAllFiles(tree);
+        
+        const folder: DirectoryData = { 
+          name: dirHandle.name, 
+          files: tree,
+          allFiles: allFiles
+        };
+        
+        console.log(`✅ [FOLDER_SELECTOR] Dossier sélectionné: ${dirHandle.name} (${tree.length} éléments, ${allFiles.length} fichiers total)`);
         onFolderSelect(folder);
       }
     } catch (error) {
-      console.error('Erreur sélection dossier:', error);
+      console.error('❌ [FOLDER_SELECTOR] Erreur sélection dossier:', error);
       onFolderSelect(null);
     }
   };

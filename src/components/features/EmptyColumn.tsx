@@ -9,7 +9,8 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { FolderPlus, Download, Folder } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { FolderPlus, Download, Folder, Cloud } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '@/shared/i18n';
 
@@ -18,13 +19,15 @@ interface EmptyColumnProps {
   onFolderSelect: () => void;
   colorScheme?: 'blue' | 'green' | 'purple' | 'slate';
   description?: string;
+  onGoogleDriveSelect?: () => void;
 }
 
 export const EmptyColumn: React.FC<EmptyColumnProps> = ({
   title,
   onFolderSelect,
   colorScheme = 'slate',
-  description
+  description,
+  onGoogleDriveSelect
 }) => {
   const { t } = useTranslation();
   const colorClasses = {
@@ -111,19 +114,85 @@ export const EmptyColumn: React.FC<EmptyColumnProps> = ({
             {t('comparison.placeholders.dragDropHint')}
           </p>
 
-          {/* Bouton d'ajout principal */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button
-              onClick={onFolderSelect}
-              className={`${colors.button} text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto`}
+          {/* Boutons de sélection */}
+          <div className="flex flex-col gap-3">
+            {/* Bouton local principal */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <FolderPlus size={16} />
-              {t('ui.buttons.select')}
-            </Button>
-          </motion.div>
+              <Button
+                onClick={onFolderSelect}
+                className={`${colors.button} text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto`}
+              >
+                <FolderPlus size={16} />
+                {t('ui.buttons.select')}
+              </Button>
+            </motion.div>
+
+            {/* Séparateur élégant */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-slate-200"></div>
+              <span className="text-xs text-slate-400 font-medium">OU</span>
+              <div className="flex-1 h-px bg-slate-200"></div>
+            </div>
+
+            {/* Bouton Google Drive */}
+            {onGoogleDriveSelect && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      onClick={onGoogleDriveSelect}
+                      variant="outline"
+                      className="border-2 border-slate-300 hover:border-blue-400 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto group"
+                    >
+                      <motion.div
+                        className="flex items-center justify-center w-5 h-5"
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                      >
+                        {/* Google Drive official icon colors */}
+                        <svg 
+                          width="16" 
+                          height="16" 
+                          viewBox="0 0 24 24"
+                          className="transition-all duration-200"
+                        >
+                          {/* Triangle bleu (partie gauche) */}
+                          <path 
+                            d="M7.71 3.5L1.15 15h4.55l6.56-11.5h-4.55z" 
+                            fill="#1fa463" 
+                            className="group-hover:brightness-110"
+                          />
+                          {/* Triangle jaune (partie droite) */}
+                          <path 
+                            d="M20.84 15H14.3l-3.28 5.74h10.26L20.84 15z" 
+                            fill="#ffc107" 
+                            className="group-hover:brightness-110"
+                          />
+                          {/* Triangle rouge (partie du haut) */}
+                          <path 
+                            d="M16.84 3.5L5.72 20.74h5.56L20.84 9.24 16.84 3.5z" 
+                            fill="#4285f4" 
+                            className="group-hover:brightness-110"
+                          />
+                        </svg>
+                      </motion.div>
+                      <span className="text-sm">Google Drive</span>
+                    </Button>
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="bg-slate-800 text-white text-sm max-w-xs">
+                  <p>Sélectionner un dossier depuis Google Drive</p>
+                  <p className="text-xs text-slate-300 mt-1">Accédez à vos fichiers cloud</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
 
           {/* Indication visuelle supplémentaire */}
           <motion.div 

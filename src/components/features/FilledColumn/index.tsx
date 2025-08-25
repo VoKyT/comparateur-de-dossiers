@@ -2,15 +2,16 @@
  * @fileoverview Composant FilledColumn modulaire restructuré
  * @description Colonne avec fichiers et boutons d'export - Architecture modulaire
  * @props title - Titre de la colonne
- * @props files - Liste des fichiers à afficher
+ * @props files - Liste des fichiers à afficher (tous les fichiers du dossier)
  * @props folderData - Données complètes du dossier pour export
  * @props colorScheme - Thème couleur de la colonne
  * @props onReselect - Callback pour resélectionner un dossier
  * @props showPaths - Afficher les chemins complets (pour fichiers communs)
+ * @props comparisonData - Données de comparaison pour styling différentiel (optionnel)
  */
 
 import React, { useState } from 'react';
-import { FileItem, DirectoryData, ComparisonResult } from '@/shared/types';
+import { FileItem, DirectoryData, ComparisonResult, ComparisonData } from '@/shared/types';
 import { useFileListExport } from '@/shared/hooks';
 import { useTranslation } from '@/shared/i18n';
 import { FileTreeItem } from '../FileTreeItem';
@@ -25,6 +26,7 @@ interface FilledColumnProps {
   colorScheme?: 'blue' | 'green' | 'purple' | 'slate';
   onReselect: () => void;
   showPaths?: boolean;
+  comparisonData?: ComparisonData | null;
 }
 
 type ExportFormat = 'txt' | 'csv' | 'json';
@@ -35,7 +37,8 @@ export const FilledColumn: React.FC<FilledColumnProps> = ({
   folderData,
   colorScheme = 'slate',
   onReselect,
-  showPaths = false
+  showPaths = false,
+  comparisonData
 }) => {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const { generateFileList, downloadFileList } = useFileListExport();
@@ -122,9 +125,8 @@ export const FilledColumn: React.FC<FilledColumnProps> = ({
                 return (
                   <FileTreeItem
                     key={`${file.name}-${file.size}-${index}`}
-                    file={file}
-                    level={0}
-                    showPath={showPaths}
+                    item={file}
+                    depth={0}
                   />
                 );
               }

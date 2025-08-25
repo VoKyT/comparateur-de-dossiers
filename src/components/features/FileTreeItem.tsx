@@ -23,7 +23,7 @@ export const FileTreeItem: React.FC<FileTreeItemProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  const hasChildren = item.children && item.children.length > 0;
+  const hasChildren = item?.children && Array.isArray(item.children) && item.children.length > 0;
   const indentWidth = depth * 20;
 
   // Fonction pour obtenir l'emoji selon l'extension ou le type
@@ -129,6 +129,12 @@ export const FileTreeItem: React.FC<FileTreeItemProps> = ({
     
     return emojiMap[extension] || '📄';
   };
+
+  // Protection défensive contre item undefined
+  if (!item) {
+    console.warn('⚠️ [FILE_TREE_ITEM] Item undefined reçu');
+    return null;
+  }
 
   const emoji = getFileEmoji(item.name, item.type);
 

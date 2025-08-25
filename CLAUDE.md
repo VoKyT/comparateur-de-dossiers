@@ -41,6 +41,14 @@
 - ✅ **DOCUMENTATION** : Mettre à jour les fichiers MD après chaque modularisation
 - ❌ **JAMAIS ignorer** - La modularité est NON-NÉGOCIABLE
 
+### 🔍 RÈGLE CRITIQUE - LOGS OBLIGATOIRES POUR DEBUGGING
+- ✅ **LOGS STRATÉGIQUES** dans toutes les fonctions critiques pour debugging rapide
+- ✅ **FORMAT STANDARDISÉ** : [EMOJI] [CONTEXTE] [ACTION] - [DÉTAILS]
+- ✅ **POINTS CLÉS** : Entrées de fonctions, avant/après setState, flux de données, erreurs
+- ✅ **DEBUGGING 10X PLUS RAPIDE** - Identification immédiate des problèmes
+- ✅ **NETTOYAGE AVANT PROD** : Supprimer logs détaillés, garder logs critiques
+- ❌ **JAMAIS de code sans logs** - Le debugging efficace est NON-NÉGOCIABLE
+
 ## 📋 Description du projet
 - **Objectif**: Application web moderne pour comparer le contenu de deux dossiers et identifier les fichiers identiques
 - **Fonctionnalités principales**:

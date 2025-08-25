@@ -4,7 +4,9 @@
   "description": "Application web pour comparer le contenu de dossiers",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode development --host",
+    "dev": "node scripts/kill-port.js 3000 && vite --mode development --host",
+    "dev:force": "node scripts/kill-port.js 3000 && vite --mode development --host --force",
+    "kill-port": "node scripts/kill-port.js",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -58,6 +60,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.540.0",
     "resend": "^6.0.1",

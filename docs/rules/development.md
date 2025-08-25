@@ -113,3 +113,109 @@ Avant d'ajouter une fonctionnalité, vérifier:
 - **Logique dans les composants**: calculs complexes, appels API directs
 - **Barrel exports trop larges**: exposer uniquement l'API publique
 - **Mixage des responsabilités**: UI + logique métier dans le même fichier
+
+## 🔍 RÈGLE CRITIQUE - LOGS OBLIGATOIRES POUR DEBUGGING
+
+### PRINCIPE FONDAMENTAL
+**TOUT code doit inclure des logs stratégiques pour faciliter le debugging rapide et efficace.**
+
+### QUAND LOGGER - OBLIGATOIRE
+✅ **Points d'entrée de fonctions critiques**
+```tsx
+const handleFolderSelect = async () => {
+  console.log(`👆 [FOLDER_SELECTION] DEBUT handleFolderSelect`);
+  // logique...
+}
+```
+
+✅ **Avant et après opérations importantes**
+```tsx
+console.log(`🔥 [HOOK] Avant setState - Données:`, newData);
+setState(newData);
+console.log(`✅ [HOOK] setState appelé avec succès`);
+```
+
+✅ **États de composants React (pendant développement)**
+```tsx
+console.log(`🔗 [COMPONENT] Render - État:`, {
+  hasData: !!data,
+  isLoading,
+  items: items?.length || 0
+});
+```
+
+✅ **Flux de données entre composants**
+```tsx
+console.log(`🏠 [PARENT] Transmission vers enfant:`, {
+  propA: propA ? 'présent' : 'null',
+  propB: propB?.length || 0
+});
+```
+
+✅ **Erreurs et cas limites**
+```tsx
+if (!item?.children) {
+  console.warn(`⚠️ [COMPONENT] Item sans children:`, item);
+  return fallback;
+}
+```
+
+### FORMAT DE LOGS STANDARDISÉ
+
+#### Structure recommandée
+```
+[EMOJI] [CONTEXTE] [ACTION] - [DETAILS]
+```
+
+#### Emojis standards
+- `🎯` Début/initialisation
+- `👆` Action utilisateur
+- `🔥` Opération critique
+- `✅` Succès/validation
+- `❌` Erreur/échec
+- `⚠️` Avertissement
+- `🔗` État/render de composant
+- `🏠` Transmission parent→enfant
+- `🔧` Configuration/setup
+- `🔍` Debug/investigation
+
+### EXEMPLES CONCRETS DU PROJET
+
+#### ❌ Log inutile
+```tsx
+console.log("data", data); // Pas de contexte
+```
+
+#### ✅ Log efficace
+```tsx
+console.log(`🔗 [USE_FOLDER_SELECTION] Hook render - État:`, {
+  folderA: folderA ? { name: folderA.name } : 'null',
+  folderB: folderB ? { name: folderB.name } : 'null'
+});
+```
+
+#### ✅ Log de debugging spécialisé
+```tsx
+console.log(`🔍 [DEBUG] Structure du premier élément:`, tree[0]);
+```
+
+### RÈGLES DE NETTOYAGE
+
+#### Logs à conserver (PRODUCTION)
+- Erreurs critiques
+- Actions utilisateur importantes
+- États applicatifs critiques
+
+#### Logs à supprimer (AVANT PRODUCTION)
+- Logs de debugging détaillés
+- États de render fréquents
+- Données sensibles
+
+### AVANTAGES DÉMONTRÉS
+1. **Debugging 10x plus rapide** - Identification immédiate des problèmes
+2. **Compréhension du flux** - Visualisation claire des données
+3. **Détection précoce** - Identification des erreurs avant qu'elles cassent
+4. **Maintenance facilitée** - Compréhension rapide du code existant
+
+### RÈGLE CRITIQUE
+**🚨 AVANT de commit - Vérifier que les logs de debugging sont appropriés pour l'environnement cible (dev/prod)**

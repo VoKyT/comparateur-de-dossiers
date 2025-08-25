@@ -13,8 +13,8 @@ import { Resend } from 'resend';
 
 // Configuration Resend (plus simple et sécurisée)
 const RESEND_CONFIG = {
-  API_KEY: 're_your_api_key', // À remplacer par votre clé Resend
-  FROM_EMAIL: 'noreply@votre-domaine.com' // À remplacer par votre domaine vérifié
+  API_KEY: 're_GFeTi4hN_AzHQnXrr48DRsZ2oFnkyn8qS', // Clé API Resend active
+  FROM_EMAIL: 'onboarding@resend.dev' // Domaine pré-vérifié par Resend pour tests
 };
 
 export interface EmailData {
@@ -138,7 +138,7 @@ class EmailService {
   }
 
   /**
-   * Envoie un rapport de comparaison par email via Resend
+   * Envoie un rapport de comparaison par email via backend local
    * @param toEmail - Adresse email de destination
    * @param reportContent - Contenu du rapport
    * @param folderAName - Nom du dossier A
@@ -153,51 +153,49 @@ class EmailService {
     comparisonSummary: string = ''
   ): Promise<void> {
     try {
-      this.initialize();
-
       // Validation de l'email
       if (!this.isValidEmail(toEmail)) {
         throw new Error('Adresse email invalide');
       }
 
-      // Vérification de la configuration
-      if (!this.resend) {
-        throw new Error('Service Resend non initialisé');
-      }
-
-      console.log('📤 [EMAIL_SERVICE] Tentative envoi email via Resend vers:', toEmail);
+      console.log('📤 [EMAIL_SERVICE] Tentative envoi email via backend vers:', toEmail);
 
       // Générer le HTML de l'email
       const htmlContent = this.generateEmailHTML(folderAName, folderBName, comparisonSummary, reportContent);
 
-      // Envoi via Resend API
-      const response = await this.resend.emails.send({
-        from: this.config.fromEmail,
-        to: [toEmail],
-        subject: `📊 Rapport de comparaison : ${folderAName} vs ${folderBName}`,
-        html: htmlContent
+      // Envoi via backend local (évite CORS)
+      const response = await fetch('http://localhost:3001/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: toEmail,
+          subject: `📊 Rapport de comparaison : ${folderAName} vs ${folderBName}`,
+          html: htmlContent
+        })
       });
 
-      if (response.data) {
-        console.log('✅ [EMAIL_SERVICE] Email envoyé avec succès via Resend:', response.data.id);
-      } else if (response.error) {
-        console.error('❌ [EMAIL_SERVICE] Erreur Resend:', response.error);
-        throw new Error(`Erreur Resend: ${response.error.message}`);
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ [EMAIL_SERVICE] Email envoyé avec succès via backend:', result.id);
+      } else {
+        console.error('❌ [EMAIL_SERVICE] Erreur backend:', result.error);
+        throw new Error(`Erreur backend: ${result.error}`);
       }
 
     } catch (error) {
       console.error('❌ [EMAIL_SERVICE] Erreur envoi email:', error);
       
-      // Messages d'erreur spécifiques pour Resend
+      // Messages d'erreur spécifiques
       if (error instanceof Error) {
         if (error.message.includes('Invalid email')) {
           throw new Error('Adresse email invalide');
-        } else if (error.message.includes('domain')) {
-          throw new Error('Domaine email non vérifié dans Resend');
-        } else if (error.message.includes('API key')) {
-          throw new Error('Clé API Resend invalide ou manquante');
+        } else if (error.message.includes('fetch')) {
+          throw new Error('Serveur backend indisponible - Vérifiez qu\'il tourne sur le port 3001');
         } else if (error.message.includes('rate limit')) {
-          throw new Error('Limite d\'envoi Resend atteinte - Réessayez plus tard');
+          throw new Error('Limite d\'envoi atteinte - Réessayez plus tard');
         }
       }
       

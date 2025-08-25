@@ -66,7 +66,7 @@ const App: React.FC = () => {
               }}
             >
               {/* Bouton de langue uniquement sur l'écran de bienvenue */}
-              <LanguageToggle variant="inline" />
+              {/* <LanguageToggle variant="inline" /> */}
               <WelcomeScreen onWelcomeComplete={handleWelcomeComplete} />
             </motion.div>
           ) : showInterface ? (

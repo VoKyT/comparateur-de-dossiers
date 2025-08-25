@@ -22,7 +22,8 @@ export const frTranslations: TranslationValues = {
       back: "Retour",
       close: "Fermer",
       open: "Ouvrir",
-      change: "Changer"
+      change: "Changer",
+      reselect: "Resélectionner"
     },
     labels: {
       folderA: "Dossier A",
@@ -104,7 +105,21 @@ export const frTranslations: TranslationValues = {
       folderBSelected: "sélectionné",
       nowSelectB: "Maintenant sélectionnez le Dossier B pour comparer",
       nowSelectA: "Maintenant sélectionnez le Dossier A pour comparer",
-      selectBothToFind: "Sélectionnez le Dossier A et le Dossier B pour trouver les fichiers communs entre eux"
+      selectBothToFind: "Sélectionnez le Dossier A et le Dossier B pour trouver les fichiers communs entre eux",
+      noFiles: "Aucun fichier"
+    }
+  },
+
+  export: {
+    formats: {
+      txt: "Rapport Texte",
+      csv: "Export CSV",
+      json: "Données JSON"
+    },
+    descriptions: {
+      txt: "Résumé lisible par l'humain",
+      csv: "Compatible tableur",
+      json: "Format lisible par machine"
     }
   },
 

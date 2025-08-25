@@ -71,6 +71,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onBackToWelcome }) => {
   const { t } = useTranslation();
   const { backgroundColor, borderColor, textColor, animateHover, animateRest } = useMotionColorAnimation();
 
+  // Handlers Google Drive (placeholder pour l'implémentation future)
+  const handleGoogleDriveSelectA = async () => {
+    console.log('🔍 [HOME_PAGE] Google Drive sélection A demandée');
+    // TODO: Implémenter l'intégration Google Drive API
+    alert('Fonctionnalité Google Drive en cours de développement.\nProchainement disponible pour accéder à vos dossiers cloud !');
+  };
+
+  const handleGoogleDriveSelectB = async () => {
+    console.log('🔍 [HOME_PAGE] Google Drive sélection B demandée');
+    // TODO: Implémenter l'intégration Google Drive API
+    alert('Fonctionnalité Google Drive en cours de développement.\nProchainement disponible pour accéder à vos dossiers cloud !');
+  };
+
   useEffect(() => {
     // Éviter les logs doublons en mode dev
     if (process.env.NODE_ENV === 'development') {
@@ -224,6 +237,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onBackToWelcome }) => {
             folderB={folderB}
             onFolderSelectA={handleFolderSelectA}
             onFolderSelectB={handleFolderSelectB}
+            onGoogleDriveSelectA={handleGoogleDriveSelectA}
+            onGoogleDriveSelectB={handleGoogleDriveSelectB}
           />
         </div>
       </motion.div>

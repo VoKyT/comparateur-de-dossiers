@@ -29,7 +29,7 @@ export default defineConfig({
   // Configuration du serveur de développement avec HMR
   server: {
     port: 3000,
-    strictPort: false, // Permet de chercher un port libre automatiquement
+    strictPort: true, // Force l'utilisation du port 3000 (fermera le processus s'il existe)
     open: true, // Ouvre automatiquement le navigateur
     host: 'localhost'
   },
